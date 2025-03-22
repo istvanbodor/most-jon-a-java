@@ -2,7 +2,7 @@ package lab.proj.mostjonajava.model;
 
 import java.util.List;
 
-abstract class Tekton {
+public abstract class Tekton {
 
     private List<Tekton> szomszedosTektonok;
 

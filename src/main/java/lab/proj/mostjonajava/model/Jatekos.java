@@ -1,6 +1,6 @@
 package lab.proj.mostjonajava.model;
 
-abstract class Jatekos {
+public abstract class Jatekos {
     private String nev;
     private int pont;
     private boolean aktiv;
