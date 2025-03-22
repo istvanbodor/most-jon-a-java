@@ -1,6 +1,7 @@
 package lab.proj.mostjonajava.model;
 
 public class Rovar extends Jatekos{
+    private Tekton tekton;
     private int lepesSzam;
     private boolean vagoKepesseg;
     private boolean benulas;

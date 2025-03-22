@@ -1,6 +1,11 @@
 package lab.proj.mostjonajava.model;
 
+import java.util.List;
+
 public class Gombatest {
+    private Tekton tekton;
+    private List<GombaFonal> gombaFonalak;
+
     private int kilohetoSporakSzama;
     private int elszortSporakSzama;
     private int noveszthetoFonalakSzama;

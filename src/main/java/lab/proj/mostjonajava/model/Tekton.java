@@ -1,8 +1,22 @@
 package lab.proj.mostjonajava.model;
 
+import java.util.List;
+
 abstract class Tekton {
-    protected int sporaSzam;
-    protected int fonalakElettartama;
+
+    private List<Tekton> szomszedosTektonok;
+
+    private Rovar rovar;
+
+    private Gombasz gombasz;
+
+    private List<GombaFonal> gombafonalak;
+
+    private Gombatest gombatest;
+
+    private List<Spora> sporak;
+    private int sporaSzam;
+    private int fonalakElettartama;
 
     public abstract Tekton ujTektonLetrehozasa();
     public abstract void ketteTores();
