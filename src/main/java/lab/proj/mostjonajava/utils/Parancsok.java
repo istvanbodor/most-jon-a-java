@@ -2,6 +2,7 @@ package lab.proj.mostjonajava.utils;
 
 public class Parancsok {
     public static final String FONALNOVESZTES = "FONALNOVESZTES";
+    public static final String JATEKINDITAS = "JATEKINDITAS";
     public static final String SPORATERMELES = "SPORATERMELES";
     public static final String SIMASPORASZORAS = "SIMASPORASZORAS";
     public static final String FEJLETTSPORASZORAS = "FEJLETTSPORASZORAS";

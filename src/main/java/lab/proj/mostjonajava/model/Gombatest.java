@@ -1,7 +1,10 @@
 package lab.proj.mostjonajava.model;
 
+import lombok.Data;
+
 import java.util.List;
 
+@Data
 public class Gombatest {
     private Tekton tekton;
     private List<GombaFonal> gombaFonalak;

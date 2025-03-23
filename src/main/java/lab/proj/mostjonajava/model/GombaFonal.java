@@ -1,5 +1,8 @@
 package lab.proj.mostjonajava.model;
 
+import lombok.Data;
+
+@Data
 public class GombaFonal {
     private Tekton honnan;
     private Tekton hova;

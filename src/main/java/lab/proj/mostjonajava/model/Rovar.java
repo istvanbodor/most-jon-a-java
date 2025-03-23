@@ -1,10 +1,21 @@
 package lab.proj.mostjonajava.model;
 
+import lombok.Data;
+
+@Data
 public class Rovar extends Jatekos{
     private Tekton tekton;
     private int lepesSzam;
     private boolean vagoKepesseg;
     private boolean benulas;
+
+    public Rovar(String nev) {
+        super(nev);
+        tekton = null;
+        lepesSzam = 2;
+        vagoKepesseg = true;
+        benulas = false;
+    }
 
     public Tekton tektonKivalasztasa() { return null; }
     public void pontNovelese(int ertek) {}

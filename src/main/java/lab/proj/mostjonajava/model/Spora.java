@@ -1,5 +1,8 @@
 package lab.proj.mostjonajava.model;
 
+import lombok.Data;
+
+@Data
 public abstract class Spora {
     private Tekton tekton;
     private Gombatest gombatest;
