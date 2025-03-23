@@ -35,8 +35,8 @@ public class FungoriumApplication extends Application {
                 case JATEKINDITAS -> jatekInditasa(parameterek);
                 case FONALNOVESZTES -> testFonalNovesztes(parameterek);
                 case SPORATERMELES -> testSporaTermeles(parameterek);
-                case SIMASPORASZORAS -> testSimaSporaSzoros(parameterek);
-                case FEJLETTSPORASZORAS -> testFejlettSporaSzoros(parameterek);
+                case SIMASPORASZORAS -> testSimaSporaSzoras(parameterek);
+                case FEJLETTSPORASZORAS -> testFejlettSporaSzoras(parameterek);
                 case GOMBATESTNOVESZTES -> testGombaTestNovesztes(parameterek);
                 case GOMBATESTFEJLESZTES -> testGombaTestFejlesztes(parameterek);
                 case GOMBATESTELPUSZTUL -> testGombaTestElpusztul(parameterek);
@@ -76,11 +76,11 @@ public class FungoriumApplication extends Application {
         //todo teszteset
     }
 
-    private static void testSimaSporaSzoros(String[] parameterek) {
+    private static void testSimaSporaSzoras(String[] parameterek) {
         //todo teszteset
     }
 
-    private static void testFejlettSporaSzoros(String[] parameterek) {
+    private static void testFejlettSporaSzoras(String[] parameterek) {
         //todo teszteset
     }
 
