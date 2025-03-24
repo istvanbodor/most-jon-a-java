@@ -5,6 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lab.proj.mostjonajava.game.Jatek;
+import lab.proj.mostjonajava.model.Gombasz;
+import lab.proj.mostjonajava.model.Gombatest;
+import lab.proj.mostjonajava.model.Tekton;
 import lab.proj.mostjonajava.utils.Logger;
 
 import java.io.BufferedReader;
@@ -95,7 +98,7 @@ public class FungoriumApplication extends Application {
     }
 
     private static void testFonalNovesztes(String[] parameterek) {
-        //todo teszteset
+
     }
 
     private static void testSporaTermeles(String[] parameterek) {
