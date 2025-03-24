@@ -49,9 +49,14 @@ public class GombaFonal {
     }
 
     /**
-     *Ellenőrzi, hogy az adott fonal csatlakozik-e meg a
+     * Ellenőrzi, hogy az adott fonal csatlakozik-e meg a
+     *
      * @param fonal a csekkolandó fonal
+     * @return
      */
-    public void vanGombaTestKapcsolat(GombaFonal fonal) {}
+    public boolean vanGombaTestKapcsolat(GombaFonal fonal) {
+        log("vanGombaTestKapcsolat ellenorizve.");
+        return false;
+    }
 
 }
