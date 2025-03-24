@@ -22,39 +22,42 @@ public class Gombatest {
         log("Gombatest letrejott");
     }
 
-    public void fonalNovesztes(Tekton honnan, Tekton hova) {
-    }
+    /**
+     * Egy új fonalat növeszt.
+     * @param honnan
+     * @param hova
+     */
+    public void fonalNovesztes(Tekton honnan, Tekton hova) {}
 
-    public void elpusztulas() {
-    }
+    /**
+     * Megsemmisíti a gombatestet, a fonalakkal együtt.
+     */
+    public void elpusztulas() {}
 
-    public void sporaKiloves(Tekton tekton) {
-    }
+    /**
+     * Spórákat lő ki.
+     * @param tekton
+     */
+    public void sporaKiloves(Tekton tekton) {}
 
+    /**
+     * Minden körben spoórát termel.
+     */
     public void sporaTermeles() {
         hivasLog("sporaTermeles()", List.of(), 0);
         log("Spora termeles megtortent");
     }
 
-    public void sporaTorleseGombatestbol(Spora spora) {
-    }
+    /**
+     * A kilőtt spórákat törli a gombatestből.
+     * @param spora
+     */
+    public void sporaTorleseGombatestbol(Spora spora) {}
 
-    public void sporaTarolasa() {
-    }
-
-    public Gombatest ujGombatestLetrehozas(Tekton tekton) {
-        return null;
-    }
-
-    public int getKilohetoSporakSzama() {
-        return kilohetoSporakSzama;
-    }
-
-    public int getElszortSporakSzama() {
-        return elszortSporakSzama;
-    }
-
-    public int getNoveszthetoFonalakSzama() {
-        return noveszthetoFonalakSzama;
-    }
+    /**
+     * Gombatest konstruktora
+     * @param tekton
+     * @return
+     */
+    public Gombatest ujGombatestLetrehozas(Tekton tekton) { return null; }
 }
