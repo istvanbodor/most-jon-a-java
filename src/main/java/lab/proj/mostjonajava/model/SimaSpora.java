@@ -10,8 +10,8 @@ import static lab.proj.mostjonajava.utils.Logger.log;
 public class SimaSpora extends Spora {
 
     public SimaSpora() {
-        log("Sima spora letrejotte.");
     }
+
     /**
      * Kifejti a hatasat a rovarra, ami jelenleg csak a tapanyagszint noveles.
      */
@@ -22,5 +22,7 @@ public class SimaSpora extends Spora {
     /**
      * Uj sima spora letrehozasa.
      */
-    public Spora ujSporaLetrehozasa() { return null; }
+    public Spora ujSporaLetrehozasa() {
+        return null;
+    }
 }

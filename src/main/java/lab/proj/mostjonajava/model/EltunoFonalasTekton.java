@@ -6,6 +6,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class EltunoFonalasTekton extends Tekton {
+
+    public EltunoFonalasTekton() {
+        super();
+    }
     /**
      * A tekton konstruktora.
      */
