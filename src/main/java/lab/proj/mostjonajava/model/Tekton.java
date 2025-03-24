@@ -60,13 +60,17 @@ public abstract class Tekton {
      * @param tekton
      * @return
      */
-    public boolean vanFonalKozottuk(Tekton tekton) { return false; }
+    public boolean vanFonalKozottuk(Tekton tekton) {
+        log("vanFonalKozottuk ellenorizve.");
+        return false; }
 
     /**
      * Hozzáad egy fonalat a tektonhoz.
      * @param fonal
      */
-    public void fonalHozzaadasa(GombaFonal fonal) {}
+    public void fonalHozzaadasa(GombaFonal fonal) {
+        log("Fonal hozzaadva.");
+    }
 
     /**
      * Törlődik a megadott fonal.
@@ -100,7 +104,9 @@ public abstract class Tekton {
      * Ellenörzi, hogy növeszthető-e a tektonon gombafonal.
      * @return
      */
-    public boolean gombafonalNoveszthetoE() { return false; }
+    public boolean gombafonalNoveszthetoE() {
+        log("Gombafonal noveszthetosege megvizsgalva.");
+        return false; }
 
     /**
      * Ellenörzi, hogy növeszthető-e gombatest az adott tekton.
@@ -119,5 +125,7 @@ public abstract class Tekton {
      * @param tekton
      * @return
      */
-    public boolean egyenlo(Tekton tekton) { return false; }
+    public boolean egyenlo(Tekton tekton) {
+        log("Egyenloseg megvizsgalva.");
+        return false; }
 }

@@ -98,7 +98,64 @@ public class FungoriumApplication extends Application {
     }
 
     private static void testFonalNovesztes(String[] parameterek) {
+        if (parameterek.length < 2) {
+            hibaLog("Nem adtal meg elegendo parametert a fonal novesztesehez!");
+            return;
+        }
+        Tekton honnan = new Tekton() {
+            @Override
+            public Tekton ujTektonLetrehozasa() {
+                return null;
+            }
 
+            @Override
+            public void ketteTores() {
+
+            }
+        };
+        Tekton hova = new Tekton() {
+            @Override
+            public Tekton ujTektonLetrehozasa() {
+                return null;
+            }
+
+            @Override
+            public void ketteTores() {
+
+            }
+        };
+
+        hova.setSzomszedosTektonok(new ArrayList<>());
+        honnan.setSzomszedosTektonok(new ArrayList<>());
+        List<Tekton> szomszedokHova = new ArrayList<>();
+        List<Tekton> szomszedokHonnan = new ArrayList<>();
+        szomszedokHova.add(honnan);
+
+        hova.setSzomszedosTektonok(szomszedokHova);
+        honnan.setSzomszedosTektonok(szomszedokHonnan);
+
+
+        Gombatest gombatest = new Gombatest();
+        Gombasz gombasz= new Gombasz("nev");
+        Tekton valasztott = gombasz.tektonKivalasztasa();
+        hova.getSzomszedosTektonok();
+        hova.egyenlo(honnan);
+        hova.vanFonalKozottuk(hova);
+        hova.gombafonalNoveszthetoE();
+
+        if (valasztott == null ||
+                hova == null ||
+                honnan == null ||
+                hova.getSzomszedosTektonok() == null ||
+                !hova.egyenlo(honnan) ||
+                !hova.vanFonalKozottuk(honnan) ||
+                !hova.gombafonalNoveszthetoE()) {
+
+            return;
+        } else {
+            GombaFonal gombafonal = new GombaFonal(honnan, hova, gombatest);
+            hova.fonalHozzaadasa(gombafonal);
+        }
     }
 
     private static void testSporaTermeles(String[] parameterek) {

@@ -32,7 +32,10 @@ public class Gombasz extends Jatekos {
      * Kiválaszthatjuk, hogy melyik tektonon szeretnénk műveletet vegre hajtani.
      * @return
      */
-    public Tekton tektonKivalasztasa() { return null; }
+    public Tekton tektonKivalasztasa() {
+        log("Tekton kivalasztasa megtortent");
+        return null;
+    }
 
     /**
      * Növeli a gombász pontszámát.
