@@ -4,9 +4,14 @@ import lombok.Data;
 
 import java.util.List;
 
+import static lab.proj.mostjonajava.utils.Logger.log;
+
 @Data
 public abstract class Tekton {
 
+    private static int nextId = 1;
+
+    private int id;
     private List<Tekton> szomszedosTektonok;
 
     private Rovar rovar;
@@ -20,6 +25,11 @@ public abstract class Tekton {
     private List<Spora> sporak;
     private int sporaSzam;
     private int fonalakElettartama;
+
+    public Tekton() {
+        id = nextId++;
+        log("Tekton létrejött - TEKTON_ID: " + id);
+    }
 
     public abstract Tekton ujTektonLetrehozasa();
     public abstract void ketteTores();
