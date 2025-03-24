@@ -169,4 +169,11 @@ public abstract class Tekton {
         log("Egyenloseg megvizsgalva.");
         return false;
     }
+
+    public List<Tekton> getSzomszedosTektonok() {
+        hivasLog("getSzomszedosTektonok()", List.of(), 1);
+        log("Szomszedos tektonok ellenorzese");
+        return List.of();
+    }
+
 }
