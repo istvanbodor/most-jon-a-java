@@ -75,13 +75,19 @@ public class Rovar extends Jatekos {
      * @param tekton
      */
     public void sporaElfogyasztas(Tekton tekton) {
-        log("A rovar megette a sporat.");
+        hivasLog("sporaElfogyasztas(Tekton tekton)", List.of("tekton: Tekton - " + tekton.toString()), 0);
+        List<Spora> sporak = tekton.getSporak();
+        hivasLog("getSporak()", List.of(), 1);
+        tekton.setSporak(List.of());
+        hivasLog("setSporak(List<Spora> spora)", List.of("sporak: List<Spora>"), 1);
+        log("A rovar megette a sporat");
     }
 
     /**
      * A rovar lepes szamat csokkenti, azaz hanyat léphet.
      */
     public void lepesSzamNoveles() {
+        hivasLog("lepesSzamNoveles()", List.of(), 1);
         log("A rovar gyorsult.");
     }
 
@@ -89,6 +95,7 @@ public class Rovar extends Jatekos {
      * A rovar lepes szamat noveli, azaz hanyat léphet.
      */
     public void lepesSzamCsokkentes() {
+        hivasLog("lepesSzamCsokkentes()", List.of(), 1);
         log("A rovar lassult.");
     }
 
@@ -117,6 +124,8 @@ public class Rovar extends Jatekos {
      * @param tekton
      */
     public void fonalVagas(Tekton tekton) {
+        hivasLog("fonalVagas(Tekton tekton)", List.of("tekton: Tekton - " + tekton.toString()), 0);
+        tekton.fonalTorlese(new GombaFonal());
     }
 
     /**
@@ -124,7 +133,7 @@ public class Rovar extends Jatekos {
      */
     public void benulas(){
         hivasLog("benulas()", List.of(), 0);
-        log("A rovar megbenult.");
+        log("A rovar megbenult");
     }
 
     public Tekton getTekton() {

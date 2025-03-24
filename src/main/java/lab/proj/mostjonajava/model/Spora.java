@@ -12,7 +12,7 @@ public abstract class Spora {
      * A spora kifejti a hatasat a rovarra, amelyik megeszi,
      * ezt a fuggvenyt a leszarmazott osztalyai valositjak meg.
      */
-    public abstract void hatasKifejtese();
+    public abstract void hatasKifejtese(Rovar rovar);
 
     /**
      * Uj spora letrehozasa.

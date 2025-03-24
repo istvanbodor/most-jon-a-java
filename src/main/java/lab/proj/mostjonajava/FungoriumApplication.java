@@ -188,249 +188,63 @@ public class FungoriumApplication extends Application {
     }
 
     private static void testSporaFogyasztas(String[] parameterek) {
-        //todo teszteset
+        parameterVizsgalat(parameterek, 3);
+        Rovar rovar = new Rovar();
+        rovar.sporaElfogyasztas(new EgyFonalasTekton());
     }
 
     private static void testFonalVagas(String[] parameterek) {
-        //todo teszteset
+        parameterVizsgalat(parameterek, 3);
+        Rovar rovar = new Rovar();
+        rovar.fonalVagas(new EgyFonalasTekton());
     }
 
     private static void testTektonTores(String[] parameterek) {
-        //todo teszteset
+        parameterVizsgalat(parameterek, 2);
+        EgyFonalasTekton tekton = new EgyFonalasTekton();
+        tekton.ketteTores();
     }
 
     private static void testBenitoSporaHatasKifejtese(String[] parameterek) {
-        if (parameterek.length < 2) {
-            hibaLog("Nem adtal meg elegendo parametert!");
-            return;
-        }
-
-        int rovarId;
-        try {
-            rovarId = Integer.parseInt(parameterek[1]);
-        } catch (NumberFormatException e) {
-            hibaLog("Ervenytelen rovar ID!");
-            return;
-        }
-
-        Rovar rovar = Jatek.rovaraszok.stream()
-                .filter(r -> r.getId() == rovarId)
-                .findFirst()
-                .orElse(null);
-
-        if (rovar == null) {
-            hibaLog("Nincs ilyen rovar azonositoval: " + rovarId);
-            return;
-        }
-
+        parameterVizsgalat(parameterek, 2);
+        Rovar rovar = new Rovar();
         BenitoSpora benitoSpora = new BenitoSpora();
-
-        Tekton tekton = new Tekton() {
-            @Override
-            public Tekton ujTektonLetrehozasa() {
-                return null;
-            }
-
-            @Override
-            public void ketteTores() {
-
-            }
-        };
-
-        rovar.sporaElfogyasztas(tekton);
-
-        benitoSpora.hatasKifejtese();
-
-        rovar.benulas();
+        benitoSpora.hatasKifejtese(rovar);
     }
 
     private static void testLassitoSporaHatasKifejtese(String[] parameterek) {
-        if (parameterek.length < 2) {
-            hibaLog("Nem adtal meg elegendo parametert!");
-            return;
-        }
-
-        int rovarId;
-        try {
-            rovarId = Integer.parseInt(parameterek[1]);
-        } catch (NumberFormatException e) {
-            hibaLog("Ervenytelen rovar ID!");
-            return;
-        }
-
-        Rovar rovar = Jatek.rovaraszok.stream()
-                .filter(r -> r.getId() == rovarId)
-                .findFirst()
-                .orElse(null);
-
-        if (rovar == null) {
-            hibaLog("Nincs ilyen rovar azonositoval: " + rovarId);
-            return;
-        }
-
+        parameterVizsgalat(parameterek, 2);
+        Rovar rovar = new Rovar();
         LassitoSpora lassitoSpora = new LassitoSpora();
-
-        Tekton tekton = new Tekton() {
-            @Override
-            public Tekton ujTektonLetrehozasa() {
-                return null;
-            }
-
-            @Override
-            public void ketteTores() {
-
-            }
-        };
-
-        rovar.sporaElfogyasztas(tekton);
-
-        lassitoSpora.hatasKifejtese();
-
-        rovar.lepesSzamCsokkentes();
+        lassitoSpora.hatasKifejtese(rovar);
     }
 
     private static void testGyorsitoSporaHatasKifejtese(String[] parameterek) {
-        if (parameterek.length < 2) {
-            hibaLog("Nem adtal meg elegendo parametert!");
-            return;
-        }
-
-        int rovarId;
-        try {
-            rovarId = Integer.parseInt(parameterek[1]);
-        } catch (NumberFormatException e) {
-            hibaLog("Ervenytelen rovar ID!");
-            return;
-        }
-
-        Rovar rovar = Jatek.rovaraszok.stream()
-                .filter(r -> r.getId() == rovarId)
-                .findFirst()
-                .orElse(null);
-
-        if (rovar == null) {
-            hibaLog("Nincs ilyen rovar azonositoval: " + rovarId);
-            return;
-        }
-
+        parameterVizsgalat(parameterek, 2);
+        Rovar rovar = new Rovar();
         GyorsitoSpora gyorsitoSpora = new GyorsitoSpora();
-
-        Tekton tekton = new Tekton() {
-            @Override
-            public Tekton ujTektonLetrehozasa() {
-                return null;
-            }
-
-            @Override
-            public void ketteTores() {
-
-            }
-        };
-
-        rovar.sporaElfogyasztas(tekton);
-
-        gyorsitoSpora.hatasKifejtese();
-
-        rovar.lepesSzamNoveles();
+        gyorsitoSpora.hatasKifejtese(rovar);
     }
 
     private static void testVagasBenitoSporaHatasKifejtese(String[] parameterek) {
-        if (parameterek.length < 2) {
-            hibaLog("Nem adtal meg elegendo parametert!");
-            return;
-        }
-
-        int rovarId;
-        try {
-            rovarId = Integer.parseInt(parameterek[1]);
-        } catch (NumberFormatException e) {
-            hibaLog("Ervenytelen rovar ID!");
-            return;
-        }
-
-        Rovar rovar = Jatek.rovaraszok.stream()
-                .filter(r -> r.getId() == rovarId)
-                .findFirst()
-                .orElse(null);
-
-        if (rovar == null) {
-            hibaLog("Nincs ilyen rovar azonositoval: " + rovarId);
-            return;
-        }
-
+        parameterVizsgalat(parameterek, 2);
+        Rovar rovar = new Rovar();
         VagasTiltoSpora vagasTiltoSpora = new VagasTiltoSpora();
+        vagasTiltoSpora.hatasKifejtese(rovar);
 
-        Tekton tekton = new Tekton() {
-            @Override
-            public Tekton ujTektonLetrehozasa() {
-                return null;
-            }
-
-            @Override
-            public void ketteTores() {
-
-            }
-        };
-
-        rovar.sporaElfogyasztas(tekton);
-
-        vagasTiltoSpora.hatasKifejtese();
-
-        rovar.vagoKepessegTiltas();
     }
 
     private static void testSimaSporaHatasKifejtese(String[] parameterek) {
-        if (parameterek.length < 2) {
-            hibaLog("Nem adtal meg elegendo parametert!");
-            return;
-        }
-
-        int rovarId;
-        try {
-            rovarId = Integer.parseInt(parameterek[1]);
-        } catch (NumberFormatException e) {
-            hibaLog("Ervenytelen rovar ID!");
-            return;
-        }
-
-        Rovar rovar = Jatek.rovaraszok.stream()
-                .filter(r -> r.getId() == rovarId)
-                .findFirst()
-                .orElse(null);
-
-        if (rovar == null) {
-            hibaLog("Nincs ilyen rovar azonositoval: " + rovarId);
-            return;
-        }
-
+        parameterVizsgalat(parameterek, 2);
+        Rovar rovar = new Rovar();
         SimaSpora simaSpora = new SimaSpora();
-
-        Tekton tekton = new Tekton() {
-            @Override
-            public Tekton ujTektonLetrehozasa() {
-                return null;
-            }
-
-            @Override
-            public void ketteTores() {
-
-            }
-        };
-
-        rovar.sporaElfogyasztas(tekton);
-
-        simaSpora.hatasKifejtese();
-
-        rovar.pontNovelese(10);
+        simaSpora.hatasKifejtese(rovar);
     }
 
     private static void testFonalFelszivodas(String[] parameterek) {
-        Gombatest gombatest = new Gombatest();
-        EltunoFonalasTekton tekton1 = new EltunoFonalasTekton();
-        TobbFonalasTekton tekton2 = new TobbFonalasTekton();
-        GombaFonal gombafonal = new GombaFonal(tekton1, tekton2, gombatest);
-
-        tekton1.eletIdoCsokkentes(gombafonal);
+        parameterVizsgalat(parameterek, 2);
+        EltunoFonalasTekton eltunoFonalasTekton = new EltunoFonalasTekton();
+        eltunoFonalasTekton.eletIdoCsokkentes(new GombaFonal());
     }
 
 }

@@ -3,6 +3,9 @@ package lab.proj.mostjonajava.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
+import static lab.proj.mostjonajava.utils.Logger.hivasLog;
 import static lab.proj.mostjonajava.utils.Logger.log;
 
 @EqualsAndHashCode(callSuper = true)
@@ -16,7 +19,9 @@ public class GyorsitoSpora extends Spora {
     /**
      * Kifejti a hatasat a rovarra, ami a gyorsitas.
      */
-    public void hatasKifejtese() {
+    public void hatasKifejtese(Rovar rovar) {
+        hivasLog("hatasKifejtese(Rovar rovar)", List.of("rovar: Rovar"), 0);
+        rovar.lepesSzamNoveles();
         log("Gyorsito spora megtette a hatasat.");
     }
 
