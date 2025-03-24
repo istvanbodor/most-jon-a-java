@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static lab.proj.mostjonajava.utils.Logger.hibaLog;
+import static lab.proj.mostjonajava.utils.Logger.log;
 import static lab.proj.mostjonajava.utils.Parancsok.*;
 
 public class FungoriumApplication extends Application {
@@ -178,11 +179,49 @@ public class FungoriumApplication extends Application {
     }
 
     private static void testSimaSporaSzoras(String[] parameterek) {
-        //todo teszteset
+        Tekton tekton = new Tekton() {
+            @Override
+            public Tekton ujTektonLetrehozasa() {
+                return null;
+            }
+
+            @Override
+            public void ketteTores() {
+
+            }
+        };
+        SimaSpora sspora = new SimaSpora();
+        tekton.sporaHozzaadasa(sspora);
     }
 
     private static void testFejlettSporaSzoras(String[] parameterek) {
-        //todo teszteset
+        Tekton tekton1 = new Tekton() {@Override public Tekton ujTektonLetrehozasa() {
+                return null;
+            }@Override public void ketteTores() {}
+        };
+        Tekton tekton2 = new Tekton() {@Override public Tekton ujTektonLetrehozasa() {
+                return null;
+            }@Override public void ketteTores() { }
+        };
+        Tekton tekton3 = new Tekton() {@Override public Tekton ujTektonLetrehozasa() {
+                return null;
+            } @Override public void ketteTores() {}
+        };
+        List<Tekton> tektonok1 = new ArrayList<>();
+        tektonok1.add(tekton2);
+        List<Tekton> tektonok2 = new ArrayList<>();
+        tektonok2.add(tekton1);
+        tektonok2.add(tekton3);
+        List<Tekton> tektonok3 = new ArrayList<>();
+        tektonok3.add(tekton2);
+        tekton1.setSzomszedosTektonok(tektonok1);
+        tekton2.setSzomszedosTektonok(tektonok2);
+        tekton3.setSzomszedosTektonok(tektonok3);
+        Gombatest gombatest = new Gombatest();
+        gombatest.setKilohetoSporakSzama(10);
+        tekton1.setGombatest(gombatest);
+        gombatest.sporaKiloves(tekton3);
+        log("FejlettSporaSzoras");
     }
 
     private static void testGombaTestNovesztes(String[] parameterek) {
@@ -222,7 +261,33 @@ public class FungoriumApplication extends Application {
      * @param parameterek
      */
     private static void testBenitoSporaHatasKifejtese(String[] parameterek) {
-        Tekton t = new Tekton() {
+        //todo teszteset
+        if (parameterek.length < 2) {
+            hibaLog("Nem adtal meg elegendo parametert!");
+            return;
+        }
+
+        int rovarId;
+        try {
+            rovarId = Integer.parseInt(parameterek[1]);
+        } catch (NumberFormatException e) {
+            hibaLog("Érvénytelen rovar ID!");
+            return;
+        }
+
+        Rovar rovar = Jatek.rovaraszok.stream()
+                .filter(r -> r.getId() == rovarId)
+                .findFirst()
+                .orElse(null);
+
+        if (rovar == null) {
+            hibaLog("Nincs ilyen rovar azonosítóval: " + rovarId);
+            return;
+        }
+
+        BenitoSpora benitoSpora = new BenitoSpora();
+
+        Tekton tekton = new Tekton() {
             @Override
             public Tekton ujTektonLetrehozasa() {
                 return null;
@@ -233,6 +298,12 @@ public class FungoriumApplication extends Application {
 
             }
         };
+
+        rovar.sporaElfogyasztas(tekton);
+
+        benitoSpora.hatasKifejtese();
+
+        rovar.benulas();
     }
 
     private static void testLassitoSporaHatasKifejtese(String[] parameterek) {
