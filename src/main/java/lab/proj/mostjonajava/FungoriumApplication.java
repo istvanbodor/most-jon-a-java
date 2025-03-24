@@ -484,7 +484,12 @@ public class FungoriumApplication extends Application {
     }
 
     private static void testFonalFelszivodas(String[] parameterek) {
-        //todo teszteset
+        Gombatest gombatest = new Gombatest();
+        EltunoFonalasTekton tekton1 = new EltunoFonalasTekton();
+        TobbFonalasTekton tekton2 = new TobbFonalasTekton();
+        GombaFonal gombafonal = new GombaFonal(tekton1, tekton2, gombatest);
+
+        tekton1.eletIdoCsokkentes(gombafonal);
     }
 
 }

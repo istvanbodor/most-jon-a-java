@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static lab.proj.mostjonajava.utils.Logger.hivasLog;
+import static lab.proj.mostjonajava.utils.Logger.log;
 
 
 @Data
@@ -44,6 +45,7 @@ public class GombaFonal {
      * @param fonal törlendő fonal
      */
     public void fonalTorlese(GombaFonal fonal) {
+        log("Fonal eltavolitva.");
     }
 
     /**

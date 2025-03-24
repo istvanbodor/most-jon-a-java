@@ -40,7 +40,7 @@ public abstract class Tekton {
         gombatest =null;
         sporak = new ArrayList<>();
         sporaSzam = 0;
-        fonalakElettartama = 0;
+        fonalakElettartama = 1;
         log("Tekton letrejott.");
     }
 
@@ -98,7 +98,16 @@ public abstract class Tekton {
     /**
      * Bizonyos tektonoknál (pl. Eltűnő fonalas) számolni kell az eltelt időt, ezt valósítja meg ez a fügvény.
      */
-    public void eletIdoCsokkentes() {}
+    public void eletIdoCsokkentes( GombaFonal gombafonal) {
+        fonalakElettartama--;
+
+        if (fonalakElettartama <= 0) {
+            gombafonal.fonalTorlese(gombafonal);
+            fonalakElettartama = 1;
+        }
+
+        log("Eletido csokkentve.");
+    }
 
     /**
      * Ellenörzi, hogy növeszthető-e a tektonon gombafonal.
