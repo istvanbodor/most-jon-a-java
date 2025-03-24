@@ -142,6 +142,10 @@ public class FungoriumApplication extends Application {
         //todo teszteset
     }
 
+    /**
+     *
+     * @param parameterek
+     */
     private static void testBenitoSporaHatasKifejtese(String[] parameterek) {
         //todo teszteset
     }
