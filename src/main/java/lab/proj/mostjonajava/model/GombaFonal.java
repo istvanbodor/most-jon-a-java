@@ -1,12 +1,11 @@
 package lab.proj.mostjonajava.model;
 
-import lab.proj.mostjonajava.utils.Logger;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static lab.proj.mostjonajava.utils.Logger.hivasLog;
+import static lab.proj.mostjonajava.utils.Logger.log;
 
 
 @Data
@@ -26,8 +25,10 @@ public class GombaFonal {
         parameterek.add("honnan: Tekton - " + hn);
         parameterek.add("hova: Tekton - " + hv);
         parameterek.add("gombatest: Tekton - " + gt);
-        hivasLog("GombaFonal(Tekton honnan), (Tekton hova), (Gombatest gombatest)", parameterek, 3);
-        honnan = hn; hova = hv; gombatest = gt;}
+        //hivasLog("GombaFonal(Tekton honnan), (Tekton hova), (Gombatest gombatest)", parameterek, 3);
+        honnan = hn; hova = hv; gombatest = gt;
+        log ("gombafonal letrejott.");
+    }
 
     /**
      * Fonalmasiktektonja kitorolve, mert a masik fonal meg van adva
@@ -44,12 +45,18 @@ public class GombaFonal {
      * @param fonal törlendő fonal
      */
     public void fonalTorlese(GombaFonal fonal) {
+        log("fonalTorlese megtortent");
     }
 
     /**
-     *Ellenőrzi, hogy az adott fonal csatlakozik-e meg a
+     * Ellenőrzi, hogy az adott fonal csatlakozik-e meg a
+     *
      * @param fonal a csekkolandó fonal
+     * @return
      */
-    public void vanGombaTestKapcsolat(GombaFonal fonal) {}
+    public boolean vanGombaTestKapcsolat(GombaFonal fonal) {
+        log("vanGombaTestKapcsolat ellenorizve.");
+        return false;
+    }
 
 }

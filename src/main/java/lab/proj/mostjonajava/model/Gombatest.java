@@ -35,7 +35,9 @@ public class Gombatest {
     /**
      * Megsemmisíti a gombatestet, a fonalakkal együtt.
      */
-    public void elpusztulas() {}
+    public void elpusztulas() {
+        log("Elpusztulas sikeres.");
+    }
 
     /**
      * Spórákat lő ki.
@@ -47,7 +49,7 @@ public class Gombatest {
      * Minden körben spoórát termel.
      */
     public void sporaTermeles() {
-        hivasLog("sporaTermeles()", List.of(), 0);
+        //hivasLog("sporaTermeles()", List.of(), 0);
         log("Spora termeles megtortent");
     }
 

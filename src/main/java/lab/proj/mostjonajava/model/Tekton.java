@@ -76,7 +76,9 @@ public abstract class Tekton {
      * Törlődik a megadott fonal.
      * @param fonal
      */
-    public void fonalTorlese(GombaFonal fonal) {}
+    public void fonalTorlese(GombaFonal fonal) {
+        log("fonalTorlese sikeres volt.");
+    }
 
     /**
      * Minden fonal elszakad, ami az adott tektonhoz tertozott.
@@ -93,7 +95,9 @@ public abstract class Tekton {
      * Töröl egy spórát.
      * @param spora
      */
-    public void sporaTorlese(Spora spora) {}
+    public void sporaTorlese(Spora spora) {
+        log("sporaTorlese sikeres volt.");
+    }
 
     /**
      * Bizonyos tektonoknál (pl. Eltűnő fonalas) számolni kell az eltelt időt, ezt valósítja meg ez a fügvény.
