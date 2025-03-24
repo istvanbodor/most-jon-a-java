@@ -96,7 +96,33 @@ public class FungoriumApplication extends Application {
     }
 
     private static void testFonalNovesztes(String[] parameterek) {
+        /*if (parameterek.length < 2) {
+            hibaLog("Nem adtal meg elegendo parametert a spora termelesehez!");
+            return;
+        }
+        Tekton honnan = new Tekton;
+        Tekton hova = new Tekton();
 
+        // Gombász kiválaszt egy Tekton mezőt
+        Tekton tekton = gombasz.tektonKivalasztasa();
+        if (tekton == null) {
+            hibaLog("Nem sikerult Tekton mezot valasztani!");
+            return;
+        }
+
+        // A kiválasztott mezőn lévő Gombatestet használjuk
+        Gombatest gombatest = tekton.getGombatest();
+        if (gombatest == null) {
+            hibaLog("A kiválasztott Tekton mezon nincs Gombatest!");
+            return;
+        }
+
+        try {
+            gombatest.sporaTermeles();
+            System.out.println("Spora termelese sikeres");
+        } catch (Exception e) {
+            hibaLog("Hiba tortent a spora termelese kozben: " + e.getMessage());
+        }*/
     }
 
     private static void testSporaTermeles(String[] parameterek) {
