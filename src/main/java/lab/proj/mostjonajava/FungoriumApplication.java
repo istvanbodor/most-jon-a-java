@@ -172,11 +172,19 @@ public class FungoriumApplication extends Application {
     }
 
     private static void testRovarMozgatas(String[] parameterek) {
-        //todo teszteset
+        parameterVizsgalat(parameterek, 3);
+        Rovar rovar = new Rovar("testrovar");
+        rovar.lepes(new EgyFonalasTekton());
     }
 
     private static void testRovarMozgatasBlokkolas(String[] parameterek) {
-        //todo teszteset
+        parameterVizsgalat(parameterek, 2);
+        Rovar rovar = new Rovar();
+        rovar.setTekton(new EgyFonalasTekton());
+        if (rovar.getTekton().getSzomszedosTektonok().isEmpty()) {
+            rovar.benulas();
+        }
+
     }
 
     private static void testSporaFogyasztas(String[] parameterek) {

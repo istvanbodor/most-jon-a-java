@@ -3,14 +3,16 @@ package lab.proj.mostjonajava.model;
 import lab.proj.mostjonajava.utils.Logger;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Random;
 
-import static lab.proj.mostjonajava.utils.Logger.hivasLog;
-import static lab.proj.mostjonajava.utils.Logger.log;
+import static lab.proj.mostjonajava.utils.Logger.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@NoArgsConstructor
 public class Rovar extends Jatekos {
     private static int nextId = 1;
     private int id;
@@ -55,6 +57,17 @@ public class Rovar extends Jatekos {
      * @param tekton
      */
     public void lepes(Tekton tekton) {
+        hivasLog("lepes(Tekton tekton)", List.of("tekton: Tekton - " + tekton.toString()), 0);
+        List<Tekton> szomszedosTektonok = tekton.getSzomszedosTektonok();
+
+        int randomSzomszedossag = (int) Math.floor(Math.random()*2);
+        if (randomSzomszedossag == 0) {
+            log("Nem szomszedosak a tektonok, a rovar nem tud lepni koztuk");
+        }
+        else {
+            log("Sikeresen lepett a rovar");
+        }
+
     }
 
     /**
@@ -110,6 +123,13 @@ public class Rovar extends Jatekos {
      * Lebenitja a rovart.
      */
     public void benulas(){
+        hivasLog("benulas()", List.of(), 0);
         log("A rovar megbenult.");
+    }
+
+    public Tekton getTekton() {
+        hivasLog("getTekton()", List.of(), 0);
+        log("Rovar tektonjanak lekerese");
+        return tekton;
     }
 }
