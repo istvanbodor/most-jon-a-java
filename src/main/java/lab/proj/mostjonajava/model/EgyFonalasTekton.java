@@ -7,6 +7,13 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class EgyFonalasTekton extends Tekton {
+    /**
+     * A tekton konstruktora.
+     */
     public Tekton ujTektonLetrehozasa() { return null; }
+
+    /**
+     * A tekton kettetoresenek megvalositasa.
+     */
     public void ketteTores() {}
 }
