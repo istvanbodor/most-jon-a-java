@@ -69,7 +69,7 @@ public class FungoriumApplication extends Application {
     //akkor hibaüzenet, ha jók akkor továbbhívni ezekkel a paraméterekkel
     //kelleni fog egy játék osztály példány globálisan, ebben kell az állapotokat változtatni
     //todo a két játék init teszteset még hiányzik a parancsok közül - azokat megfogalmazni stb.
-    //mvn clean javafx:run ezzel a paranccsal futtatható az app zöld gomb nélkül is
+    //./mvnw clean javafx:run ezzel a paranccsal futtatható az app zöld gomb nélkül is
 
 
     private static void jatekInditasa(String[] parameterek) {

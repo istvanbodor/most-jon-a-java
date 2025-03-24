@@ -15,10 +15,18 @@ public class Logger {
         System.out.println("\t".repeat(Math.max(0, szint)) + "-> " + hivottFuggveny + " fut a kovetkezo parameterekkel: " + parameterek);
     }
 
+    /**
+     * Ez egy hiba logolás céljából létrehozott segédföggvény
+     * @param hiba a hibaüzenet
+     */
     public static void hibaLog(String hiba) {
         System.out.println("Hiba: " + hiba);
     }
 
+    /**
+     *  Sima logger függvény
+     * @param uzenet a logolandó üzenet
+     */
     public static void log(String uzenet) {
         System.out.println(uzenet);
     }

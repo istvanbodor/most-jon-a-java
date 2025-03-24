@@ -5,6 +5,8 @@ import lombok.Data;
 
 import java.util.List;
 
+import static lab.proj.mostjonajava.utils.Logger.hivasLog;
+
 @Data
 public class Rovar extends Jatekos {
     private Tekton tekton;
@@ -14,7 +16,7 @@ public class Rovar extends Jatekos {
 
     public Rovar(String nev) {
         super(nev);
-        Logger.hivasLog("Rovar(String nev)", List.of("nev: String - " + nev), 1);
+        hivasLog("Rovar(String nev)", List.of("nev: String - " + nev), 1);
         tekton = null;
         lepesSzam = 2;
         vagoKepesseg = true;
