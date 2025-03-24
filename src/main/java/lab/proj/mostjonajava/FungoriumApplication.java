@@ -20,6 +20,7 @@ import static lab.proj.mostjonajava.utils.Parancsok.*;
 
 public class FungoriumApplication extends Application {
     public static Jatek jatek;
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(FungoriumApplication.class.getResource("hello-view.fxml"));
@@ -67,19 +68,8 @@ public class FungoriumApplication extends Application {
     }
 
 
-    //itt kell megírni a teszteket
-    //a parameterek[1] től kezdődnek a paraméterek, paraméter ellenőrzés először, ha rosszakat adott meg vagy nem eleget
-    //akkor hibaüzenet, ha jók akkor továbbhívni ezekkel a paraméterekkel
-    //kelleni fog egy játék osztály példány globálisan, ebben kell az állapotokat változtatni
-    //todo a két játék init teszteset még hiányzik a parancsok közül - azokat megfogalmazni stb.
-    //./mvnw clean javafx:run ezzel a paranccsal futtatható az app zöld gomb nélkül is
-
-
     private static void jatekInditasa(String[] parameterek) {
-        if (parameterek.length < 3) {
-            hibaLog("Nem adtal meg elegendo parametert!");
-            return;
-        }
+        if (parameterVizsgalat(parameterek, 3)) return;
 
         int jatekosokSzama = Integer.parseInt(parameterek[1]);
         List<String> nevek = List.of(parameterek[2].split(","));
@@ -89,7 +79,7 @@ public class FungoriumApplication extends Application {
             return;
         }
 
-        if(nevek.size() != jatekosokSzama) {
+        if (nevek.size() != jatekosokSzama) {
             hibaLog("Nem egyezik a nevek es a jatekosok szama!");
             return;
         }
@@ -97,70 +87,24 @@ public class FungoriumApplication extends Application {
         jatek = new Jatek(jatekosokSzama, nevek);
     }
 
-    private static void testFonalNovesztes(String[] parameterek) {
-        if (parameterek.length < 2) {
-            hibaLog("Nem adtal meg elegendo parametert a fonal novesztesehez!");
-            return;
+    private static boolean parameterVizsgalat(String[] parameterek, int elvartMeret) {
+        if (parameterek.length < elvartMeret) {
+            hibaLog("Nem adtal meg elegendo parametert!");
+            return true;
         }
-        Tekton honnan = new Tekton() {
-            @Override
-            public Tekton ujTektonLetrehozasa() {
-                return null;
-            }
+        return false;
+    }
 
-            @Override
-            public void ketteTores() {
-
-            }
-        };
-        Tekton hova = new Tekton() {
-            @Override
-            public Tekton ujTektonLetrehozasa() {
-                return null;
-            }
-
-            @Override
-            public void ketteTores() {
-
-            }
-        };
-
-        hova.setSzomszedosTektonok(new ArrayList<>());
-        honnan.setSzomszedosTektonok(new ArrayList<>());
-        //List<Tekton> szomszedokHova = new ArrayList<>();
-        //List<Tekton> szomszedokHonnan = new ArrayList<>();
-        //szomszedokHova.add(honnan);
-
-        //hova.setSzomszedosTektonok(szomszedokHova);
-        //honnan.setSzomszedosTektonok(szomszedokHonnan);
-
-
+    private static void testFonalNovesztes(String[] parameterek) {
+        if (parameterVizsgalat(parameterek, 4)) return;
         Gombatest gombatest = new Gombatest();
-        Gombasz gombasz= new Gombasz("nev");
-        Tekton valasztott = gombasz.tektonKivalasztasa();
-        hova.getSzomszedosTektonok();
-        hova.egyenlo(honnan);
-        hova.vanFonalKozottuk(hova);
-        hova.gombafonalNoveszthetoE();
+        gombatest.fonalNovesztes(new EgyFonalasTekton(), new EgyFonalasTekton());
 
-        /*if (valasztott == null ||
-                hova == null ||
-                honnan == null ||
-                hova.getSzomszedosTektonok() == null ||
-                !hova.egyenlo(honnan) ||
-                !hova.vanFonalKozottuk(honnan) ||
-                !hova.gombafonalNoveszthetoE()) {
-            return;
-        } else {*/
-            GombaFonal gombafonal = new GombaFonal(honnan, hova, gombatest);
-            hova.fonalHozzaadasa(gombafonal);
-        //}
     }
 
     private static void testSporaTermeles(String[] parameterek) {
-        if (parameterek.length < 2) {
-            hibaLog("Nem adtal meg elegendo parametert!");
-        }
+        if (parameterVizsgalat(parameterek, 2)) return;
+
 
 //        int gombaId = Integer.parseInt(parameterek[1]);
 //
@@ -180,282 +124,51 @@ public class FungoriumApplication extends Application {
     }
 
     private static void testSimaSporaSzoras(String[] parameterek) {
-        Tekton tekton = new Tekton() {
-            @Override
-            public Tekton ujTektonLetrehozasa() {
-                return null;
-            }
-
-            @Override
-            public void ketteTores() {
-
-            }
-        };
-        SimaSpora sspora = new SimaSpora();
-        tekton.sporaHozzaadasa(sspora);
+        if (parameterVizsgalat(parameterek, 3)) return;
+        Gombatest gombatest = new Gombatest();
+        gombatest.sporaKiloves(new EgyFonalasTekton());
     }
 
     private static void testFejlettSporaSzoras(String[] parameterek) {
-        Tekton tekton1 = new Tekton() {@Override public Tekton ujTektonLetrehozasa() {
-                return null;
-            }@Override public void ketteTores() {}
-        };
-        Tekton tekton2 = new Tekton() {@Override public Tekton ujTektonLetrehozasa() {
-                return null;
-            }@Override public void ketteTores() { }
-        };
-        Tekton tekton3 = new Tekton() {@Override public Tekton ujTektonLetrehozasa() {
-                return null;
-            } @Override public void ketteTores() {}
-        };
-        List<Tekton> tektonok1 = new ArrayList<>();
-        tektonok1.add(tekton2);
-        List<Tekton> tektonok2 = new ArrayList<>();
-        tektonok2.add(tekton1);
-        tektonok2.add(tekton3);
-        List<Tekton> tektonok3 = new ArrayList<>();
-        tektonok3.add(tekton2);
-        tekton1.setSzomszedosTektonok(tektonok1);
-        tekton2.setSzomszedosTektonok(tektonok2);
-        tekton3.setSzomszedosTektonok(tektonok3);
-        Gombatest gombatest = new Gombatest();
-        gombatest.setKilohetoSporakSzama(10);
-        tekton1.setGombatest(gombatest);
-        gombatest.sporaKiloves(tekton3);
-        log("FejlettSporaSzoras");
+        parameterVizsgalat(parameterek, 3);
+        FejlettGombatest gombatest = new FejlettGombatest();
+        gombatest.sporaKiloves(new EgyFonalasTekton());
     }
 
     private static void testGombaTestNovesztes(String[] parameterek) {
-        if (parameterek.length < 1) {
-            hibaLog("Nem adtal meg elegendo parametert a gombatest novesztesehez!");
-            return;
+        if (parameterVizsgalat(parameterek, 2)) return;
+        EgyFonalasTekton tekton = new EgyFonalasTekton();
+        if (tekton.gombatestNoveszthetoE()) {
+            tekton.setGombatest(new Gombatest());
+        } else {
+            hibaLog("Ezen a tektonon nem novesztheto gombatest!");
         }
-
-        // Gombasz létrehozása és tekton kiválasztása szimuláltan
-        Gombasz gombasz = new Gombasz("tesztgombasz");
-        Tekton tekton = new Tekton() {
-            @Override
-            public Tekton ujTektonLetrehozasa() {
-                return null;
-            }
-
-            @Override
-            public void ketteTores() {
-
-            }
-        };
-        gombasz.tektonKivalasztasa();
-        int sporaSzam = tekton.getSporaSzam();
-        boolean vanFonal = !tekton.getGombafonalak().isEmpty(); // feltételezve, hogy ez nem null
-        boolean novesztheto = tekton.gombatestNoveszthetoE();
-        boolean vanMarGombatest = tekton.getGombatest() != null;
-
-        Spora spora = new Spora() {
-            @Override
-            public void hatasKifejtese() {
-
-            }
-
-            @Override
-            public Spora ujSporaLetrehozasa() {
-                return null;
-            }
-        };
-        Tekton hn = tekton;
-        Tekton hv = new Tekton() {
-            @Override
-            public Tekton ujTektonLetrehozasa() {
-                return null;
-            }
-
-            @Override
-            public void ketteTores() {
-
-            }
-        };
-        Gombatest gt = new Gombatest();
-        GombaFonal fonal = new GombaFonal(hn, hv, gt);
-        List<Spora> sporak = new ArrayList<>();
-        sporak.add(spora);
-        List<GombaFonal> fonalak = new ArrayList<>();
-        fonalak.add(fonal);
-
-        Spora elsoSpora = sporak.get(0);
-        tekton.sporaTorlese(elsoSpora);
-
-        GombaFonal elsoFonal = fonalak.get(0);
-        tekton.fonalTorlese(elsoFonal);
-
-        gombasz.gombaTestNovesztes(tekton);
-
-        Gombatest uj = new Gombatest();
-        tekton.setGombatest(uj);
-
-        gombasz.pontNovelese(10);
-
-        log("Gombatest novesztese sikeres volt.");
     }
 
     private static void testGombaTestFejlesztes(String[] parameterek) {
-        if (parameterek.length < 1) {
-            hibaLog("Nem adtal meg elegendo parametert a gombatest fejleszteshez!");
-            return;
+        if (parameterVizsgalat(parameterek, 2)) return;
+
+        EgyFonalasTekton tekton = new EgyFonalasTekton();
+        if (tekton.gombatestFejleszthetoE()) {
+            tekton.setGombatest(new FejlettGombatest());
+        } else {
+            hibaLog("A tekton gombateste nem fejleszthető!");
         }
-
-        // Gombasz és Tekton beállítása
-        Gombasz gombasz = new Gombasz("tesztgombasz");
-        Tekton tekton = new Tekton() {
-            @Override
-            public Tekton ujTektonLetrehozasa() {
-                return null;
-            }
-
-            @Override
-            public void ketteTores() {
-
-            }
-        };
-
-        Tekton szomszedtekton = new Tekton() {
-            @Override
-            public Tekton ujTektonLetrehozasa() {
-                return null;
-            }
-
-            @Override
-            public void ketteTores() {
-
-            }
-        };
-
-        Spora spora1 = new Spora() {
-            @Override
-            public void hatasKifejtese() {
-
-            }
-
-            @Override
-            public Spora ujSporaLetrehozasa() {
-                return null;
-            }
-        };
-        Spora spora2 = new Spora() {
-            @Override
-            public void hatasKifejtese() {
-
-            }
-
-            @Override
-            public Spora ujSporaLetrehozasa() {
-                return null;
-            }
-        };
-        Spora spora3 = new Spora() {
-            @Override
-            public void hatasKifejtese() {
-
-            }
-
-            @Override
-            public Spora ujSporaLetrehozasa() {
-                return null;
-            }
-        };
-        int sporaSzam = tekton.getSporaSzam();
-        List<Spora> sporak = new ArrayList<>();
-        sporak.add(spora1);
-        sporak.add(spora2);
-        sporak.add(spora3);
-
-        Gombatest gombatest= new Gombatest();
-        tekton.setGombatest(gombatest);
-        GombaFonal gombaFonal = new GombaFonal(tekton, szomszedtekton, gombatest);
-        List<GombaFonal> fonalak = new ArrayList<>();
-        fonalak.add(gombaFonal);
-
-        // Feltétel: legalább 3 spóra kell
-        if (sporak == null || sporak.size() < 3) {
-            log("Nem tortent fejlesztes, mert nincs elegendo spora (szam: " + sporaSzam + ")");
-            return;
-        }
-
-        // Feltétel: legalább 1 gombafonal kell
-        if (fonalak == null ) {
-            log("Nem tortent fejlesztes, mert nincs elegendo fonal ");
-            return;
-        }
-
-        // Gombatest lekérése
-        //Gombatest gombatest = tekton.getGombatest();
-        if (gombatest == null) {
-            log("Nincs gombatest ezen a tektonon!");
-            return;
-        }
-
-        // Spóra törlése és fejlesztés
-        for (int i = 0; i < sporak.size(); i++) {
-            tekton.sporaTorlese(sporak.get(i));
-        }
-
-        for (int i = 0; i < fonalak.size(); i++) {
-            tekton.fonalTorlese(fonalak.get(i));
-        }
-
-        gombasz.gombaTestFejlesztes(gombatest);
-
-        log("Gombatest fejlesztes sikeres volt.");
     }
 
     private static void testGombaTestElpusztul(String[] parameterek) {
-        if (parameterek.length < 1) {
-            hibaLog("Nem adtal meg elegendo parametert a gombatest elpusztulashoz!");
-            return;
-        }
+        parameterVizsgalat(parameterek, 2);
 
-        Tekton tekton1 = new Tekton() {
-            @Override
-            public Tekton ujTektonLetrehozasa() {
-                return null;
-            }
+        Gombatest gombatest = new Gombatest();
+        gombatest.setKilohetoSporakSzama(0);
 
-            @Override
-            public void ketteTores() {
-
-            }
-        };
-
-        Tekton tekton2 = new Tekton() {
-            @Override
-            public Tekton ujTektonLetrehozasa() {
-                return null;
-            }
-
-            @Override
-            public void ketteTores() {
-
-            }
-        };
-
-        Gombatest gombatest = new Gombatest() {};
-        tekton1.setGombatest(gombatest);
-        GombaFonal gombaFonal = new GombaFonal(tekton1, tekton2, gombatest);
-
-        if (gombatest == null) {
-            hibaLog("Nincs gombatest ezen a Tektonon!");
-            return;
-        }
-
-        int sporaSzam = gombatest.getKilohetoSporakSzama();
-
-        log("Kiloheto sporak szama: " + sporaSzam);
-
-        if (sporaSzam == 0) {
-            if (!gombaFonal.vanGombaTestKapcsolat(gombaFonal)){
-               gombaFonal.fonalTorlese(gombaFonal);
-            };
+        if (gombatest.getKilohetoSporakSzama() == 0) {
             gombatest.elpusztulas();
-
         }
+        else {
+            log("A gombatest meg nem all keszen a halalra");
+        }
+
     }
 
     private static void testRovarMozgatas(String[] parameterek) {
