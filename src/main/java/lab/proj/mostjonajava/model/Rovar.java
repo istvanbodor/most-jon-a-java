@@ -47,6 +47,7 @@ public class Rovar extends Jatekos {
      * @param ertek
      */
     public void pontNovelese(int ertek) {
+        log("Novekedett a rovar pontszama.");
     }
 
     /**
@@ -61,24 +62,28 @@ public class Rovar extends Jatekos {
      * @param tekton
      */
     public void sporaElfogyasztas(Tekton tekton) {
+        log("A rovar megette a sporat.");
     }
 
     /**
      * A rovar lepes szamat csokkenti, azaz hanyat léphet.
      */
     public void lepesSzamNoveles() {
+        log("A rovar gyorsult.");
     }
 
     /**
      * A rovar lepes szamat noveli, azaz hanyat léphet.
      */
     public void lepesSzamCsokkentes() {
+        log("A rovar lassult.");
     }
 
     /**
      * Nem engedi, hogy a rovar vagjon.
      */
     public void vagoKepessegTiltas() {
+        log("A rovar nem tud vagni.");
     }
 
     /**
@@ -105,5 +110,6 @@ public class Rovar extends Jatekos {
      * Lebenitja a rovart.
      */
     public void benulas(){
+        log("A rovar megbenult.");
     }
 }

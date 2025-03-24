@@ -37,6 +37,7 @@ public class FungoriumApplication extends Application {
             bemenet = streamReader.readLine();
             parameterek = bemenet.split(" ");
             parancs = parameterek[0];
+
             switch (parancs) {
                 case JATEKINDITAS -> jatekInditasa(parameterek);
                 case FONALNOVESZTES -> testFonalNovesztes(parameterek);
@@ -55,6 +56,7 @@ public class FungoriumApplication extends Application {
                 case LASSITOSPORAHATASKIFEJTESE -> testLassitoSporaHatasKifejtese(parameterek);
                 case GYORSITOSPORAHATASKIFEJTESE -> testGyorsitoSporaHatasKifejtese(parameterek);
                 case VAGASBENITOSPORAHATASKIFEJTESE -> testVagasBenitoSporaHatasKifejtese(parameterek);
+                case SIMASPORAHATASKIFEJTESE -> testSimaSporaHatasKifejtese(parameterek);
                 case FONALFELSZIVODAS -> testFonalFelszivodas(parameterek);
                 case KILEPES -> System.exit(0);
                 default -> hibaLog("Nem letezo parancsot adtal meg!");
@@ -159,12 +161,7 @@ public class FungoriumApplication extends Application {
         //todo teszteset
     }
 
-    /**
-     *
-     * @param parameterek
-     */
     private static void testBenitoSporaHatasKifejtese(String[] parameterek) {
-        //todo teszteset
         if (parameterek.length < 2) {
             hibaLog("Nem adtal meg elegendo parametert!");
             return;
@@ -174,7 +171,7 @@ public class FungoriumApplication extends Application {
         try {
             rovarId = Integer.parseInt(parameterek[1]);
         } catch (NumberFormatException e) {
-            hibaLog("Érvénytelen rovar ID!");
+            hibaLog("Ervenytelen rovar ID!");
             return;
         }
 
@@ -184,7 +181,7 @@ public class FungoriumApplication extends Application {
                 .orElse(null);
 
         if (rovar == null) {
-            hibaLog("Nincs ilyen rovar azonosítóval: " + rovarId);
+            hibaLog("Nincs ilyen rovar azonositoval: " + rovarId);
             return;
         }
 
@@ -210,15 +207,183 @@ public class FungoriumApplication extends Application {
     }
 
     private static void testLassitoSporaHatasKifejtese(String[] parameterek) {
-        //todo teszteset
+        if (parameterek.length < 2) {
+            hibaLog("Nem adtal meg elegendo parametert!");
+            return;
+        }
+
+        int rovarId;
+        try {
+            rovarId = Integer.parseInt(parameterek[1]);
+        } catch (NumberFormatException e) {
+            hibaLog("Ervenytelen rovar ID!");
+            return;
+        }
+
+        Rovar rovar = Jatek.rovaraszok.stream()
+                .filter(r -> r.getId() == rovarId)
+                .findFirst()
+                .orElse(null);
+
+        if (rovar == null) {
+            hibaLog("Nincs ilyen rovar azonositoval: " + rovarId);
+            return;
+        }
+
+        LassitoSpora lassitoSpora = new LassitoSpora();
+
+        Tekton tekton = new Tekton() {
+            @Override
+            public Tekton ujTektonLetrehozasa() {
+                return null;
+            }
+
+            @Override
+            public void ketteTores() {
+
+            }
+        };
+
+        rovar.sporaElfogyasztas(tekton);
+
+        lassitoSpora.hatasKifejtese();
+
+        rovar.lepesSzamCsokkentes();
     }
 
     private static void testGyorsitoSporaHatasKifejtese(String[] parameterek) {
-        //todo teszteset
+        if (parameterek.length < 2) {
+            hibaLog("Nem adtal meg elegendo parametert!");
+            return;
+        }
+
+        int rovarId;
+        try {
+            rovarId = Integer.parseInt(parameterek[1]);
+        } catch (NumberFormatException e) {
+            hibaLog("Ervenytelen rovar ID!");
+            return;
+        }
+
+        Rovar rovar = Jatek.rovaraszok.stream()
+                .filter(r -> r.getId() == rovarId)
+                .findFirst()
+                .orElse(null);
+
+        if (rovar == null) {
+            hibaLog("Nincs ilyen rovar azonositoval: " + rovarId);
+            return;
+        }
+
+        GyorsitoSpora gyorsitoSpora = new GyorsitoSpora();
+
+        Tekton tekton = new Tekton() {
+            @Override
+            public Tekton ujTektonLetrehozasa() {
+                return null;
+            }
+
+            @Override
+            public void ketteTores() {
+
+            }
+        };
+
+        rovar.sporaElfogyasztas(tekton);
+
+        gyorsitoSpora.hatasKifejtese();
+
+        rovar.lepesSzamNoveles();
     }
 
     private static void testVagasBenitoSporaHatasKifejtese(String[] parameterek) {
-        //todo teszteset
+        if (parameterek.length < 2) {
+            hibaLog("Nem adtal meg elegendo parametert!");
+            return;
+        }
+
+        int rovarId;
+        try {
+            rovarId = Integer.parseInt(parameterek[1]);
+        } catch (NumberFormatException e) {
+            hibaLog("Ervenytelen rovar ID!");
+            return;
+        }
+
+        Rovar rovar = Jatek.rovaraszok.stream()
+                .filter(r -> r.getId() == rovarId)
+                .findFirst()
+                .orElse(null);
+
+        if (rovar == null) {
+            hibaLog("Nincs ilyen rovar azonositoval: " + rovarId);
+            return;
+        }
+
+        VagasTiltoSpora vagasTiltoSpora = new VagasTiltoSpora();
+
+        Tekton tekton = new Tekton() {
+            @Override
+            public Tekton ujTektonLetrehozasa() {
+                return null;
+            }
+
+            @Override
+            public void ketteTores() {
+
+            }
+        };
+
+        rovar.sporaElfogyasztas(tekton);
+
+        vagasTiltoSpora.hatasKifejtese();
+
+        rovar.vagoKepessegTiltas();
+    }
+
+    private static void testSimaSporaHatasKifejtese(String[] parameterek) {
+        if (parameterek.length < 2) {
+            hibaLog("Nem adtal meg elegendo parametert!");
+            return;
+        }
+
+        int rovarId;
+        try {
+            rovarId = Integer.parseInt(parameterek[1]);
+        } catch (NumberFormatException e) {
+            hibaLog("Ervenytelen rovar ID!");
+            return;
+        }
+
+        Rovar rovar = Jatek.rovaraszok.stream()
+                .filter(r -> r.getId() == rovarId)
+                .findFirst()
+                .orElse(null);
+
+        if (rovar == null) {
+            hibaLog("Nincs ilyen rovar azonositoval: " + rovarId);
+            return;
+        }
+
+        SimaSpora simaSpora = new SimaSpora();
+
+        Tekton tekton = new Tekton() {
+            @Override
+            public Tekton ujTektonLetrehozasa() {
+                return null;
+            }
+
+            @Override
+            public void ketteTores() {
+
+            }
+        };
+
+        rovar.sporaElfogyasztas(tekton);
+
+        simaSpora.hatasKifejtese();
+
+        rovar.pontNovelese(10);
     }
 
     private static void testFonalFelszivodas(String[] parameterek) {

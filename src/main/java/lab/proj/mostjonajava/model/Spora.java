@@ -15,7 +15,7 @@ public abstract class Spora {
     public abstract void hatasKifejtese();
 
     /**
-     * A spora konstruktora.
+     * Uj spora letrehozasa.
      */
     public abstract Spora ujSporaLetrehozasa();
 }

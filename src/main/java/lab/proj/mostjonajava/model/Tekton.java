@@ -41,7 +41,7 @@ public abstract class Tekton {
         sporak = new ArrayList<>();
         sporaSzam = 0;
         fonalakElettartama = 0;
-        log("Tekton létrejött");
+        log("Tekton letrejott.");
     }
 
     /**

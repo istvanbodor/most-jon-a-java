@@ -20,5 +20,6 @@ public class Parancsok {
     public static final String VAGASBENITOSPORAHATASKIFEJTESE = "VAGASBENITOSPORAHATASKIFEJTESE";
     public static final String FONALFELSZIVODAS = "FONALFELSZIVODAS";
     public static final String KILEPES = "KILEPES";
+    public static final String SIMASPORAHATASKIFEJTESE = "SIMASPORAHATASKIFEJTESE";
 
 }
