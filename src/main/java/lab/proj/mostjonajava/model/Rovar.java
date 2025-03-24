@@ -14,7 +14,7 @@ public class Rovar extends Jatekos {
 
     public Rovar(String nev) {
         super(nev);
-        Logger.hivasLog("Rovar(String nev)", List.of("nev: String - " + nev));
+        Logger.hivasLog("Rovar(String nev)", List.of("nev: String - " + nev), 1);
         tekton = null;
         lepesSzam = 2;
         vagoKepesseg = true;

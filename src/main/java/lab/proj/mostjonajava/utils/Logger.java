@@ -11,8 +11,8 @@ public class Logger {
      * @param hivottFuggveny a hívott függvény
      * @param parameterek    a hívott függvény paraméterei
      */
-    public static void hivasLog(String hivottFuggveny, List<String> parameterek) {
-        System.out.println("-> " + hivottFuggveny + " fut a kovetkezo parameterekkel: " + parameterek);
+    public static void hivasLog(String hivottFuggveny, List<String> parameterek, int szint) {
+        System.out.println("\t".repeat(Math.max(0, szint)) + "-> " + hivottFuggveny + " fut a kovetkezo parameterekkel: " + parameterek);
     }
 
     public static void hibaLog(String hiba) {

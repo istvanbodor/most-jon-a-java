@@ -22,7 +22,7 @@ public class Jatek {
         List<String> parameterek = new ArrayList<>();
         parameterek.add("jatekosokSzama: int - " + jatekosokSzama);
         parameterek.add("jatekosNevek: List<String> - " + jatekosNevek);
-        Logger.hivasLog("Jatek(int jatekosokSzama, List<String> jatekosNevek)", parameterek);
+        Logger.hivasLog("Jatek(int jatekosokSzama, List<String> jatekosNevek)", parameterek, 0);
         tektonok = new ArrayList<>();
         rovaraszok = new ArrayList<>();
         gombaszok = new ArrayList<>();

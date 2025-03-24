@@ -13,7 +13,7 @@ public class Gombasz extends Jatekos {
     public Gombasz(String nev) {
         super(nev);
         this.gombatestek = new ArrayList<>();
-        Logger.hivasLog("Gombasz(String nev)", List.of("nev: String - " + nev));
+        Logger.hivasLog("Gombasz(String nev)", List.of("nev: String - " + nev), 1);
     }
 
     public Tekton tektonKivalasztasa() { return null; }
