@@ -5,14 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lab.proj.mostjonajava.game.Jatek;
-import lab.proj.mostjonajava.model.Gombasz;
-import lab.proj.mostjonajava.model.Gombatest;
-import lab.proj.mostjonajava.model.Tekton;
+import lab.proj.mostjonajava.model.*;
 import lab.proj.mostjonajava.model.Gombatest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import static lab.proj.mostjonajava.utils.Logger.hibaLog;
@@ -96,33 +95,64 @@ public class FungoriumApplication extends Application {
     }
 
     private static void testFonalNovesztes(String[] parameterek) {
-        /*if (parameterek.length < 2) {
-            hibaLog("Nem adtal meg elegendo parametert a spora termelesehez!");
+        if (parameterek.length < 2) {
+            hibaLog("Nem adtal meg elegendo parametert a fonal novesztesehez!");
             return;
         }
-        Tekton honnan = new Tekton;
-        Tekton hova = new Tekton();
+        Tekton honnan = new Tekton() {
+            @Override
+            public Tekton ujTektonLetrehozasa() {
+                return null;
+            }
 
-        // Gombász kiválaszt egy Tekton mezőt
-        Tekton tekton = gombasz.tektonKivalasztasa();
-        if (tekton == null) {
-            hibaLog("Nem sikerult Tekton mezot valasztani!");
+            @Override
+            public void ketteTores() {
+
+            }
+        };
+        Tekton hova = new Tekton() {
+            @Override
+            public Tekton ujTektonLetrehozasa() {
+                return null;
+            }
+
+            @Override
+            public void ketteTores() {
+
+            }
+        };
+
+        hova.setSzomszedosTektonok(new ArrayList<>());
+        honnan.setSzomszedosTektonok(new ArrayList<>());
+        List<Tekton> szomszedokHova = new ArrayList<>();
+        List<Tekton> szomszedokHonnan = new ArrayList<>();
+        szomszedokHova.add(honnan);
+
+        hova.setSzomszedosTektonok(szomszedokHova);
+        honnan.setSzomszedosTektonok(szomszedokHonnan);
+
+
+        Gombatest gombatest = new Gombatest();
+        Gombasz gombasz= new Gombasz("nev");
+        Tekton valasztott = gombasz.tektonKivalasztasa();
+        hova.getSzomszedosTektonok();
+        hova.egyenlo(honnan);
+        hova.vanFonalKozottuk(hova);
+        hova.gombafonalNoveszthetoE();
+
+        if (valasztott == null ||
+                hova == null ||
+                honnan == null ||
+                hova.getSzomszedosTektonok() == null ||
+                !hova.egyenlo(honnan) ||
+                !hova.vanFonalKozottuk(honnan) ||
+                !hova.gombafonalNoveszthetoE()) {
+
             return;
+        } else {
+            GombaFonal gombafonal = new GombaFonal(honnan, hova, gombatest);
+            hova.fonalHozzaadasa(gombafonal);
         }
-
-        // A kiválasztott mezőn lévő Gombatestet használjuk
-        Gombatest gombatest = tekton.getGombatest();
-        if (gombatest == null) {
-            hibaLog("A kiválasztott Tekton mezon nincs Gombatest!");
-            return;
-        }
-
-        try {
-            gombatest.sporaTermeles();
-            System.out.println("Spora termelese sikeres");
-        } catch (Exception e) {
-            hibaLog("Hiba tortent a spora termelese kozben: " + e.getMessage());
-        }*/
     }
 
     private static void testSporaTermeles(String[] parameterek) {
@@ -192,7 +222,17 @@ public class FungoriumApplication extends Application {
      * @param parameterek
      */
     private static void testBenitoSporaHatasKifejtese(String[] parameterek) {
-        //todo teszteset
+        Tekton t = new Tekton() {
+            @Override
+            public Tekton ujTektonLetrehozasa() {
+                return null;
+            }
+
+            @Override
+            public void ketteTores() {
+
+            }
+        };
     }
 
     private static void testLassitoSporaHatasKifejtese(String[] parameterek) {

@@ -2,6 +2,7 @@ package lab.proj.mostjonajava.model;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static lab.proj.mostjonajava.utils.Logger.log;
@@ -31,8 +32,21 @@ public abstract class Tekton {
      * Konstruktor felülírása.
      */
     public Tekton() {
-     //   id = nextId++;
-        log("Tekton létrejött");
+        id = nextId++;
+        szomszedosTektonok = new ArrayList<>();
+        rovar =null;
+        gombasz =null;
+        gombafonalak = new ArrayList<>();
+        gombatest =null;
+        sporak = new ArrayList<>();
+        sporaSzam = 0;
+        fonalakElettartama = 0;
+        log("Tekton letrejott");
+    }
+
+    public List<Tekton> getSzomszedosTektonok() {
+        log(szomszedosTektonok.toString());
+        return this.szomszedosTektonok;
     }
 
     /**
@@ -51,13 +65,17 @@ public abstract class Tekton {
      * @param tekton
      * @return
      */
-    public boolean vanFonalKozottuk(Tekton tekton) { return false; }
+    public boolean vanFonalKozottuk(Tekton tekton) {
+        log("vanFonalKozottuk ellenorizve.");
+        return false; }
 
     /**
      * Hozzáad egy fonalat a tektonhoz.
      * @param fonal
      */
-    public void fonalHozzaadasa(GombaFonal fonal) {}
+    public void fonalHozzaadasa(GombaFonal fonal) {
+        log("Fonal hozzaadva.");
+    }
 
     /**
      * Törlődik a megadott fonal.
@@ -91,7 +109,9 @@ public abstract class Tekton {
      * Ellenörzi, hogy növeszthető-e a tektonon gombafonal.
      * @return
      */
-    public boolean gombafonalNoveszthetoE() { return false; }
+    public boolean gombafonalNoveszthetoE() {
+        log("Gombafonal noveszthetosege megvizsgalva.");
+        return false; }
 
     /**
      * Ellenörzi, hogy növeszthető-e gombatest az adott tekton.
@@ -110,5 +130,7 @@ public abstract class Tekton {
      * @param tekton
      * @return
      */
-    public boolean egyenlo(Tekton tekton) { return false; }
+    public boolean egyenlo(Tekton tekton) {
+        log("Egyenloseg megvizsgalva.");
+        return false; }
 }

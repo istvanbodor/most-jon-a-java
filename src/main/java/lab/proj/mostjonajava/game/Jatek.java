@@ -18,6 +18,11 @@ public class Jatek {
 
     public static List<Gombasz> gombaszok;
 
+    /**
+     * A jatek konstruktora
+     * @param jatekosokSzama A jatekosok szama
+     * @param jatekosNevek A jatekosok neveinek a listaja
+     */
     public Jatek(int jatekosokSzama, List<String> jatekosNevek) {
 
         List<String> parameterek = new ArrayList<>();
