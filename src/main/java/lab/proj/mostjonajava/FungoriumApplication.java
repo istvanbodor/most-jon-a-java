@@ -475,8 +475,27 @@ public class FungoriumApplication extends Application {
     }
 
     private static void testTektonTores(String[] parameterek) {
-        //todo teszteset
+        if (parameterek.length < 1) {
+            hibaLog("Nem adtal meg elegendo parametert a tekton tores teszthez!");
+            return;
+        }
+
+        Tekton tekton = new Tekton() {
+            @Override
+            public Tekton ujTektonLetrehozasa() {
+                return null;
+            }
+
+            @Override
+            public void ketteTores() {
+
+            }
+        };
+
+        // Meghívjuk a tores logikát (maga dönti el, megtörténik-e)
+        tekton.ketteTores();
     }
+
 
     private static void testBenitoSporaHatasKifejtese(String[] parameterek) {
         if (parameterek.length < 2) {
