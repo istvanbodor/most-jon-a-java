@@ -100,4 +100,10 @@ public class Rovar extends Jatekos {
      */
     public void fonalVagas(Tekton tekton) {
     }
+
+    /**
+     * Lebenitja a rovart.
+     */
+    public void benulas(){
+    }
 }

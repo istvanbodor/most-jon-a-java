@@ -5,9 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lab.proj.mostjonajava.game.Jatek;
-import lab.proj.mostjonajava.model.Gombasz;
-import lab.proj.mostjonajava.model.Gombatest;
-import lab.proj.mostjonajava.model.Tekton;
+import lab.proj.mostjonajava.model.*;
 import lab.proj.mostjonajava.model.Gombatest;
 
 import java.io.BufferedReader;
@@ -167,6 +165,38 @@ public class FungoriumApplication extends Application {
      */
     private static void testBenitoSporaHatasKifejtese(String[] parameterek) {
         //todo teszteset
+        if (parameterek.length < 2) {
+            hibaLog("Nem adtal meg elegendo parametert!");
+            return;
+        }
+
+        int rovarId;
+        try {
+            rovarId = Integer.parseInt(parameterek[1]);
+        } catch (NumberFormatException e) {
+            hibaLog("Érvénytelen rovar ID!");
+            return;
+        }
+
+        Rovar rovar = Jatek.rovaraszok.stream()
+                .filter(r -> r.getId() == rovarId)
+                .findFirst()
+                .orElse(null);
+
+        if (rovar == null) {
+            hibaLog("Nincs ilyen rovar azonosítóval: " + rovarId);
+            return;
+        }
+
+        BenitoSpora benitoSpora = new BenitoSpora();
+
+        Tekton tekton = new Tekton();
+
+        rovar.sporaElfogyasztas(tekton);
+
+        benitoSpora.hatasKifejtese();
+
+        rovar.benulas();
     }
 
     private static void testLassitoSporaHatasKifejtese(String[] parameterek) {
