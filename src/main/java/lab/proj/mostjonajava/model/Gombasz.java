@@ -18,10 +18,10 @@ public class Gombasz extends Jatekos {
 
     public Gombasz(String nev) {
         super(nev);
-        this.gombatestek = new ArrayList<>();
+//        this.gombatestek = new ArrayList<>();
         hivasLog("Gombasz(String nev)", List.of("nev: String - " + nev), 1);
-        id = nextId++;
-        log("Gombasz letrejott - GOMBASZ_ID: " + id);
+//        id = nextId++;
+        log("Gombasz letrejott");
     }
 
     public Tekton tektonKivalasztasa() { return null; }

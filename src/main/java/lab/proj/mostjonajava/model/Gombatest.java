@@ -1,10 +1,10 @@
 package lab.proj.mostjonajava.model;
 
-import lab.proj.mostjonajava.utils.Logger;
 import lombok.Data;
 
 import java.util.List;
 
+import static lab.proj.mostjonajava.utils.Logger.hivasLog;
 import static lab.proj.mostjonajava.utils.Logger.log;
 
 @Data
@@ -18,18 +18,43 @@ public class Gombatest {
     private int noveszthetoFonalakSzama;
 
     public Gombatest() {
-        id = nextId++;
-        log("Gombatest letrejott - GOMBATEST_ID: " + id);
+     //   id = nextId++;
+        log("Gombatest letrejott");
     }
 
-    public void fonalNovesztes(Tekton honnan, Tekton hova) {}
-    public void elpusztulas() {}
-    public void sporaKiloves(Tekton tekton) {}
-    public void sporaTermeles() {}
-    public void sporaTorleseGombatestbol(Spora spora) {}
-    public void sporaTarolasa() {}
-    public Gombatest ujGombatestLetrehozas(Tekton tekton) { return null; }
-    public int getKilohetoSporakSzama() { return kilohetoSporakSzama; }
-    public int getElszortSporakSzama() { return elszortSporakSzama; }
-    public int getNoveszthetoFonalakSzama() { return noveszthetoFonalakSzama; }
+    public void fonalNovesztes(Tekton honnan, Tekton hova) {
+    }
+
+    public void elpusztulas() {
+    }
+
+    public void sporaKiloves(Tekton tekton) {
+    }
+
+    public void sporaTermeles() {
+        hivasLog("sporaTermeles()", List.of(), 0);
+        log("Spora termeles megtortent");
+    }
+
+    public void sporaTorleseGombatestbol(Spora spora) {
+    }
+
+    public void sporaTarolasa() {
+    }
+
+    public Gombatest ujGombatestLetrehozas(Tekton tekton) {
+        return null;
+    }
+
+    public int getKilohetoSporakSzama() {
+        return kilohetoSporakSzama;
+    }
+
+    public int getElszortSporakSzama() {
+        return elszortSporakSzama;
+    }
+
+    public int getNoveszthetoFonalakSzama() {
+        return noveszthetoFonalakSzama;
+    }
 }

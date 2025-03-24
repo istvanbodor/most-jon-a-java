@@ -22,12 +22,12 @@ public class Rovar extends Jatekos {
     public Rovar(String nev) {
         super(nev);
         hivasLog("Rovar(String nev)", List.of("nev: String - " + nev), 1);
-        tekton = null;
-        lepesSzam = 2;
-        vagoKepesseg = true;
-        benulas = false;
-        id = nextId++;
-        log("Rovar letrejott - ROVAR_ID: " + id);
+//        tekton = null;
+//        lepesSzam = 2;
+//        vagoKepesseg = true;
+//        benulas = false;
+//        id = nextId++;
+        log("Rovar letrejott");
     }
 
     public Tekton tektonKivalasztasa() {

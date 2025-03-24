@@ -11,9 +11,9 @@ public abstract class Jatekos {
     private boolean aktiv;
 
     public Jatekos(String nev) {
-        this.nev = nev;
-        this.pont = 0;
-        this.aktiv = true;
+//        this.nev = nev;
+//        this.pont = 0;
+//        this.aktiv = true;
     }
 
     public Tekton tektonKivalasztasa() { return null; }

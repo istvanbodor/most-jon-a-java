@@ -27,8 +27,8 @@ public abstract class Tekton {
     private int fonalakElettartama;
 
     public Tekton() {
-        id = nextId++;
-        log("Tekton létrejött - TEKTON_ID: " + id);
+     //   id = nextId++;
+        log("Tekton létrejött");
     }
 
     public abstract Tekton ujTektonLetrehozasa();
