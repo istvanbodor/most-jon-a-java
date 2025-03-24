@@ -16,6 +16,14 @@ public abstract class Jatekos {
         this.aktiv = true;
     }
 
+    /**
+     * Kivalaszt egy tektont.
+     */
     public Tekton tektonKivalasztasa() { return null; }
+
+    /**
+     * A jatekosok pontszamat lehet vele novelni a parameterben megadott ertekkel.
+     * @param ertek
+     */
     public void pontNovelese(int ertek) {}
 }
