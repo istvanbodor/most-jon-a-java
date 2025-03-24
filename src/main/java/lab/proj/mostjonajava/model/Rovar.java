@@ -19,6 +19,10 @@ public class Rovar extends Jatekos {
     private boolean vagoKepesseg;
     private boolean benulas;
 
+    /**
+     * A rovar konstruktora
+     * @param nev A rovar neve
+     */
     public Rovar(String nev) {
         super(nev);
         hivasLog("Rovar(String nev)", List.of("nev: String - " + nev), 1);

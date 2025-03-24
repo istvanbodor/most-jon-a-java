@@ -17,6 +17,9 @@ public class Gombatest {
     private int elszortSporakSzama;
     private int noveszthetoFonalakSzama;
 
+    /**
+     * A gombatest konstruktora
+     */
     public Gombatest() {
         id = nextId++;
         log("Gombatest letrejott - GOMBATEST_ID: " + id);
