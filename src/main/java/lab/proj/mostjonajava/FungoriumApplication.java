@@ -166,7 +166,17 @@ public class FungoriumApplication extends Application {
      * @param parameterek
      */
     private static void testBenitoSporaHatasKifejtese(String[] parameterek) {
-        //todo teszteset
+        Tekton t = new Tekton() {
+            @Override
+            public Tekton ujTektonLetrehozasa() {
+                return null;
+            }
+
+            @Override
+            public void ketteTores() {
+
+            }
+        };
     }
 
     private static void testLassitoSporaHatasKifejtese(String[] parameterek) {

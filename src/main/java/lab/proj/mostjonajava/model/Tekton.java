@@ -2,6 +2,7 @@ package lab.proj.mostjonajava.model;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static lab.proj.mostjonajava.utils.Logger.log;
@@ -31,7 +32,15 @@ public abstract class Tekton {
      * Konstruktor felülírása.
      */
     public Tekton() {
-     //   id = nextId++;
+        id = nextId++;
+        szomszedosTektonok = new ArrayList<>();
+        rovar =null;
+        gombasz =null;
+        gombafonalak = new ArrayList<>();
+        gombatest =null;
+        sporak = new ArrayList<>();
+        sporaSzam = 0;
+        fonalakElettartama = 0;
         log("Tekton létrejött");
     }
 
