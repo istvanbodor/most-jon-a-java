@@ -4,14 +4,21 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import lab.proj.mostjonajava.game.Jatek;
+import lab.proj.mostjonajava.utils.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
+import static lab.proj.mostjonajava.utils.Logger.hibaLog;
+import static lab.proj.mostjonajava.utils.Logger.log;
 import static lab.proj.mostjonajava.utils.Parancsok.*;
 
 public class FungoriumApplication extends Application {
+    public static Jatek jatek;
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(FungoriumApplication.class.getResource("hello-view.fxml"));
@@ -51,7 +58,7 @@ public class FungoriumApplication extends Application {
                 case VAGASBENITOSPORAHATASKIFEJTESE -> testVagasBenitoSporaHatasKifejtese(parameterek);
                 case FONALFELSZIVODAS -> testFonalFelszivodas(parameterek);
                 case KILEPES -> System.exit(0);
-                default -> System.out.println("Nem létező parancsot adtál meg!");
+                default -> hibaLog("Nem letezo parancsot adtal meg!");
             }
         }
     }
@@ -66,6 +73,25 @@ public class FungoriumApplication extends Application {
 
 
     private static void jatekInditasa(String[] parameterek) {
+        if (parameterek.length < 3) {
+            hibaLog("Nem adtal meg elegendo parametert!");
+            return;
+        }
+
+        int jatekosokSzama = Integer.parseInt(parameterek[1]);
+        List<String> nevek = List.of(parameterek[2].split(","));
+
+        if (jatekosokSzama < 2 || jatekosokSzama > 10) {
+            hibaLog("Tul sok vagy tul keves a jatekosok szama!");
+            return;
+        }
+
+        if(nevek.size() != jatekosokSzama) {
+            hibaLog("Nem egyezik a nevek es a jatekosok szama");
+            return;
+        }
+
+        jatek = new Jatek(jatekosokSzama, nevek);
     }
 
     private static void testFonalNovesztes(String[] parameterek) {
