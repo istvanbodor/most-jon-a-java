@@ -190,7 +190,17 @@ public class FungoriumApplication extends Application {
 
         BenitoSpora benitoSpora = new BenitoSpora();
 
-        Tekton tekton = new Tekton();
+        Tekton tekton = new Tekton() {
+            @Override
+            public Tekton ujTektonLetrehozasa() {
+                return null;
+            }
+
+            @Override
+            public void ketteTores() {
+
+            }
+        };
 
         rovar.sporaElfogyasztas(tekton);
 

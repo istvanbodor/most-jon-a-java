@@ -10,6 +10,10 @@ public abstract class Jatekos {
     private int pont;
     private boolean aktiv;
 
+    /**
+     * A jatekos konstruktora
+     * @param nev A jatekos neve
+     */
     public Jatekos(String nev) {
 //        this.nev = nev;
 //        this.pont = 0;
