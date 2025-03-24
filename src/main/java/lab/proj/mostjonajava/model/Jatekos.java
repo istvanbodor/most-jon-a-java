@@ -15,9 +15,9 @@ public abstract class Jatekos {
      * @param nev A jatekos neve
      */
     public Jatekos(String nev) {
-        this.nev = nev;
-        this.pont = 0;
-        this.aktiv = true;
+//        this.nev = nev;
+//        this.pont = 0;
+//        this.aktiv = true;
     }
 
     /**

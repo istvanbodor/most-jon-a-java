@@ -8,16 +8,14 @@ import lab.proj.mostjonajava.game.Jatek;
 import lab.proj.mostjonajava.model.Gombasz;
 import lab.proj.mostjonajava.model.Gombatest;
 import lab.proj.mostjonajava.model.Tekton;
-import lab.proj.mostjonajava.utils.Logger;
+import lab.proj.mostjonajava.model.Gombatest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 import static lab.proj.mostjonajava.utils.Logger.hibaLog;
-import static lab.proj.mostjonajava.utils.Logger.log;
 import static lab.proj.mostjonajava.utils.Parancsok.*;
 
 public class FungoriumApplication extends Application {
@@ -90,7 +88,7 @@ public class FungoriumApplication extends Application {
         }
 
         if(nevek.size() != jatekosokSzama) {
-            hibaLog("Nem egyezik a nevek es a jatekosok szama");
+            hibaLog("Nem egyezik a nevek es a jatekosok szama!");
             return;
         }
 
@@ -102,7 +100,25 @@ public class FungoriumApplication extends Application {
     }
 
     private static void testSporaTermeles(String[] parameterek) {
-        //todo teszteset
+        if (parameterek.length < 2) {
+            hibaLog("Nem adtal meg elegendo parametert!");
+        }
+
+//        int gombaId = Integer.parseInt(parameterek[1]);
+//
+//        Gombatest gombatest = Jatek.gombaszok.stream()
+//                .flatMap(it -> it.getGombatestek().stream())
+//                .filter(it -> it.getId() == gombaId)
+//                .findFirst()
+//                .orElse(null);
+//
+//        if (gombatest == null) {
+//            hibaLog("Nincs gombatest ilyen ID-val!");
+//            return;
+//        }
+        Gombatest gombatest = new Gombatest();
+        gombatest.sporaTermeles();
+
     }
 
     private static void testSimaSporaSzoras(String[] parameterek) {

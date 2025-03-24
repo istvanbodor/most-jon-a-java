@@ -1,10 +1,10 @@
 package lab.proj.mostjonajava.model;
 
-import lab.proj.mostjonajava.utils.Logger;
 import lombok.Data;
 
 import java.util.List;
 
+import static lab.proj.mostjonajava.utils.Logger.hivasLog;
 import static lab.proj.mostjonajava.utils.Logger.log;
 
 @Data
@@ -21,8 +21,8 @@ public class Gombatest {
      * A gombatest konstruktora
      */
     public Gombatest() {
-        id = nextId++;
-        log("Gombatest letrejott - GOMBATEST_ID: " + id);
+     //   id = nextId++;
+        log("Gombatest letrejott");
     }
 
     /**
@@ -46,7 +46,10 @@ public class Gombatest {
     /**
      * Minden körben spoórát termel.
      */
-    public void sporaTermeles() {}
+    public void sporaTermeles() {
+        hivasLog("sporaTermeles()", List.of(), 0);
+        log("Spora termeles megtortent");
+    }
 
     /**
      * A kilőtt spórákat törli a gombatestből.
