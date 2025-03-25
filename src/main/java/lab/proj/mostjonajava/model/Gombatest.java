@@ -41,9 +41,9 @@ public class Gombatest {
         hivasLog("fonalNovesztes(Tekton honnan, Tekton hova)", List.of("honnan: Tekton - " + honnan.toString(), "hova: Tekton - " + hova.toString()), 0);
         boolean feltetelekTeljesulnek = !honnan.vanFonalKozottuk(hova) && hova.gombafonalNoveszthetoE() && honnan.szomszedossagEllenorzese(hova);
         if(feltetelekTeljesulnek) {
-            log("Teljesulnek a feltetelek");
             GombaFonal gombaFonal = new GombaFonal(honnan, hova, this);
             fonalHozzaadasa(gombaFonal);
+            log("Teljesulnek a feltetelek");
         }
         else {
             log("Nem teljesulnek a fonalnovesztes feltetelei");
@@ -66,7 +66,13 @@ public class Gombatest {
     public void sporaKiloves(Tekton tekton) {
         hivasLog("sporaKiloves(Tekton tekton)", List.of("tekton: Tekton - " + tekton.toString()), 0);
         log("Gombatest spora kilovese megtortent");
-        tekton.sporaHozzaadasa(new SimaSpora());
+        this.tekton = new EgyFonalasTekton();
+        if (this.tekton.szomszedossagEllenorzese(tekton)) {
+            tekton.sporaHozzaadasa(new SimaSpora());
+        }
+        else {
+            log("A kivalasztott tekton nem szomszedja a gombatestet tartalmazo tektonnak");
+        }
     }
 
     /**

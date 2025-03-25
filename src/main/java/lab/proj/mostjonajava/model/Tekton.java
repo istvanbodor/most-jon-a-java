@@ -64,7 +64,7 @@ public abstract class Tekton {
      * @return
      */
     public boolean vanFonalKozottuk(Tekton tekton) {
-        hivasLog("vanFonalKozottuk(Tekton tekton)", List.of("tekton: Tekton"), 1);
+        hivasLog("vanFonalKozottuk(Tekton hova)", List.of("tekton: Tekton"), 1);
         log("Osszekottetes ellenorzese.");
         return false;
     }
@@ -186,7 +186,7 @@ public abstract class Tekton {
     }
 
     public boolean szomszedossagEllenorzese(Tekton tekton) {
-        hivasLog("szomszedossagEllenorzese(Tekton tekton)", List.of("tekton: Tekton"), 1);
+        hivasLog("szomszedossagEllenorzese(Tekton hova)", List.of("tekton: Tekton"), 1);
         log("Szomszedossag ellenorizve");
         return true;
     }
