@@ -10,7 +10,6 @@ public class Parancsok {
     public static final String GOMBATESTFEJLESZTES = "GOMBATESTFEJLESZTES";
     public static final String GOMBATESTELPUSZTUL = "GOMBATESTELPUSZTUL";
     public static final String ROVARMOZGATAS = "ROVARMOZGATAS";
-    public static final String ROVARMOZGATASBLOKKOLAS = "ROVARMOZGATASBLOKKOLAS";
     public static final String SPORAFOGYASZTAS = "SPORAFOGYASZTAS";
     public static final String FONALVAGAS = "FONALVAGAS";
     public static final String TEKTONTORES = "TEKTONTORES";
