@@ -94,6 +94,10 @@ public class Gombatest {
         return null;
     }
 
+    /**
+     * Fonal törlése
+     * @param fonal
+     */
     public void fonalTorles(GombaFonal fonal) {
         hivasLog("fonalTorles(GombaFonal fonal)", List.of("fonal: Gombafonal"), 2);
         log("Fonal torles gombatestbol sikeres volt");

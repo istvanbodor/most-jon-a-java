@@ -184,7 +184,6 @@ public class FungoriumApplication extends Application {
         if (rovar.getTekton().getSzomszedosTektonok().isEmpty()) {
             rovar.benulas();
         }
-
     }
 
     private static void testSporaFogyasztas(String[] parameterek) {
