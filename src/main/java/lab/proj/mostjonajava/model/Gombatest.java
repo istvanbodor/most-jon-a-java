@@ -66,7 +66,13 @@ public class Gombatest {
     public void sporaKiloves(Tekton tekton) {
         hivasLog("sporaKiloves(Tekton tekton)", List.of("tekton: Tekton - " + tekton.toString()), 0);
         log("Gombatest spora kilovese megtortent");
-        tekton.sporaHozzaadasa(new SimaSpora());
+        this.tekton = new EgyFonalasTekton();
+        if (this.tekton.szomszedossagEllenorzese(tekton)) {
+            tekton.sporaHozzaadasa(new SimaSpora());
+        }
+        else {
+            log("A kivalasztott tekton nem szomszedja a gombatestet tartalmazo tektonnak");
+        }
     }
 
     /**
