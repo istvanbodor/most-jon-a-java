@@ -39,7 +39,8 @@ public class Gombatest {
      */
     public void fonalNovesztes(Tekton honnan, Tekton hova) {
         hivasLog("fonalNovesztes(Tekton honnan, Tekton hova)", List.of("honnan: Tekton - " + honnan.toString(), "hova: Tekton - " + hova.toString()), 0);
-        if(!honnan.vanFonalKozottuk(hova) && hova.gombafonalNoveszthetoE()) {
+        boolean feltetelekTeljesulnek = !honnan.vanFonalKozottuk(hova) && hova.gombafonalNoveszthetoE() && honnan.szomszedossagEllenorzese(hova);
+        if(feltetelekTeljesulnek) {
             log("Teljesulnek a feltetelek");
             GombaFonal gombaFonal = new GombaFonal(honnan, hova, this);
             fonalHozzaadasa(gombaFonal);

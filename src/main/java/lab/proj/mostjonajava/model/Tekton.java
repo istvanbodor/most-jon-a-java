@@ -185,4 +185,10 @@ public abstract class Tekton {
         return List.of();
     }
 
+    public boolean szomszedossagEllenorzese(Tekton tekton) {
+        hivasLog("szomszedossagEllenorzese(Tekton tekton)", List.of("tekton: Tekton"), 1);
+        log("Szomszedossag ellenorizve");
+        return true;
+    }
+
 }
