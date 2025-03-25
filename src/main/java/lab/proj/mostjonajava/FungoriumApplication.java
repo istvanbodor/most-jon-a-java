@@ -51,7 +51,6 @@ public class FungoriumApplication extends Application {
                 case GOMBATESTFEJLESZTES -> testGombaTestFejlesztes(parameterek);
                 case GOMBATESTELPUSZTUL -> testGombaTestElpusztul(parameterek);
                 case ROVARMOZGATAS -> testRovarMozgatas(parameterek);
-                case ROVARMOZGATASBLOKKOLAS -> testRovarMozgatasBlokkolas(parameterek);
                 case SPORAFOGYASZTAS -> testSporaFogyasztas(parameterek);
                 case FONALVAGAS -> testFonalVagas(parameterek);
                 case TEKTONTORES -> testTektonTores(parameterek);
@@ -175,15 +174,6 @@ public class FungoriumApplication extends Application {
         parameterVizsgalat(parameterek, 3);
         Rovar rovar = new Rovar("testrovar");
         rovar.lepes(new EgyFonalasTekton());
-    }
-
-    private static void testRovarMozgatasBlokkolas(String[] parameterek) {
-        parameterVizsgalat(parameterek, 2);
-        Rovar rovar = new Rovar();
-        rovar.setTekton(new EgyFonalasTekton());
-        if (rovar.getTekton().getSzomszedosTektonok().isEmpty()) {
-            rovar.benulas();
-        }
     }
 
     private static void testSporaFogyasztas(String[] parameterek) {
