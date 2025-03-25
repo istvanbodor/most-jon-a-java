@@ -63,14 +63,13 @@ public class Rovar extends Jatekos {
      */
     public void lepes(Tekton tekton) {
         hivasLog("lepes(Tekton tekton)", List.of("tekton: Tekton - " + tekton.toString()), 0);
-        List<Tekton> szomszedosTektonok = tekton.getSzomszedosTektonok();
-
+        this.tekton = new EgyFonalasTekton();
+        tekton.vanFonalKozottuk(this.tekton);
         int randomSzomszedossag = (int) Math.floor(Math.random()*2);
         if (randomSzomszedossag == 0) {
-            log("Nem szomszedosak a tektonok, a rovar nem tud lepni koztuk");
+            log("Nem koti ossze fonal a tektonokokat, a rovar nem tud lepni koztuk");
         }
         else {
-            this.tekton = new EgyFonalasTekton();
             this.tekton.setRovar(null);
             this.setTekton(tekton);
             tekton.setRovar(this);
