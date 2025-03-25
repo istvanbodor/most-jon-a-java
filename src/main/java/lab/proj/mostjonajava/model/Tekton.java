@@ -78,7 +78,9 @@ public abstract class Tekton {
      * @param fonal
      */
     public void fonalTorlese(GombaFonal fonal) {
-        log("fonalTorlese sikeres volt.");
+        hivasLog("fonalTorlese(GombaFonal fonal)", List.of("fonal: Gombafonal"), 1);
+        new Gombatest().fonalTorles(fonal);
+        log("Fonal torlese sikeres volt.");
     }
 
     /**
@@ -110,14 +112,14 @@ public abstract class Tekton {
      * Bizonyos tektonoknál (pl. Eltűnő fonalas) számolni kell az eltelt időt, ezt valósítja meg ez a fügvény.
      */
     public void eletIdoCsokkentes(GombaFonal gombafonal) {
+        hivasLog("eletIdoCsokkentes(GombaFonal gombafonal)", List.of("gombafonal: Gombafonal"), 0);
         fonalakElettartama--;
-
+        log("Eletido csokkentve.");
         if (fonalakElettartama <= 0) {
             gombafonal.fonalTorlese(gombafonal);
             fonalakElettartama = 1;
         }
 
-        log("Eletido csokkentve.");
     }
 
     /**
