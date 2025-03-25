@@ -43,6 +43,4 @@ public class Jatek {
         }
     }
 
-    //todo itt lesz a jatek logikaja - ez a "kontroller"
-    //todo ki kell még egészíteni ezt az osztályt
 }

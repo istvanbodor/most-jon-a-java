@@ -36,6 +36,11 @@ public class Rovar extends Jatekos {
         log("Rovar letrejott");
     }
 
+    public void setTekton(Tekton tekton) {
+        hivasLog("setTekton(Tekton tekton)", List.of("tekton: Tekton"), 1);
+        log("A rovar tektonja beallitasra kerult");
+    }
+
     /**
      * Kivalaszt egy tektont.
      * @return
@@ -65,6 +70,10 @@ public class Rovar extends Jatekos {
             log("Nem szomszedosak a tektonok, a rovar nem tud lepni koztuk");
         }
         else {
+            this.tekton = new EgyFonalasTekton();
+            this.tekton.setRovar(null);
+            this.setTekton(tekton);
+            tekton.setRovar(this);
             log("Sikeresen lepett a rovar");
         }
 

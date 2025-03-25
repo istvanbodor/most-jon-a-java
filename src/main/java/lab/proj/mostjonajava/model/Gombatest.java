@@ -39,6 +39,14 @@ public class Gombatest {
      */
     public void fonalNovesztes(Tekton honnan, Tekton hova) {
         hivasLog("fonalNovesztes(Tekton honnan, Tekton hova)", List.of("honnan: Tekton - " + honnan.toString(), "hova: Tekton - " + hova.toString()), 0);
+        if(!honnan.vanFonalKozottuk(honnan) && hova.gombafonalNoveszthetoE()) {
+            log("Teljesulnek a feltetelek");
+            GombaFonal gombaFonal = new GombaFonal(honnan, hova, this);
+            fonalHozzaadasa(gombaFonal);
+        }
+        else {
+            log("Nem teljesulnek a fonalnovesztes feltetelei");
+        }
     }
 
     /**
@@ -89,5 +97,10 @@ public class Gombatest {
     public void fonalTorles(GombaFonal fonal) {
         hivasLog("fonalTorles(GombaFonal fonal)", List.of("fonal: Gombafonal"), 2);
         log("Fonal torles gombatestbol sikeres volt");
+    }
+
+    public void fonalHozzaadasa(GombaFonal fonal) {
+        hivasLog("fonalHozzaadasa(GombaFonal fonal)", List.of("fonal: Gombafonal"), 1);
+        log("Fonal hozzaadava a gombatesthez");
     }
 }

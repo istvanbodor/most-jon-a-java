@@ -20,6 +20,11 @@ public class GombaFonal {
     public GombaFonal()
     {}
 
+    public GombaFonal(Tekton honnan, Tekton hova, Gombatest gombatest) {
+        hivasLog("GombaFonal(Tekton honnan, Tekton hova, Gombatest gombatest)", List.of(), 2);
+        log("Fonal letrejott a ket tekton kozott");
+    }
+
     /**
      * Fonalmasiktektonja kitorolve, mert a masik fonal meg van adva
      */

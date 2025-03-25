@@ -40,6 +40,11 @@ public abstract class Tekton {
         log("Gombatest beallitasra kerult");
     }
 
+    public void setRovar(Rovar rovar) {
+        hivasLog("setRovar(Rovar rovar)", List.of("rovar: Rovar"), 1);
+        log("Rovar beallitasra kerult a tektonon");
+    }
+
     /**
      * Tekton konstruktor.
      *
@@ -59,7 +64,8 @@ public abstract class Tekton {
      * @return
      */
     public boolean vanFonalKozottuk(Tekton tekton) {
-        log("vanFonalKozottuk ellenorizve.");
+        hivasLog("vanFonalKozottuk(Tekton tekton)", List.of("tekton: Tekton"), 1);
+        log("Osszekottetes ellenorzese.");
         return false;
     }
 
@@ -128,8 +134,9 @@ public abstract class Tekton {
      * @return
      */
     public boolean gombafonalNoveszthetoE() {
-        log("Gombafonal noveszthetosege megvizsgalva.");
-        return false;
+        hivasLog("gombafonalNoveszthetoE()", List.of(), 1);
+        log("Gombafonal noveszthetosegenek vizsgalata.");
+        return true;
     }
 
     /**
