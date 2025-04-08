@@ -22,6 +22,7 @@ public class VagasTiltoSpora extends Spora {
     /**
      * Kifejti a hatasat a rovarra, ami a rovarok vagas kepessegenek korlatozasa.
      */
+    @Override
     public void hatasKifejtese(Rovar rovar) {
         hivasLog("hatasKifejtese(Rovar rovar)", List.of("rovar: Rovar"), 0);
         if (rovar != null) {
