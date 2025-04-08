@@ -1,12 +1,11 @@
 package lab.proj.mostjonajava.model;
 
-import lombok.Data;
-
-import static lab.proj.mostjonajava.utils.Logger.hivasLog;
-
 import java.util.ArrayList;
 import java.util.List;
-@Data
+
+import static lab.proj.mostjonajava.utils.Logger.hivasLog;
+//@Data
+//@NoArgsConstructor
 public class Rovarasz extends Jatekos {
     private static int nextId = 1;
     private int id;

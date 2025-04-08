@@ -19,16 +19,6 @@ public class GombaFonal {
     }
 
     /**
-     * Fonalmasiktektonja kitorolve, mert a masik fonal meg van adva
-     */
-
-    /**
-     * Uj gomba fonalat hoz létre
-     */
-    public void ujGombaFonalLetrehozasa(Tekton hn, Tekton hv, Gombatest gt) {
-    }
-
-    /**
      *Kitörli a paraméternek megadott gombafonalat
      * @param fonal törlendő fonal
      */
@@ -37,6 +27,8 @@ public class GombaFonal {
         log("Fonal eltavolitva.");
     }
 
+    public Tekton getHonnan(){ return honnan; }
+    public Tekton getHova(){ return hova; }
     /**
      * Ellenőrzi, hogy az adott fonal csatlakozik-e meg a
      *

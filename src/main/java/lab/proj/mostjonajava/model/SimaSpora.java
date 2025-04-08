@@ -23,6 +23,7 @@ public class SimaSpora extends Spora {
     /**
      * Kifejti a hatasat a rovarra, ami jelenleg csak a tapanyagszint noveles.
      */
+    @Override
     public void hatasKifejtese(Rovar rovar) {
         hivasLog("hatasKifejtese(Rovar rovar)", List.of("rovar: Rovar"), 0);
         if (rovar != null) {

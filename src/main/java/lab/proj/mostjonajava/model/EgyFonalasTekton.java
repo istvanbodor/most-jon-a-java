@@ -1,12 +1,12 @@
 package lab.proj.mostjonajava.model;
 
-import lab.proj.mostjonajava.utils.Logger;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
+import java.util.ArrayList;
 import java.util.List;
 
-import static lab.proj.mostjonajava.utils.Logger.*;
+import static lab.proj.mostjonajava.utils.Logger.hivasLog;
+import static lab.proj.mostjonajava.utils.Logger.log;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -15,13 +15,40 @@ public class EgyFonalasTekton extends Tekton {
     /**
      * A tekton konstruktora.
      */
-    public Tekton ujTektonLetrehozasa() { return null; }
+    public EgyFonalasTekton() {
+        super(-1);
+        log("EgyFonalasTekton letrejott.");
+    }
 
     /**
      * A tekton kettetoresenek megvalositasa.
      */
+    @Override
     public void ketteTores() {
         hivasLog("ketteTores()", List.of(), 0);
-        log("A tekton kettetort");
+
+        EltunoFonalasTekton ujTekton = new EltunoFonalasTekton();
+        
+        this.getGombatest().elpusztulas(true);
+        this.setGombatest(null);
+        List<GombaFonal> torlendoFonalak = new ArrayList<>(this.getGombafonalak());
+        for (GombaFonal fonal : torlendoFonalak) {
+            this.fonalTorlese(fonal); // tektonról törlés
+            if (this.getGombatest() != null) {
+                this.getGombatest().fonalTorles(fonal); // gombatestről törlés
+            }
+        }
+
+        List<Spora> torlendoSporak = new ArrayList<>(this.getSporak());
+        for (Spora spora : torlendoSporak) {
+            this.sporaTorlese(spora);
+        }
+
+        log("Kettetoeres befejezodott: sporak es fonalak torlodtek, gombatest leválasztva.");
+    }
+
+    @Override
+    public void setGombafonal(GombaFonal fonal) {
+        if(this.getGombafonalak().isEmpty()) this.setGombafonal(fonal);
     }
 }

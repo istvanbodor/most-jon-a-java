@@ -22,6 +22,7 @@ public class OsztodoSpora extends Spora {
     /**
      * Kifejti a hatasat a rovarra, ami az osztodas.
      */
+    @Override
     public void hatasKifejtese(Rovar rovar) {
         hivasLog("hatasKifejtese(Rovar rovar)", List.of("rovar: Rovar"), 0);
         if (rovar != null) {

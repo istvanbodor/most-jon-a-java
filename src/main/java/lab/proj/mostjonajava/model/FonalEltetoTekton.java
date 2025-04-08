@@ -1,18 +1,19 @@
 package lab.proj.mostjonajava.model;
 
-import static lab.proj.mostjonajava.utils.Logger.hivasLog;
-import static lab.proj.mostjonajava.utils.Logger.log;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class FonalEltetoTekton {
-/**
+import static lab.proj.mostjonajava.utils.Logger.hivasLog;
+import static lab.proj.mostjonajava.utils.Logger.log;
+
+public class FonalEltetoTekton extends Tekton {
+    
+    /**
      * A tekton konstruktora.
      */
     public FonalEltetoTekton() {
         super(-1);
-        log("TestNelkuliTekton letrejott.");
+        log("FonalEltetoTekton letrejott.");
     }
     /**
      * A tekton kettetoresenek megvalositasa.

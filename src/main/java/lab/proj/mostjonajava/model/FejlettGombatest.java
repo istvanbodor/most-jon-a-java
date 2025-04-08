@@ -1,48 +1,31 @@
 package lab.proj.mostjonajava.model;
 
-import lab.proj.mostjonajava.utils.Logger;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static lab.proj.mostjonajava.utils.Logger.*;
+import static lab.proj.mostjonajava.utils.Logger.hivasLog;
+import static lab.proj.mostjonajava.utils.Logger.log;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class FejlettGombatest extends Gombatest {
     
     public FejlettGombatest(Gombatest eredeti) {
-        super();
-        this.setTekton(eredeti.getTekton());
-        this.setGombasz(eredeti.getGombasz());
-        this.setKilohetoSporakSzama(eredeti.getKilohetoSporakSzama());
-        this.setElszortSporakSzama(eredeti.getElszortSporakSzama());
-        this.setNoveszthetoFonalakSzama(eredeti.getNoveszthetoFonalakSzama());
-        this.setGombaFonalak(eredeti.getGombaFonalak());
-
-        // Tektonban kicseréljük
-        if (eredeti.getTekton() != null) {
-            eredeti.getTekton().setGombatest(this);
+        super(); // új példány, új ID-vel
+        setTekton(eredeti.getTekton());
+        setGombasz(eredeti.getGombasz());
+        setKilohetoSporakSzama(eredeti.getKilohetoSporakSzama());
+        setElszortSporakSzama(eredeti.getElszortSporakSzama());
+        setNoveszthetoFonalakSzama(eredeti.getNoveszthetoFonalakSzama());
+        
+        // Fonalakat egyenként másoljuk
+        for (GombaFonal fonal : eredeti.getGombaFonalak()) {
+            this.setGombaFonalak(fonal); // saját setterrel, ami hozzáad
         }
-
-        // Gombásznál lecseréljük a listában
-        if (eredeti.getGombasz() != null) {
-            eredeti.getGombasz().gombatestTorles(eredeti);
-            eredeti.getGombasz().setGombatest(this);
-        }
-
-        // GombaFonalak frissítése
-        for (GombaFonal fonal : this.getGombaFonalak()) {
-            fonal.setGombatest(this);
-        }
-
-        // Az eredeti példányt "kiürítjük"
-        eredeti.elpusztulas(false);
-
-        log("FejlettGombatest letrejott egy Gombatest alapjan.");
+    
+        log("FejlettGombatest példány létrejött (inicializálva, de még nincs csatolva).");
     }
     
     /**

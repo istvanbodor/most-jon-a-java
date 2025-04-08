@@ -69,7 +69,26 @@ public class Gombasz extends Jatekos {
                 tekton.sporaTorlese(tekton.getSporak().get(0));
             }
     
+            // Fejlett példány létrehozása és alapadatok átvétele
             FejlettGombatest fejlett = new FejlettGombatest(gombatest);
+    
+            // Tektonban lecseréljük a gombatestet
+            tekton.setGombatest(fejlett);
+    
+            // Gombásznál lecseréljük
+            if (gombatest.getGombasz() != null) {
+                gombatest.getGombasz().gombatestTorles(gombatest);
+                gombatest.getGombasz().setGombatest(fejlett);
+            }
+    
+            // GombaFonalak gombatestje frissítve az új példányra
+            for (GombaFonal fonal : fejlett.getGombaFonalak()) {
+                fonal.setGombatest(fejlett);
+            }
+    
+            // Régi példány "elpusztítása" (kapcsolatok bontása)
+            gombatest.elpusztulas(false);
+    
             log("Gombatest fejlesztese sikeres volt.");
         } else {
             log("Nem lehet fejleszteni a megadott gombatestet.");

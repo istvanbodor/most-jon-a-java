@@ -66,7 +66,9 @@ public class Gombatest {
         tekton.setGombatest(null);
         tekton = null;
         gombasz = null;
-        //if (toroljeAFonalakat) {//a fonalTorlest kell meg meghivni de az még nincs kidolgozva}
+        if (fonalakTorlese) {
+            //a fonalTorlest kell meg meghivni de az még nincs kidolgozva
+        }
         log("A gombatest elpusztult");
     }
 
