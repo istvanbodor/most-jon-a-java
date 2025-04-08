@@ -1,81 +1,52 @@
 package lab.proj.mostjonajava.model;
 
-import lab.proj.mostjonajava.utils.Logger;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import static lab.proj.mostjonajava.utils.Logger.*;
-
-@EqualsAndHashCode(callSuper = true)
+import static lab.proj.mostjonajava.utils.Logger.hivasLog;
+import static lab.proj.mostjonajava.utils.Logger.log;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+//@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-public class Rovar extends Jatekos {
+public class Rovar {
     private static int nextId = 1;
     private int id;
-    private Tekton tekton;
-    private int lepesSzam;
-    private boolean vagoKepesseg;
-    private boolean benulas;
+    private Tekton honnan;
+    private Rovarasz rovarasz;
+    private int lepesSzam = 2;
+    private boolean vagoKepesseg = true;
+    private boolean benulas = false;
 
     /**
      * Rovar konstruktora.
      * @param nev
      */
-    public Rovar(String nev) {
-        super(nev);
-        hivasLog("Rovar(String nev)", List.of("nev: String - " + nev), 1);
-//        tekton = null;
-//        lepesSzam = 2;
-//        vagoKepesseg = true;
-//        benulas = false;
-//        id = nextId++;
+    public Rovar(Tekton tekton, Rovarasz rovarasz) {
+        this.id = nextId++;
+        this.honnan = tekton;
+        this.rovarasz = rovarasz;
+        tekton.setRovar(this);
+        rovarasz.setRovar(this);
         log("Rovar letrejott");
-    }
-
-    public void setTekton(Tekton tekton) {
-        hivasLog("setTekton(Tekton hova)", List.of("tekton: Tekton"), 1);
-        log("A rovar tektonja beallitasra kerult");
-    }
-
-    /**
-     * Kivalaszt egy tektont.
-     * @return
-     */
-    public Tekton tektonKivalasztasa() {
-        return null;
-    }
-
-    /**
-     * Noveli a jatekos pontszamat a megadott ertekkel.
-     * @param ertek
-     */
-    public void pontNovelese(int ertek) {
-        log("Novekedett a rovar pontszama.");
     }
 
     /**
      * A rovar lepeseert felelos egyik tektonrol a masikra.
      * @param tekton
      */
-    public void lepes(Tekton tekton) {
-        hivasLog("lepes(Tekton hova)", List.of("tekton: Tekton - " + tekton.toString()), 0);
-        this.tekton = new EgyFonalasTekton();
-        this.tekton.vanFonalKozottuk(tekton);
-        int randomSzomszedossag = (int) Math.floor(Math.random()*2);
-        if (randomSzomszedossag == 0) {
-            log("Nem koti ossze fonal a tektonokokat, a rovar nem tud lepni koztuk");
+    public void lepes(Tekton hova) {
+        hivasLog("lepes(Tekton hova)", List.of("tekton: Tekton - " + honnan.toString()), 0);
+        if (!honnan.vanFonalKozottuk(hova)) {
+            log("Nem koti ossze fonal a tektonokat, a rovar nem tud lepni koztuk");
+            return;
         }
-        else {
-            this.tekton.setRovar(null);
-            this.setTekton(tekton);
-            tekton.setRovar(this);
-            log("Sikeresen lepett a rovar");
-        }
-
+        honnan.rovarTorlese(this);
+        hova.setRovar(this);
+        this.setTekton(hova);
+        log("Sikeresen lepett a rovar");
+        sporaElfogyasztas(hova);
     }
 
     /**
@@ -84,46 +55,42 @@ public class Rovar extends Jatekos {
      */
     public void sporaElfogyasztas(Tekton tekton) {
         hivasLog("sporaElfogyasztas(Tekton tekton)", List.of("tekton: Tekton - " + tekton.toString()), 0);
-        List<Spora> sporak = tekton.getSporak();
-        hivasLog("getSporak()", List.of(), 1);
-        tekton.setSporak(List.of());
-        hivasLog("setSporak(List<Spora> spora)", List.of("sporak: List<Spora>"), 1);
-        log("A rovar megette a sporat");
+        if (tekton.getSporaSzam() > 0) {
+            List<Spora> sporak = tekton.getSporak();
+            Spora utolsoSpora = sporak.get(sporak.size() - 1);
+            for (Spora spora : sporak) {
+                rovarasz.setPont(rovarasz.getPont() + spora.getTapanyagErtek());
+                tekton.sporaTorlese(spora);
+            }
+            utolsoSpora.hatasKifejtese(this);
+            log("A rovar megette a sporat / sporakat");
+        }
     }
 
-    /**
-     * A rovar lepes szamat csokkenti, azaz hanyat léphet.
-     */
-    public void lepesSzamNoveles() {
-        hivasLog("lepesSzamNoveles()", List.of(), 1);
-        log("A rovar gyorsult.");
+    public void setLepesSzam(int lepes){ this.lepesSzam = lepes; }
+    public int getLepesSzam(){ return lepesSzam; }
+
+    public void setTekton(Tekton tekton){ this.honnan = tekton; }
+    public Tekton getTekton() {
+        hivasLog("getTekton()", List.of(), 0);
+        log("Rovar tektonjanak lekerese");
+        return honnan;
     }
 
-    /**
-     * A rovar lepes szamat noveli, azaz hanyat léphet.
-     */
-    public void lepesSzamCsokkentes() {
-        hivasLog("lepesSzamCsokkentes()", List.of(), 1);
-        log("A rovar lassult.");
-    }
+    public void setRovarasz(Rovarasz rovarasz){ this.rovarasz = rovarasz; }
+    public Rovarasz getRovarasz(){ return rovarasz; }
 
     /**
      * Nem engedi, hogy a rovar vagjon.
      */
-    public void vagoKepessegTiltas() {
-        log("A rovar nem tud vagni.");
+    public void setVagoKepesseg(boolean ertek) {
+        this.vagoKepesseg = ertek;
     }
 
-    /**
-     * Ellenorzi, hogy a rovar benult allapotban van-e.
-     */
-    public void benulasEllenorzes() {
-    }
-
-    /**
-     * Ellenorzi, hogy a rovar tud-e vagni.
-     */
-    public void vagasEllenorzes() {
+    public void setBenulas(boolean ertek) {
+        hivasLog("setBenulas(boolean ertek)", List.of(), 0);
+        this.benulas = ertek;
+        log("A rovar megbenult");
     }
 
     /**
@@ -131,22 +98,32 @@ public class Rovar extends Jatekos {
      * ahol a rovar all.
      * @param tekton
      */
-    public void fonalVagas(Tekton tekton) {
-        hivasLog("fonalVagas(Tekton tekton)", List.of("tekton: Tekton - " + tekton.toString()), 0);
-        tekton.fonalTorlese(new GombaFonal());
+    public void fonalVagas(Tekton hova) {
+        hivasLog("fonalVagas(Tekton tekton)", List.of("tekton: Tekton - " + hova.toString()), 0);
+        if (!honnan.vanFonalKozottuk(hova)) {
+            log("Nem letezik fonal a ket tekton kozott, nem lehet vagni.");
+            return;
+        }
+        // A két tekton közti konkrét fonal megkeresése
+        GombaFonal torlendoFonal = null;
+        for (GombaFonal fonal : honnan.getGombafonalak()) {
+            if ((fonal.getHonnan().equals(honnan) && fonal.getHova().equals(hova)) ||
+                (fonal.getHova().equals(honnan) && fonal.getHonnan().equals(hova))) {
+                torlendoFonal = fonal;
+                break;
+            }
+        }
+        if (torlendoFonal == null) {
+            log("Nem talalhato konkret GombaFonal a ket tekton kozott.");
+            return;
+        }
+        // Fonal törlése a tektonokból
+        honnan.fonalTorlese(torlendoFonal);
+        hova.fonalTorlese(torlendoFonal);
+        torlendoFonal.getGombatest().fonalTorles(torlendoFonal);
+        log("Fonalvagas vege: fonal(ak) sikeresen torolve.");
     }
 
-    /**
-     * Lebenitja a rovart.
-     */
-    public void benulas(){
-        hivasLog("benulas()", List.of(), 0);
-        log("A rovar megbenult");
-    }
 
-    public Tekton getTekton() {
-        hivasLog("getTekton()", List.of(), 0);
-        log("Rovar tektonjanak lekerese");
-        return tekton;
-    }
 }
+

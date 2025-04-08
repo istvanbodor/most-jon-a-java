@@ -1,13 +1,10 @@
 package lab.proj.mostjonajava.model;
 
-import lab.proj.mostjonajava.utils.Logger;
-import lombok.Data;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import static lab.proj.mostjonajava.utils.Logger.hivasLog;
 import static lab.proj.mostjonajava.utils.Logger.log;
+import lombok.Data;
 
 
 @Data
@@ -15,10 +12,6 @@ public class GombaFonal {
     private Tekton honnan;
     private Tekton hova;
     private Gombatest gombatest;
-
-
-    public GombaFonal()
-    {}
 
     public GombaFonal(Tekton honnan, Tekton hova, Gombatest gombatest) {
         hivasLog("GombaFonal(Tekton honnan, Tekton hova, Gombatest gombatest)", List.of(), 2);

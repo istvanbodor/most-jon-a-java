@@ -7,27 +7,26 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public abstract class Jatekos {
     private String nev;
-    private int pont;
-    private boolean aktiv;
+    private int pont = 0;
+    private boolean aktiv = true;
 
     /**
      * A jatekos konstruktora
      * @param nev A jatekos neve
      */
     public Jatekos(String nev) {
-//        this.nev = nev;
-//        this.pont = 0;
-//        this.aktiv = true;
+        this.nev = nev;
     }
-
-    /**
-     * Kivalaszt egy tektont.
-     */
-    public Tekton tektonKivalasztasa() { return null; }
 
     /**
      * A jatekosok pontszamat lehet vele novelni a parameterben megadott ertekkel.
      * @param ertek
      */
-    public void pontNovelese(int ertek) {}
+    public int getPont() { return pont; }
+
+    /**
+     * A jatekosok pontszamat lehet vele novelni a parameterben megadott ertekkel.
+     * @param ertek
+     */
+    public void setPont(int ertek) { pont = ertek; }
 }

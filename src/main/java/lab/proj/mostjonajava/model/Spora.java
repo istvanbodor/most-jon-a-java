@@ -9,13 +9,19 @@ public abstract class Spora {
     private int tapanyagErtek;
 
     /**
+     * Spora konstuktora.
+     */
+    Spora(int tapErtek){
+        this.tapanyagErtek = tapErtek;
+    }
+
+    /**
      * A spora kifejti a hatasat a rovarra, amelyik megeszi,
      * ezt a fuggvenyt a leszarmazott osztalyai valositjak meg.
      */
     public abstract void hatasKifejtese(Rovar rovar);
 
-    /**
-     * Uj spora letrehozasa.
-     */
-    public abstract Spora ujSporaLetrehozasa();
+    public int getTapanyag(){
+        return tapanyagErtek;
+    }
 }
