@@ -15,7 +15,6 @@ public class OsztodoSpora extends Spora {
      */
     public OsztodoSpora() {
         super(5);
-        hivasLog("OsztodoSpora()", List.of(), 0);
         log("Osztodo spora letrejotte.");
     }
 
@@ -25,12 +24,10 @@ public class OsztodoSpora extends Spora {
     @Override
     public void hatasKifejtese(Rovar rovar) {
         hivasLog("hatasKifejtese(Rovar rovar)", List.of("rovar: Rovar"), 0);
-        if (rovar != null) {
-            Rovar ujRovar = new Rovar(rovar.getTekton(), rovar.getRovarasz());
-            rovar.getTekton().getRovarok().add(ujRovar);
-            rovar.getRovarasz().getRovarok().add(ujRovar);
-            log("Osztodo spora megtette a hatasat.");
-        }
+        Rovar ujRovar = new Rovar(rovar.getTekton(), rovar.getRovarasz());
+        rovar.getTekton().getRovarok().add(ujRovar);
+        rovar.getRovarasz().getRovarok().add(ujRovar);
+        log("Osztodo spora megtette a hatasat.");
     }
 }
 

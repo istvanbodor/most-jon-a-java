@@ -12,7 +12,7 @@ public abstract class Tekton {
 
     private static int nextId = 1;
     private int id;
-    private int fonalakElettartama = -1;
+    private int fonalakElettartama;
 
     private List<Tekton> szomszedosTektonok;
     private List<Rovar> rovarok;
@@ -22,10 +22,11 @@ public abstract class Tekton {
     private Gombatest gombatest;
 
     /**
-     * Gombatest konstruktora.
+     * Tekton konstruktora, amely paraméterként átveszi az élettartamot.
      * @param eletTartam
      */
     Tekton(int eletTartam) {
+        hivasLog("Tekton(int eletTartam)", List.of("eletTartam: int"), 1);
         fonalakElettartama = eletTartam;
         this.id = nextId++;
         this.szomszedosTektonok = new ArrayList<>();
@@ -51,9 +52,12 @@ public abstract class Tekton {
     public boolean gombatestNoveszthetoE() {
         hivasLog("gombatestNoveszthetoE()", List.of(), 0);
         for (GombaFonal fonal : gombafonalak) {
-            if ((fonal.getHonnan() == this || fonal.getHova() == this) && sporak.size() >= 3)
+            if ((fonal.getHonnan() == this || fonal.getHova() == this) && sporak.size() >= 3){
+                log("true");
                 return true;
+            }
         }
+        log("false");
         return false;
     }
 
@@ -64,7 +68,12 @@ public abstract class Tekton {
      */
     public boolean gombatestFejleszthetoE() {
         hivasLog("gombatestFejleszthetoE()", List.of(), 0);
-        return sporak.size() >= 3 && gombatest != null;
+        if(sporak.size() >= 3 && gombatest != null){
+            log("true");
+            return true;}
+        log("false");
+        return false;
+
     }
 
     /**
@@ -74,7 +83,11 @@ public abstract class Tekton {
      */
     public boolean szomszedossagEllenorzese(Tekton tekton) {
         hivasLog("szomszedossagEllenorzese(Tekton tekton)", List.of("tekton: Tekton"), 1);
-        return szomszedosTektonok.contains(tekton);
+        if(szomszedosTektonok.contains(tekton)){
+            log("true");
+            return true;}
+        log("false");
+        return false;
     }
 
     /**
@@ -85,9 +98,12 @@ public abstract class Tekton {
     public boolean szomszedSzomszedEllenorzese(Tekton tekton) {
         hivasLog("szomszedSzomszedEllenorzese(Tekton tekton)", List.of("tekton: Tekton"), 1);
         for (Tekton szomszed : szomszedosTektonok) {
-            if (szomszed.getSzomszedosTektonok().contains(tekton)) 
+            if (szomszed.getSzomszedosTektonok().contains(tekton)){
+                log("true");
                 return true;
+            }
         }
+        log("false");
         return false;
     }
 
@@ -101,29 +117,46 @@ public abstract class Tekton {
         if (this.equals(tekton)) return false;
         for (GombaFonal fonal : gombafonalak) {
             if ((fonal.getHonnan().equals(this) && fonal.getHova().equals(tekton)) || (fonal.getHova().equals(this) && fonal.getHonnan().equals(tekton))) {
+                log("true");
                 return true;
             }
         }
+        log("false");
         return false;
     }
+
+    /**
+     * Visszatér a tekton id-jával.
+     * @return 
+     */
+    public int getId(){ return id; }
 
     /**
      * Visszaadja a szomszédos tektonokat.
      * @return
      */
-    public List<Tekton> getSzomszedosTektonok() { return szomszedosTektonok; }
+    public List<Tekton> getSzomszedosTektonok() {
+        hivasLog("getSzomszedosTektonok()", List.of(), 1);
+        return szomszedosTektonok;
+    }
 
     /**
      * Visszaadja a tektonon lévő rovarokat.
      * @return
      */
-    public List<Rovar> getRovarok() { return rovarok; }
+    public List<Rovar> getRovarok() {
+        hivasLog("getRovarok()", List.of(), 1);
+        return rovarok;
+    }
 
     /**
      * Visszaadja a tektonont összekötő gombafonalakat.
      * @return
      */
-    public List<GombaFonal> getGombafonal() { return gombafonalak; }
+    public List<GombaFonal> getGombafonalak() {
+        hivasLog("getGombafonal()", List.of(), 1);
+        return gombafonalak;
+    }
 
     /**
      * Törlődik a megadott fonal - a FonalElteto (ebben fix) és lehet az EltunoFonalas tektonba override-ol
@@ -139,26 +172,36 @@ public abstract class Tekton {
      * Hozzáad egy gombafonalat a tektonhoz. - az Egyfonalas tektonban override-ol
      * @param fonal
      */
-    public void setGombafonal(GombaFonal fonal) { this.gombafonalak.add(fonal); }
+    public void setGombafonal(GombaFonal fonal) { 
+        hivasLog("setGombafonal(GombaFonal fonal)", List.of("fonal: Gombafonal"), 1);
+        gombafonalak.add(fonal);
+        log("Fonal hozzaadasa sikeres volt.");
+    }
 
     /**
      * Visszaadja a tektonon lévő spórákat.
      * @return
      */
-    public List<Spora> getSporak() { return sporak; }
+    public List<Spora> getSporak() {
+        hivasLog("getSporak()", List.of(), 1);
+        return sporak;
+    }
 
     /**
      * Visszaadja a tektonon lévő gombatestet.
      * @return
      */
-    public Gombatest getGombatest() { return gombatest; }
+    public Gombatest getGombatest() {
+        hivasLog("getGombatest()", List.of(), 1);
+        return gombatest;
+    }
 
     /**
      * Hozzáad egy gombatestet a tektonhoz. - a TestNelkuli tektonban override-ol
      * @param gombatest
      */
     public void setGombatest(Gombatest gombatest) {
-        hivasLog("setGombatest(Gombatest gombatest)", List.of("gombatest: Gombatest - " + gombatest.toString()), 0);
+        hivasLog("setGombatest(Gombatest gombatest)", List.of("gombatest: Gombatest"), 0);
         this.gombatest = gombatest;
         log("Gombatest beallitasra kerult");
     }

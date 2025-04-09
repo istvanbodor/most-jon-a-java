@@ -23,8 +23,7 @@ public class FejlettGombatest extends Gombatest {
         setKilohetoSporakSzama(eredeti.getKilohetoSporakSzama());
         setElszortSporakSzama(eredeti.getElszortSporakSzama());
         setNoveszthetoFonalakSzama(eredeti.getNoveszthetoFonalakSzama());
-    
-        log("FejlettGombatest példány létrejött (inicializálva, de még nincs csatolva).");
+        log("FejlettGombatest letrejott.");
     }
     
     /**
@@ -36,13 +35,8 @@ public class FejlettGombatest extends Gombatest {
     public void sporaKiloves(Tekton celTekton, int mennyiseg) {
         hivasLog("sporaKiloves(Tekton tekton, int mennyiseg)", List.of("tekton: Tekton", "mennyiseg: int"), 0);
 
-        if (!getTekton().szomszedSzomszedEllenorzese(celTekton)) {
-            log("A kiválasztott tekton nem szomszédos a gombatesttel.");
-            return;
-        }
-
-        if (getKilohetoSporakSzama() < mennyiseg) {
-            log("Nincs eleg kiloheto spora. Maradek: " + getKilohetoSporakSzama());
+        if (!getTekton().szomszedSzomszedEllenorzese(celTekton) || getKilohetoSporakSzama() < mennyiseg) {
+            log("Spora kilovese sikertelen.");
             return;
         }
 
@@ -51,16 +45,14 @@ public class FejlettGombatest extends Gombatest {
 
         Random rand = new Random();
         for (int i = 0; i < mennyiseg; i++) {
-            int valasztas = rand.nextInt(6);
-            Spora spora;
-            switch (valasztas) {
-                case 0 -> spora = new BenitoSpora();
-                case 1 -> spora = new VagasTiltoSpora();
-                case 2 -> spora = new OsztodoSpora();
-                case 3 -> spora = new LassitoSpora();
-                case 4 -> spora = new GyorsitoSpora();
-                default -> spora = new SimaSpora();
-            }
+            Spora spora = switch (rand.nextInt(6)) {
+                case 0 -> new BenitoSpora();
+                case 1 -> new VagasTiltoSpora();
+                case 2 -> new OsztodoSpora();
+                case 3 -> new LassitoSpora();
+                case 4 -> new GyorsitoSpora();
+                default -> new SimaSpora();
+            };
             celTekton.getSporak().add(spora);
         }
         log("Spora(k) kilovese sikeres volt: " + mennyiseg + " db");

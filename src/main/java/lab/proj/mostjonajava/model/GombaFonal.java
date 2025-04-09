@@ -19,11 +19,11 @@ public class GombaFonal {
      * @param gombatest
      */
     public GombaFonal(Tekton honnan, Tekton hova, Gombatest gombatest) {
-        hivasLog("GombaFonal(Tekton honnan, Tekton hova, Gombatest gombatest)", List.of(), 2);
+        hivasLog("GombaFonal(Tekton honnan, Tekton hova, Gombatest gombatest)", List.of("honnan: Tekton - " + honnan.toString(), "hova: Tekton - " + hova.toString()  +" gombatest: Gombatest"), 2);
         this.honnan = honnan;
         this.hova = hova;
         this.gombatest = gombatest; 
-        log("Fonal letrejott a ket tekton kozott");
+        log("Fonal letrejott");
     }
 
     /**
@@ -35,13 +35,8 @@ public class GombaFonal {
     
         Tekton rovarTektonja = rovar.getTekton();
 
-        if (!(rovarTektonja.equals(honnan) || rovarTektonja.equals(hova))) {
-            log("A rovar nem a fonal egyik végén van, nem fogyasztható el.");
-            return;
-        }
-
-        if (!rovar.getBenulas()) {
-            log("A rovar nincs lebénulva, nem fogyasztható el.");
+        if ((!rovarTektonja.equals(honnan) && !rovarTektonja.equals(hova)) || !rovar.getBenulas()) {
+            log("A rovar nem fogyaszthato el.");
             return;
         }
 
@@ -51,31 +46,43 @@ public class GombaFonal {
         Gombatest ujGombatest = new Gombatest(rovarTektonja, gombatest.getGombasz());
         getGombatest().getGombasz().getGombatestek().add(ujGombatest);
         rovarTektonja.setGombatest(ujGombatest);
-        log("Új Gombatest letrejott a rovar helyén.");
+        log("Gombatest letrejott.");
     }
 
     /**
      * Visszatér a gombafonal egyik tektonjával. 
      * @return
      */
-    public Tekton getHonnan(){ return honnan; }
+    public Tekton getHonnan(){
+        hivasLog("getHonnan()", List.of(), 1);
+        return honnan;
+    }
 
     /**
      * Visszatér a gombafonal másik tektonjával. 
      * @return
      */
-    public Tekton getHova(){ return hova; }
+    public Tekton getHova(){
+        hivasLog("getHova()", List.of(), 1);
+        return hova;
+    }
 
     /**
      * Visszatér a gombafonal gombatestével. 
      * @return
      */
-    public Gombatest getGombatest(){ return gombatest; }
+    public Gombatest getGombatest(){
+        hivasLog("getGombatest()", List.of(), 1);
+        return gombatest;
+    }
 
     /**
      * Beállíthatjuk vele a gombafonál gombatestjét.
      * @param gombatest
      */
-    public void setGombatest(Gombatest gombatest){ this.gombatest = gombatest; }
+    public void setGombatest(Gombatest gombatest){
+        hivasLog("setGombatest(Gombatest gombatest)", List.of("gombatest: Gombatest"), 0);
+        this.gombatest = gombatest;
+    }
 
 }

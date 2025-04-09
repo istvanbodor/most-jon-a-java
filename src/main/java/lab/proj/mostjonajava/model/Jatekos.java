@@ -1,12 +1,15 @@
 package lab.proj.mostjonajava.model;
 
+import java.util.List;
+
+import static lab.proj.mostjonajava.utils.Logger.hivasLog;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 public abstract class Jatekos {
-    
+
     private String nev;
     private int pont = 0;
     private boolean aktiv = true;
@@ -21,11 +24,17 @@ public abstract class Jatekos {
      * A jatekosok pontszamat lehet vele novelni a parameterben megadott ertekkel.
      * @param ertek
      */
-    public int getPont() { return pont; }
+    public int getPont() {
+        hivasLog("getPont()", List.of(), 1);
+        return pont;
+    }
 
     /**
      * A jatekosok pontszamat lehet vele novelni a parameterben megadott ertekkel.
      * @param ertek
      */
-    public void setPont(int ertek) { pont = ertek; }
+    public void setPont(int ertek) {
+        hivasLog("setPont(int ertek)", List.of("ertek: int"), 1);
+        pont = ertek;
+    }
 }

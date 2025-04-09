@@ -16,7 +16,7 @@ public class SimaSpora extends Spora {
      */
     public SimaSpora() {
         super(10);
-        hivasLog("SimaSpora()", List.of(), 0);
+        hivasLog("SimaSpora()", List.of(), 1);
         log("Sima spora letrejotte.");
     }
 
@@ -27,9 +27,7 @@ public class SimaSpora extends Spora {
     @Override
     public void hatasKifejtese(Rovar rovar) {
         hivasLog("hatasKifejtese(Rovar rovar)", List.of("rovar: Rovar"), 0);
-        if (rovar != null) {
-            log("Sima spora megtette a hatasat.");
-        }
+        log("Sima spora megtette a hatasat.");
     }
 
     

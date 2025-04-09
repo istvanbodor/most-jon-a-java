@@ -26,6 +26,7 @@ public class Rovar {
      * @param rovarasz
      */
     public Rovar(Tekton tekton, Rovarasz rovarasz) {
+        hivasLog("Rovar(Tekton tekton, Rovarasz rovarasz)", List.of("tekton: Tekton - " + id + "rovarasz: Rovarasz - " + id), 1);
         this.id = nextId++;
         this.honnan = tekton;
         this.rovarasz = rovarasz;
@@ -34,12 +35,13 @@ public class Rovar {
 
     /**
      * A rovar lepeseert felelos egyik tektonrol a masikra.
+     * Feltételek: legyen a két tekton között fonál és ne legyen a rovar lebénulva.
      * @param hova
      */
     public void lepes(Tekton hova) {
         hivasLog("lepes(Tekton hova)", List.of("tekton: Tekton - " + honnan.toString()), 0);
-        if (!honnan.vanFonalKozottuk(hova)) {
-            log("Nem koti ossze fonal a tektonokat, a rovar nem tud lepni koztuk");
+        if (!honnan.vanFonalKozottuk(hova) || benulas) {
+            log("A lepes sikertelen");
             return;
         }
         honnan.getRovarok().remove(this);
@@ -51,6 +53,7 @@ public class Rovar {
 
     /**
      * Spora elfogyasztasa.
+     * Feltételek: legyen a tektonon spóra.
      * @param tekton
      */
     public void sporaElfogyasztas(Tekton tekton) {
@@ -69,17 +72,18 @@ public class Rovar {
 
     /**
      * Elvagja a fonalat a kijelolt tekton es az a tekton kozott, ahol a rovar all.
+     * Feltételek: legyen a kiválasztott tekton és ad adott tekton között fonál illetve tudjon a rovar fonalat vágni.
      * @param tekton
      */
     public void fonalVagas(Tekton hova) {
         hivasLog("fonalVagas(Tekton tekton)", List.of("tekton: Tekton - " + hova.toString()), 0);
-        if (!honnan.vanFonalKozottuk(hova)) {
-            log("Nem letezik fonal a ket tekton kozott, nem lehet vagni.");
+        if (!honnan.vanFonalKozottuk(hova) || !vagoKepesseg) {
+            log("Fonal vagas sikertelen");
             return;
         }
 
         GombaFonal torlendoFonal = null;
-        for (GombaFonal fonal : honnan.getGombafonal()) {
+        for (GombaFonal fonal : honnan.getGombafonalak()) {
             if ((fonal.getHonnan().equals(honnan) && fonal.getHova().equals(hova)) || (fonal.getHova().equals(honnan) && fonal.getHonnan().equals(hova))) {
                 torlendoFonal = fonal;
                 break;
@@ -94,16 +98,26 @@ public class Rovar {
     }
 
     /**
+     * Visszatér a rovar id-jával.
+     * @return 
+     */
+    public int getId(){ return id; }
+
+    /**
      * Visszatér a rovar vágóképességével.
      * @return 
      */
-    public boolean getVagoKepesseg(){ return vagoKepesseg; }
+    public boolean getVagoKepesseg(){
+        hivasLog("getVagoKepesseg()", List.of(), 1);
+        return vagoKepesseg;
+    }
 
     /**
      * Beállítjuk a rovar vágóképességét.
      * @param ertek
      */
     public void setVagoKepesseg(boolean ertek) {
+        hivasLog("setVagoKepesseg(boolean ertek)", List.of("ertek: boolean"), 1);
         this.vagoKepesseg = ertek;
         log("A rovar elvesztette a vagokepesseget");
     }
@@ -112,13 +126,17 @@ public class Rovar {
      * Visszatér azzal, hogy a rovar bénult-e.
      * @return 
      */
-    public boolean getBenulas(){ return benulas; }
+    public boolean getBenulas(){
+        hivasLog("getBenulas()", List.of(), 1);
+        return benulas;
+    }
 
     /**
      * Beállítjuk a rovar bénulási állapotával.
      * @param ertek
      */
     public void setBenulas(boolean ertek) {
+        hivasLog("setBenulas(boolean ertek)", List.of("ertek: boolean"), 1);
         this.benulas = ertek;
         log("A rovar megbenult");
     }
@@ -127,25 +145,38 @@ public class Rovar {
      * Visszatér a rovar rovarászával.
      * @return 
      */
-    public Rovarasz getRovarasz(){ return rovarasz; }
+    public Rovarasz getRovarasz(){
+        hivasLog("getRovarasz()", List.of(), 1);
+        return rovarasz;
+    }
 
     /**
      * Visszatér azzal a tektonnal, amelyiken a rovar jeleneg van.
      * @return 
      */
-    public Tekton getTekton(){ return honnan; }
+    public Tekton getTekton(){
+        hivasLog("getTkekton()", List.of(), 1);
+
+        return honnan;
+    }
 
     /**
      * Visszatér a rovar lépésszámával.
      * @return 
      */
-    public int getLepesSzam(){ return lepesSzam; }
+    public int getLepesSzam(){
+        hivasLog("getLepesSzam()", List.of(), 1);
+        return lepesSzam;
+    }
 
     /**
      * Beállítja a rovar lépésszámát.
      * @param ertek 
      */
-    public void setLepesSzam(int ertek){ lepesSzam = ertek; }
+    public void setLepesSzam(int ertek){
+        hivasLog("setLepesSzam(int ertek)", List.of("ertek: int"), 1);
+        lepesSzam = ertek;
+    }
 
 }
 

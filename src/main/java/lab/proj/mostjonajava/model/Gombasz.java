@@ -23,9 +23,9 @@ public class Gombasz extends Jatekos {
      */
     public Gombasz(String nev) {
         super(nev);
+        hivasLog("Gombasz(String nev)", List.of("nev: String - " + nev), 1);
         this.id = nextId++;
         this.gombatestek = new ArrayList<>();
-        hivasLog("Gombasz(String nev)", List.of("nev: String - " + nev), 1);
         log("Gombasz letrejott");
     }
 
@@ -46,7 +46,7 @@ public class Gombasz extends Jatekos {
             tekton.setGombatest(ujGombatest);
 
             setPont(getPont() + 1);
-            log("Gombatest novesztese sikeres volt. Gombasz pontja novelve.");
+            log("Gombatest novesztese sikeres.");
         } else {
             log("Nem lehet gombatestet noveszteni a megadott tektonon.");
         }
@@ -76,15 +76,24 @@ public class Gombasz extends Jatekos {
             }
 
             gombatest.elpusztulas();
-            log("Gombatest fejlesztese sikeres volt.");
+            log("Gombatest fejlesztese sikeres.");
         } else {
             log("Nem lehet fejleszteni a megadott gombatestet.");
         }
     }
 
     /**
+     * Visszatér a gombász id-jával.
+     * @return 
+     */
+    public int getId(){ return id; }
+
+    /**
      * Visszatér a gombász gombatestjeivel.
      * @return 
      */
-    public List<Gombatest> getGombatestek() { return gombatestek; }
+    public List<Gombatest> getGombatestek() {
+        hivasLog("getGombatestek()", List.of(), 1);
+        return gombatestek;
+    }
 }

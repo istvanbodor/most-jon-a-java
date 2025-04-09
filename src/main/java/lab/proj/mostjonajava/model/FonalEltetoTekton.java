@@ -13,7 +13,7 @@ public class FonalEltetoTekton extends Tekton {
      */
     public FonalEltetoTekton() {
         super(-1);
-        log("FonalEltetoTekton letrejott.");
+        hivasLog("FonalEltetoTekton()", List.of(), 1);
     }
 
     /**
@@ -33,14 +33,14 @@ public class FonalEltetoTekton extends Tekton {
         }
 
         // egyéb gombafonal törlése a tektonról
-        List<GombaFonal> torlendoFonalak = new ArrayList<>(this.getGombafonal());
-        for (GombaFonal fonal : torlendoFonalak) { this.getGombafonal().remove(fonal); }
+        List<GombaFonal> torlendoFonalak = new ArrayList<>(this.getGombafonalak());
+        for (GombaFonal fonal : torlendoFonalak) { this.getGombafonalak().remove(fonal); }
 
         // spórák törlése a tektonról
         List<Spora> torlendoSporak = new ArrayList<>(this.getSporak());
         for (Spora spora : torlendoSporak) { this.getSporak().remove(spora);  }
 
-        log("Kettetoeres befejezodott: sporak es fonalak torlodtek, gombatest leválasztva.");
+        log("A tekton kettetort.");
     }
 
     //TODO
@@ -53,6 +53,6 @@ public class FonalEltetoTekton extends Tekton {
     @Override
     public void fonalTorlese(GombaFonal fonal) {
         hivasLog("fonalTorlese(GombaFonal fonal)", List.of("fonal: Gombafonal"), 1);
-        log("Fonal torlese sikeres volt.");
+        log("Fonal torles sikerleten.");
     }
 }

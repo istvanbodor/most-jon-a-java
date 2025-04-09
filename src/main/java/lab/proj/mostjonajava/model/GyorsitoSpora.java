@@ -15,7 +15,6 @@ public class GyorsitoSpora extends Spora {
      */
     public GyorsitoSpora() {
         super(5);
-        hivasLog("GyorsitoSpora()", List.of(), 0);
         log("Gyorsito spora letrejotte.");
     }
 
@@ -25,9 +24,7 @@ public class GyorsitoSpora extends Spora {
     @Override
     public void hatasKifejtese(Rovar rovar) {
         hivasLog("hatasKifejtese(Rovar rovar)", List.of("rovar: Rovar"), 0);
-        if (rovar != null) {
-            rovar.setLepesSzam(rovar.getLepesSzam()+1);
-            log("Gyorsito spora megtette a hatasat.");
-        }
+        rovar.setLepesSzam(rovar.getLepesSzam()+1);
+        log("Gyorsito spora megtette a hatasat.");
     }
 }

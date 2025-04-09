@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lab.proj.mostjonajava.game.Jatek;
 import lab.proj.mostjonajava.model.*;
-import lab.proj.mostjonajava.model.Gombatest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,7 +42,7 @@ public class FungoriumApplication extends Application {
 
             switch (parancs) {
                 case MENTES -> mentes(parameterek);
-                case BETOLTOES -> betoltes(parameterek);
+                case BETOLTES -> betoltes(parameterek);
                 case MAKE -> make(parameterek);
                 case ALLAPOT -> allapot(parameterek);
                 case JATEKINDITAS -> jatekInditasa(parameterek);
@@ -71,6 +70,14 @@ public class FungoriumApplication extends Application {
         }
     }
 
+
+    private static void mentes(String[] parameterek) { }
+
+    private static void betoltes(String[] parameterek) { }
+
+    private static void make(String[] parameterek) { }
+
+    private static void allapot(String[] parameterek) { }
 
     private static void jatekInditasa(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 3)) return;

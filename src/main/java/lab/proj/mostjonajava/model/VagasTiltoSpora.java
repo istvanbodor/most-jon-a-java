@@ -16,10 +16,10 @@ public class VagasTiltoSpora extends Spora {
      */
     public VagasTiltoSpora() {
         super(15);
-        hivasLog("VagasTiltoSpora()", List.of(), 0);        
-        log("Vagastilto spora letrejotte.");
+        hivasLog("VagasTiltoSpora()", List.of(), 1);
+        log("Vagastilto spora letrejott.");
     }
-    
+
     /**
      * Kifejti a hatasat a rovarra, ami a rovarok vagas kepessegenek korlatozasa.
      * @param rovar

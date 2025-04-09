@@ -89,7 +89,7 @@ public class Gombatest {
         // minden olyan fonalat törlünk, ami olyan tektonban van, amely már nem kapcsolódik a gombatesthez
         for (Tekton tek : List.of(honnan, hova)) {
             List<GombaFonal> torlendoFonalak = new ArrayList<>();
-            for (GombaFonal fon : tek.getGombafonal()) {    
+            for (GombaFonal fon : tek.getGombafonalak()) {    
                 if (!elerhetoTektonok.contains(fon.getHonnan()) || !elerhetoTektonok.contains(fon.getHova()))
                     torlendoFonalak.add(fon);
             }
@@ -97,7 +97,7 @@ public class Gombatest {
                 tek.fonalTorlese(torolheto);
             }
         }
-        log("Fonal torlese gombatestbol es elszakadt fonalak eltavolitasa is sikeres volt.");
+        log("Fonal torlese sikeres.");
     }
 
     /**
@@ -141,13 +141,8 @@ public class Gombatest {
     public void sporaKiloves(Tekton celTekton, int mennyiseg) {
         hivasLog("sporaKiloves(Tekton tekton, int mennyiseg)", List.of("tekton: Tekton", "mennyiseg: int"), 0);
 
-        if (!tekton.szomszedossagEllenorzese(celTekton)) {
-            log("A kiválasztott tekton nem szomszédos a gombatesttel.");
-            return;
-        }
-
-        if (kilohetoSporakSzama < mennyiseg) {
-            log("Nincs eleg kiloheto spora. Maradek: " + kilohetoSporakSzama);
+        if (!tekton.szomszedossagEllenorzese(celTekton) || kilohetoSporakSzama < mennyiseg) {
+            log("Spora kilovese sikertelen.");
             return;
         }
 
@@ -156,66 +151,94 @@ public class Gombatest {
 
         Random rand = new Random();
         for (int i = 0; i < mennyiseg; i++) {
-            int valasztas = rand.nextInt(6);
-            Spora spora;
-            switch (valasztas) {
-                case 0 -> spora = new BenitoSpora();
-                case 1 -> spora = new VagasTiltoSpora();
-                case 2 -> spora = new OsztodoSpora();
-                case 3 -> spora = new LassitoSpora();
-                case 4 -> spora = new GyorsitoSpora();
-                default -> spora = new SimaSpora();
-            }
+            Spora spora = switch (rand.nextInt(6)) {
+                case 0 -> new BenitoSpora();
+                case 1 -> new VagasTiltoSpora();
+                case 2 -> new OsztodoSpora();
+                case 3 -> new LassitoSpora();
+                case 4 -> new GyorsitoSpora();
+                default -> new SimaSpora();
+            };
             celTekton.getSporak().add(spora);
         }
-        log("Spora(k) kilovese sikeres volt: " + mennyiseg + " db");
+        log("Sporak kilovese sikeres volt.");
     }
+
+    /**
+     * Visszatér a gombatest id-jával.
+     * @return 
+     */
+    public int getId(){return id; }
 
     /**
      * Visszatér a gombatest tektonjával.
      * @return 
      */
-    public Tekton getTekton() { return tekton; }
+    public Tekton getTekton() {
+        hivasLog("getTekton()", List.of(), 0);
+        return tekton;
+    }
 
     /**
      * Beállítja a tektont.
      * @param ertek
      */
-    public void setTekton(Tekton ertek) { tekton = ertek; }
+    public void setTekton(Tekton tekton) {
+        hivasLog("setTekton(Tekton tekton)", List.of("tekton: Tekton"), 0);
+        this.tekton = tekton;
+    }
 
     /**
      * Visszatér a gombatest gombászával.
      * @return 
      */
-    public Gombasz getGombasz() { return gombasz; }
+    public Gombasz getGombasz() {
+        hivasLog("getGombasz()", List.of(), 0);
+        return gombasz;
+    }
 
     /**
      * Beállítja a gombászt. 
      * @param ertek
      */
-    public void setGombasz(Gombasz ertek) { gombasz = ertek; }
+    public void setGombasz(Gombasz gombasz) {
+        hivasLog("setGombasz(Gombasz gombasz)", List.of("gombasz: Gombasz"), 0);
+        this.gombasz = gombasz;
+    }
 
     /**
      * Visszatér a kilőhető spórák számával.
      * @return 
      */
-    public int getKilohetoSporakSzama() { return kilohetoSporakSzama; }
+    public int getKilohetoSporakSzama() {
+        hivasLog("getKilohetoSporakSzama()", List.of(), 0);
+        return kilohetoSporakSzama;
+    }
 
     /**
      * Visszatér az elszórt spórák számával.
      * @return 
      */
-    public int getElszortSporakSzama() { return elszortSporakSzama; }
+    public int getElszortSporakSzama() {
+        hivasLog("getElszortSporakSzama()", List.of(), 0);
+        return elszortSporakSzama;
+    }
 
     /**
      * Visszatér a növeszthető fonalak számával.
      * @return 
      */
-    public int getNoveszthetoFonalakSzama() { return noveszthetoFonalakSzama; }
+    public int getNoveszthetoFonalakSzama() {
+        hivasLog("getNoveszthetoFonalakSzama()", List.of(), 0);
+        return noveszthetoFonalakSzama;
+    }
 
     /**
      * Visszatér a gombatest gombafonalaival.
      * @return 
      */
-    public List<GombaFonal> getGombaFonalak() { return gombaFonalak; }
+    public List<GombaFonal> getGombaFonalak() {
+        hivasLog("getGombaFonalak()", List.of(), 0);
+        return gombaFonalak;
+    }
 }
