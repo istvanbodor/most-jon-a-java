@@ -11,8 +11,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class Gombasz extends Jatekos {
+
     private static int nextId;
     private int id;
+
     private List<Gombatest> gombatestek;
 
     /**
@@ -36,24 +38,20 @@ public class Gombasz extends Jatekos {
 
         if (tekton.gombatestNoveszthetoE()) {
             // 3 spóra törlése
-            for (int i = 0; i < 3 && tekton.getSporaSzam() > 0; i++) {
-                tekton.sporaTorlese(tekton.getSporak().get(0));
+            for (int i = 0; i < 3 && !tekton.getSporak().isEmpty(); i++) {
+                tekton.getSporak().remove(tekton.getSporak().get(0));
             }
+            Gombatest ujGombatest = new Gombatest(tekton, this);
+            getGombatestek().add(ujGombatest);
+            tekton.setGombatest(ujGombatest);
 
-            // új gombatest létrehozása
-            Gombatest gombatest = new Gombatest();
-            gombatest.setTekton(tekton);
-            gombatest.setGombasz(this);
-            tekton.setGombatest(gombatest);
-            this.gombatestek.add(gombatest);
-
-            // pont növelése
             setPont(getPont() + 1);
             log("Gombatest novesztese sikeres volt. Gombasz pontja novelve.");
         } else {
             log("Nem lehet gombatestet noveszteni a megadott tektonon.");
         }
     }
+
     /**
      * Egy adott gombatest tovább fejlődését valósítja meg.
      * @param gombatest
@@ -62,48 +60,31 @@ public class Gombasz extends Jatekos {
         hivasLog("gombaTestFejlesztes(Gombatest gombatest)", List.of("gombatest: Gombatest"), 1);
     
         Tekton tekton = gombatest.getTekton();
-    
-        if (tekton != null && tekton.gombatestFejleszthetoE()) {
+        if (tekton.gombatestFejleszthetoE()) {
             // 3 spóra törlése
-            for (int i = 0; i < 3 && tekton.getSporaSzam() > 0; i++) {
-                tekton.sporaTorlese(tekton.getSporak().get(0));
+            for (int i = 0; i < 3 && !tekton.getSporak().isEmpty(); i++) {
+                tekton.getSporak().remove(tekton.getSporak().get(0));
             }
     
-            // Fejlett példány létrehozása és alapadatok átvétele
-            FejlettGombatest fejlett = new FejlettGombatest(gombatest);
-    
-            // Tektonban lecseréljük a gombatestet
-            tekton.setGombatest(fejlett);
-    
-            // Gombásznál lecseréljük
-            if (gombatest.getGombasz() != null) {
-                gombatest.getGombasz().gombatestTorles(gombatest);
-                gombatest.getGombasz().setGombatest(fejlett);
+            FejlettGombatest ujGombatest = new FejlettGombatest(gombatest);
+            gombatest.getTekton().setGombatest(ujGombatest);
+            gombatest.getGombasz().getGombatestek().add(ujGombatest);
+
+            for (GombaFonal fonal : gombatest.getGombaFonalak()) {
+                fonal.setGombatest(ujGombatest);
+                ujGombatest.getGombaFonalak().add(fonal);
             }
-    
-            // GombaFonalak gombatestje frissítve az új példányra
-            for (GombaFonal fonal : fejlett.getGombaFonalak()) {
-                fonal.setGombatest(fejlett);
-            }
-    
-            // Régi példány "elpusztítása" (kapcsolatok bontása)
-            gombatest.elpusztulas(false);
-    
+
+            gombatest.elpusztulas();
             log("Gombatest fejlesztese sikeres volt.");
         } else {
             log("Nem lehet fejleszteni a megadott gombatestet.");
         }
     }
 
-    public List<Gombatest> getGombatestek() {
-        return gombatestek;
-    }
-
-    public void setGombatest(Gombatest gombatest) {
-        this.gombatestek.add(gombatest);
-    }
-
-    public void gombatestTorles(Gombatest gombatest) {
-        this.gombatestek.remove(gombatest);
-    }
+    /**
+     * Visszatér a gombász gombatestjeivel.
+     * @return 
+     */
+    public List<Gombatest> getGombatestek() { return gombatestek; }
 }

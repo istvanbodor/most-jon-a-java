@@ -1,20 +1,19 @@
 package lab.proj.mostjonajava.game;
 
-import lab.proj.mostjonajava.model.Gombasz;
-import lab.proj.mostjonajava.model.Rovar;
-import lab.proj.mostjonajava.model.Tekton;
-import lombok.Data;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import lab.proj.mostjonajava.model.Gombasz;
+import lab.proj.mostjonajava.model.Rovarasz;
+import lab.proj.mostjonajava.model.Tekton;
 import static lab.proj.mostjonajava.utils.Logger.hivasLog;
+import lombok.Data;
 
 @Data
 public class Jatek {
     public static List<Tekton> tektonok;
 
-    public static List<Rovar> rovaraszok;
+    public static List<Rovarasz> rovaraszok;
 
     public static List<Gombasz> gombaszok;
 
@@ -36,7 +35,7 @@ public class Jatek {
         for (int i = 0; i < jatekosokSzama; i++) {
             String nev = jatekosNevek.get(i);
             if (i % 2 == 1) {
-              Rovar rovar = new Rovar(nev);
+                Rovarasz rovarasz = new Rovarasz(nev);
             } else {
                Gombasz gombasz = new Gombasz(nev);
             }

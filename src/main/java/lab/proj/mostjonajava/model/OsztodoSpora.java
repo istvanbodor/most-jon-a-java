@@ -26,7 +26,9 @@ public class OsztodoSpora extends Spora {
     public void hatasKifejtese(Rovar rovar) {
         hivasLog("hatasKifejtese(Rovar rovar)", List.of("rovar: Rovar"), 0);
         if (rovar != null) {
-            new Rovar(rovar.getTekton(), rovar.getRovarasz());    
+            Rovar ujRovar = new Rovar(rovar.getTekton(), rovar.getRovarasz());
+            rovar.getTekton().getRovarok().add(ujRovar);
+            rovar.getRovarasz().getRovarok().add(ujRovar);
             log("Osztodo spora megtette a hatasat.");
         }
     }

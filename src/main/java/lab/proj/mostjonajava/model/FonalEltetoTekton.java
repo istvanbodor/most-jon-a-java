@@ -15,6 +15,7 @@ public class FonalEltetoTekton extends Tekton {
         super(-1);
         log("FonalEltetoTekton letrejott.");
     }
+
     /**
      * A tekton kettetoresenek megvalositasa.
      */
@@ -22,26 +23,30 @@ public class FonalEltetoTekton extends Tekton {
     public void ketteTores() {
         hivasLog("ketteTores()", List.of(), 0);
 
-        FonalEltetoTekton ujTekton = new FonalEltetoTekton();
+        TestNelkuliTekton ujTekton = new TestNelkuliTekton();
+        getSzomszedosTektonok().add(ujTekton); // minek legyen még a szomszédja?
         
-        this.getGombatest().elpusztulas(true);
-        this.setGombatest(null);
-        List<GombaFonal> torlendoFonalak = new ArrayList<>(this.getGombafonalak());
-        for (GombaFonal fonal : torlendoFonalak) {
-            this.fonalTorlese(fonal); // tektonról törlés
-            if (this.getGombatest() != null) {
-                this.getGombatest().fonalTorles(fonal); // gombatestről törlés
-            }
+        // gombatest törlése a tektonról és önmagát is töröljük a fonalaival (ezért elpusztul függvény)
+        if (this.getGombatest() != null) {
+            this.getGombatest().elpusztulas();  
+            this.setGombatest(null); 
         }
 
+        // egyéb gombafonal törlése a tektonról
+        List<GombaFonal> torlendoFonalak = new ArrayList<>(this.getGombafonal());
+        for (GombaFonal fonal : torlendoFonalak) { this.getGombafonal().remove(fonal); }
+
+        // spórák törlése a tektonról
         List<Spora> torlendoSporak = new ArrayList<>(this.getSporak());
-        for (Spora spora : torlendoSporak) {
-            this.sporaTorlese(spora);
-        }
+        for (Spora spora : torlendoSporak) { this.getSporak().remove(spora);  }
 
         log("Kettetoeres befejezodott: sporak es fonalak torlodtek, gombatest leválasztva.");
     }
 
+    /**
+     * Fonal törlése esetén itt nem törlődik a fonál -> még pontosan nincs jól megoldva
+     * @param fonal
+     */
     @Override
     public void fonalTorlese(GombaFonal fonal) {
         hivasLog("fonalTorlese(GombaFonal fonal)", List.of("fonal: Gombafonal"), 1);

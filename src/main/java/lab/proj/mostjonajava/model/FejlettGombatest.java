@@ -12,18 +12,17 @@ import lombok.EqualsAndHashCode;
 @Data
 public class FejlettGombatest extends Gombatest {
     
+    /**
+     * Fejlett gombatest konstuktora.
+     * @param eredeti
+     */
     public FejlettGombatest(Gombatest eredeti) {
-        super(); // új példány, új ID-vel
+        super();
         setTekton(eredeti.getTekton());
         setGombasz(eredeti.getGombasz());
         setKilohetoSporakSzama(eredeti.getKilohetoSporakSzama());
         setElszortSporakSzama(eredeti.getElszortSporakSzama());
         setNoveszthetoFonalakSzama(eredeti.getNoveszthetoFonalakSzama());
-        
-        // Fonalakat egyenként másoljuk
-        for (GombaFonal fonal : eredeti.getGombaFonalak()) {
-            this.setGombaFonalak(fonal); // saját setterrel, ami hozzáad
-        }
     
         log("FejlettGombatest példány létrejött (inicializálva, de még nincs csatolva).");
     }
@@ -62,7 +61,7 @@ public class FejlettGombatest extends Gombatest {
                 case 4 -> spora = new GyorsitoSpora();
                 default -> spora = new SimaSpora();
             }
-            celTekton.setSpora(spora);
+            celTekton.getSporak().add(spora);
         }
         log("Spora(k) kilovese sikeres volt: " + mennyiseg + " db");
     }

@@ -22,6 +22,7 @@ public class SimaSpora extends Spora {
 
     /**
      * Kifejti a hatasat a rovarra, ami jelenleg csak a tapanyagszint noveles.
+     * @param rovar
      */
     @Override
     public void hatasKifejtese(Rovar rovar) {

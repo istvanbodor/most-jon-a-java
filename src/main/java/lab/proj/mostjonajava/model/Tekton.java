@@ -22,9 +22,10 @@ public abstract class Tekton {
     private Gombatest gombatest;
 
     /**
-     * Alapértelmezett konstruktor.
+     * Gombatest konstruktora.
+     * @param eletTartam
      */
-    public Tekton(int eletTartam) {
+    Tekton(int eletTartam) {
         fonalakElettartama = eletTartam;
         this.id = nextId++;
         this.szomszedosTektonok = new ArrayList<>();
@@ -35,28 +36,27 @@ public abstract class Tekton {
     }
 
     /**
-     * Egy tekton ketté törik.
+     * Egy tekton ketté törik. Minden származtatott osztályban külön van implementálva.
      */
     public abstract void ketteTores();
 
      /**
      * Ellenőrzi, hogy növeszthető-e gombatest az adott tekton.
-     *
+     * Feltételek: legyen legalább 3 spóra a tektonon és legyen összekötve fonallal.
      * @return
      */
     public boolean gombatestNoveszthetoE() {
         hivasLog("gombatestNoveszthetoE()", List.of(), 0);
-        if (sporak.size() < 3 || gombafonalak.isEmpty()) return false;
         for (GombaFonal fonal : gombafonalak) {
-            if (fonal.getHonnan() != this || fonal.getHova() != this) {
+            if ((fonal.getHonnan() == this || fonal.getHova() == this) && sporak.size() >= 3)
                 return true;
-            }
         }
         return false;
     }
 
     /**
      * Ellenőrzi, hogy fejleszthető e a tektonon található gombatest
+     * Feltételek: legyen legalább 3 spóra a tektonon és gombatest, amit fejleszthetsz.
      * @return
      */
     public boolean gombatestFejleszthetoE() {
@@ -64,24 +64,32 @@ public abstract class Tekton {
         return sporak.size() >= 3 && gombatest != null;
     }
 
+    /**
+     * Ellenőrzi, hogy a paraméterben kapott tekton szomszédja-e az adott tektonnak.
+     * @param tekton
+     * @return
+     */
     public boolean szomszedossagEllenorzese(Tekton tekton) {
         hivasLog("szomszedossagEllenorzese(Tekton tekton)", List.of("tekton: Tekton"), 1);
         return szomszedosTektonok.contains(tekton);
     }
 
+    /**
+     * Ellenőrzi, hogy a paraméterben kapott tekton szomszédja vagy a szomszédainak szomszédja-e az adott tektonnak.
+     * @param tekton
+     * @return
+     */
     public boolean szomszedSzomszedEllenorzese(Tekton tekton) {
         hivasLog("szomszedSzomszedEllenorzese(Tekton tekton)", List.of("tekton: Tekton"), 1);
         for (Tekton szomszed : szomszedosTektonok) {
-            if (szomszed.getSzomszedosTektonok().contains(tekton)) {
+            if (szomszed.getSzomszedosTektonok().contains(tekton)) 
                 return true;
-            }
         }
         return false;
     }
 
     /**
-     * Jelzi, hogy van-e fonal a két tekton között (amin áll és ami a paraméter).
-     *
+     * Ellenőrzi, hogy van-e fonal a két tekton között (amin áll és ami a paraméter).
      * @param tekton
      * @return
      */
@@ -96,82 +104,59 @@ public abstract class Tekton {
         return false;
     }
 
-    public int getSporaSzam(){ return sporak.size(); }
+    /**
+     * Visszaadja a szomszédos tektonokat.
+     * @return
+     */
+    public List<Tekton> getSzomszedosTektonok() { return szomszedosTektonok; }
 
-    public void rovarTorlese(Rovar rovar) {
-        hivasLog("rovarTorlese(Rovar rovar)", List.of("rovar: Rovar"), 1);
-        rovarok.remove(rovar);
+    /**
+     * Visszaadja a tektonon lévő rovarokat.
+     * @return
+     */
+    public List<Rovar> getRovarok() { return rovarok; }
+
+    /**
+     * Visszaadja a tektonont összekötő gombafonalakat.
+     * @return
+     */
+    public List<GombaFonal> getGombafonal() { return gombafonalak; }
+
+    /**
+     * Törlődik a megadott fonal - a FonalElteto (ebben fix) és lehet az EltunoFonalas tektonba override-ol
+     * @param fonal
+     */
+    public void fonalTorlese(GombaFonal fonal) {
+        hivasLog("fonalTorlese(GombaFonal fonal)", List.of("fonal: Gombafonal"), 1);
+        gombafonalak.remove(fonal);
+        log("Fonal torlese sikeres volt.");
     }
 
-    public void sporaTorlese(Spora spora) {
-        hivasLog("sporaTorlese(Spora spora)", List.of("spora: Spora"), 1);
-        sporak.remove(spora);
-    }
+    /**
+     * Hozzáad egy gombafonalat a tektonhoz. - az Egyfonalas tektonban override-ol
+     * @param fonal
+     */
+    public void setGombafonal(GombaFonal fonal) { this.gombafonalak.add(fonal); }
 
+    /**
+     * Visszaadja a tektonon lévő spórákat.
+     * @return
+     */
+    public List<Spora> getSporak() { return sporak; }
+
+    /**
+     * Visszaadja a tektonon lévő gombatestet.
+     * @return
+     */
+    public Gombatest getGombatest() { return gombatest; }
+
+    /**
+     * Hozzáad egy gombatestet a tektonhoz. - a TestNelkuli tektonban override-ol
+     * @param gombatest
+     */
     public void setGombatest(Gombatest gombatest) {
         hivasLog("setGombatest(Gombatest gombatest)", List.of("gombatest: Gombatest - " + gombatest.toString()), 0);
         this.gombatest = gombatest;
         log("Gombatest beallitasra kerult");
     }
-
-    public void setRovar(Rovar rovar) {
-        hivasLog("setRovar(Rovar rovar)", List.of("rovar: Rovar"), 1);
-        rovarok.add(rovar);
-        log("Rovar beallitasra kerult a tektonon");
-    }
-
-    /**
-     * Törlődik a megadott fonal.
-     *
-     * @param fonal
-     */
-    public void fonalTorlese(GombaFonal fonal) {
-        hivasLog("fonalTorlese(GombaFonal fonal)", List.of("fonal: Gombafonal"), 1);
-        new Gombatest().fonalTorles(fonal);
-        log("Fonal torlese sikeres volt.");
-    }
-
-    public List<Tekton> getSzomszedosTektonok() {
-        return szomszedosTektonok;
-    }
-
-    public void setSzomszedosTekton(Tekton tekton) {
-        this.szomszedosTektonok.add(tekton);
-    }
-
-    public List<Rovar> getRovarok() {
-        return rovarok;
-    }
-
-    public void setRovarok(Rovar rovar) {
-        this.rovarok.add(rovar);
-    }
-
-    public List<GombaFonal> getGombafonalak() {
-        return gombafonalak;
-    }
-
-    /**
-     * Hozzáad egy fonalat a tektonhoz.
-     *
-     * @param fonal
-     */
-    public void setGombafonal(GombaFonal fonal) {
-        this.gombafonalak.add(fonal);
-    }
-
-    public List<Spora> getSporak() {
-        return sporak;
-    }
-
-    /**
-     * Hozzáad egy spórát.
-     *
-     * @param spora
-     */
-    public void setSpora(Spora spora) {
-        this.sporak.add(spora);
-        log("Spora hozzaadasa sikeres volt.");
-    }
-
 }

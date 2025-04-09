@@ -14,9 +14,7 @@ public abstract class Jatekos {
      * A jatekos konstruktora
      * @param nev A jatekos neve
      */
-    public Jatekos(String nev) {
-        this.nev = nev;
-    }
+    Jatekos(String nev) { this.nev = nev; }
 
     /**
      * A jatekosok pontszamat lehet vele novelni a parameterben megadott ertekkel.

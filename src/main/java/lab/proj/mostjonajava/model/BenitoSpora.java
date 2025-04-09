@@ -18,6 +18,7 @@ public class BenitoSpora extends Spora {
         hivasLog("BenitoSpora()", List.of(), 0);
         log("Benito spora letrejotte.");
     }
+    
     /**
      * Kifejti a hatasat a rovarra, ami a benitas.
      */

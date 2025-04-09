@@ -19,15 +19,15 @@ public class VagasTiltoSpora extends Spora {
         hivasLog("VagasTiltoSpora()", List.of(), 0);        
         log("Vagastilto spora letrejotte.");
     }
+    
     /**
      * Kifejti a hatasat a rovarra, ami a rovarok vagas kepessegenek korlatozasa.
+     * @param rovar
      */
     @Override
     public void hatasKifejtese(Rovar rovar) {
         hivasLog("hatasKifejtese(Rovar rovar)", List.of("rovar: Rovar"), 0);
-        if (rovar != null) {
-            rovar.setVagoKepesseg(false);
-            log("Vagas tilto spora megtette a hatasat.");
-        }
+        rovar.setVagoKepesseg(false);
+        log("Vagas tilto spora megtette a hatasat.");
     }
 }

@@ -13,69 +13,130 @@ public class Gombatest {
 
     private static int nextId = 1;
     private int id;
+
     private Tekton tekton;
     private Gombasz gombasz;
-    private List<GombaFonal> gombaFonalak;
     private int kilohetoSporakSzama;
     private int elszortSporakSzama;
     private int noveszthetoFonalakSzama = 1;
 
+    private List<GombaFonal> gombaFonalak;
+
     /**
-     * A gombatest konstruktora
+     * A gombatest konstruktora paraméterek nélkül (fejlesztésnél jön elő)
      */
     public Gombatest() {
         this.id = nextId++;
+        log("Gombatest letrejott.");
+    }
+
+    /**
+     * A gombatest konstruktora
+     * @param tekton
+     * @param gombasz
+     */
+    public Gombatest(Tekton tekton, Gombasz gombasz) {
+        this.id = nextId++;
+        this.gombasz = gombasz;
+        this.tekton = tekton;
         this.gombaFonalak = new ArrayList<>();
         log("Gombatest letrejott.");
     }
 
     /**
      * Egy új fonalat növeszt.
-     *
+     * Feltétel: szomszédos a két tekton
      * @param honnan
      * @param hova
      */
     public void fonalNovesztes(Tekton honnan, Tekton hova) {
         hivasLog("fonalNovesztes(Tekton honnan, Tekton hova)", List.of("honnan: Tekton - " + honnan.toString(), "hova: Tekton - " + hova.toString()), 0);
-        if(!honnan.vanFonalKozottuk(hova) && hova.gombatestNoveszthetoE() && honnan.szomszedossagEllenorzese(hova)) {
-            GombaFonal gombaFonal = new GombaFonal(this.getTekton(), hova, this);
+        if(honnan.szomszedossagEllenorzese(hova)) {
+            GombaFonal gombaFonal = new GombaFonal(honnan, hova, this);
             honnan.setGombafonal(gombaFonal);
             hova.setGombafonal(gombaFonal);
             gombaFonalak.add(gombaFonal);
             noveszthetoFonalakSzama--;
-            log("Teljesulnek a feltetelek");
+            log("Fonalnovesztes sikeres");
         }
         else {
-            log("Nem teljesulnek a fonalnovesztes feltetelei");
+            log("Nem novesztheto gombafonal");
         }
     }
-
-    //ezt atirni ez bonyolultabb lesz
-    public void fonalTorles(GombaFonal fonal) {
-        hivasLog("fonalTorles(GombaFonal fonal)", List.of("fonal: Gombafonal"), 2);
-        gombaFonalak.remove(fonal);
-        log("Fonal torlese gombatestbol sikeres volt.");
-    }
-
 
     /**
-     * Megsemmisíti a gombatestet, a fonalakkal együtt.
+     * Ha egy fonalat törlünk, akkor más fonalak már nem biztos, hogy összeköttetésben maradnak a gombatestükkel.
+     * Azokat a fonalakat töröljük, amik már nem kapcsolódnak hozzájuk, ezeket dfs bejárással keressük meg.
+     * @param fonal
      */
-    public void elpusztulas(boolean fonalakTorlese) { // az uj tekton tipus miatt nem igy fog teljesen kinezni
-        hivasLog("elpusztulas()", List.of(), 0);
-        tekton.setGombatest(null);
-        tekton = null;
-        gombasz = null;
-        if (fonalakTorlese) {
-            //a fonalTorlest kell meg meghivni de az még nincs kidolgozva
+    public void fonalTorles(GombaFonal fonal) {
+        hivasLog("fonalTorles(GombaFonal fonal)", List.of("fonal: Gombafonal"), 2);
+    
+        // eltávolítás a gombatestből
+        gombaFonalak.remove(fonal);
+    
+        // eltávolítás a tektonokból, azt még meg kell oldani, hogy marad meg ha az egyik tekton FonalElteto
+        Tekton honnan = fonal.getHonnan();
+        Tekton hova = fonal.getHova();
+        honnan.fonalTorlese(fonal);
+        hova.fonalTorlese(fonal);
+    
+        // megmaradt fonalak bejárása: melyik tekton éri még el a gombatestet?
+        List<Tekton> elerhetoTektonok = new ArrayList<>();
+
+        dfsTektonBejaras(tekton, elerhetoTektonok);
+    
+        // minden olyan fonalat törlünk, ami olyan tektonban van, amely már nem kapcsolódik a gombatesthez
+        for (Tekton tek : List.of(honnan, hova)) {
+            List<GombaFonal> torlendoFonalak = new ArrayList<>();
+            for (GombaFonal fon : tek.getGombafonalak()) {    
+                if (!elerhetoTektonok.contains(fon.getHonnan()) || !elerhetoTektonok.contains(fon.getHova()))
+                    torlendoFonalak.add(fon);
+            }
+            for (GombaFonal torolheto : torlendoFonalak) {
+                tek.fonalTorlese(torolheto);
+            }
         }
+        log("Fonal torlese gombatestbol es elszakadt fonalak eltavolitasa is sikeres volt.");
+    }
+
+    /**
+     * Dfs bejárás, hogy megtaláljuk az "elérhetetlen" tektonokat
+     * @param aktualis
+     * @param bejart
+     */
+    private void dfsTektonBejaras(Tekton aktualis, List<Tekton> bejart) {
+        if (bejart.contains(aktualis)) return;
+        bejart.add(aktualis);
+    
+        for (GombaFonal fonal : aktualis.getGombafonalak()) {
+            Tekton kovetkezo = fonal.getHonnan().equals(aktualis) ? fonal.getHova() : fonal.getHonnan();
+            dfsTektonBejaras(kovetkezo, bejart);
+        }
+    }
+    
+    /**
+     * Megsemmisíti a gombatestet, az összes fonalával együtt.
+     */
+    public void elpusztulas() { 
+        hivasLog("elpusztulas()", List.of(), 0);
+        
+        List<GombaFonal> torlendoFonalak = new ArrayList<>(gombaFonalak);
+        for (GombaFonal fonal : torlendoFonalak) {
+            fonal.getHonnan().fonalTorlese(fonal);
+            fonal.getHova().fonalTorlese(fonal);
+        }
+        gombaFonalak.clear();
+        tekton.setGombatest(null);
+        gombasz.getGombatestek().remove(this);
+        
         log("A gombatest elpusztult");
     }
 
     /**
-     * Spórákat lő ki.
-     *
-     * @param tekton
+     * Spórákat lő ki szomszédos tektonra, random generátor segítségével.
+     * @param celTekton
+     * @param mennyiseg
      */
     public void sporaKiloves(Tekton celTekton, int mennyiseg) {
         hivasLog("sporaKiloves(Tekton tekton, int mennyiseg)", List.of("tekton: Tekton", "mennyiseg: int"), 0);
@@ -105,60 +166,56 @@ public class Gombatest {
                 case 4 -> spora = new GyorsitoSpora();
                 default -> spora = new SimaSpora();
             }
-            celTekton.setSpora(spora);
+            celTekton.getSporak().add(spora);
         }
         log("Spora(k) kilovese sikeres volt: " + mennyiseg + " db");
     }
 
-    public Tekton getTekton() {
-        return tekton;
-    }
+    /**
+     * Visszatér a gombatest tektonjával.
+     * @return 
+     */
+    public Tekton getTekton() { return tekton; }
 
-    public void setTekton(Tekton tekton) {
-        this.tekton = tekton;
-    }
+    /**
+     * Beállítja a tektont.
+     * @param ertek
+     */
+    public void setTekton(Tekton ertek) { tekton = ertek; }
 
-    public Gombasz getGombasz() {
-        return gombasz;
-    }
+    /**
+     * Visszatér a gombatest gombászával.
+     * @return 
+     */
+    public Gombasz getGombasz() { return gombasz; }
 
-    public void setGombasz(Gombasz gombasz) {
-        this.gombasz = gombasz;
-    }
+    /**
+     * Beállítja a gombászt. 
+     * @param ertek
+     */
+    public void setGombasz(Gombasz ertek) { gombasz = ertek; }
 
-    public int getKilohetoSporakSzama() {
-        return kilohetoSporakSzama;
-    }
+    /**
+     * Visszatér a kilőhető spórák számával.
+     * @return 
+     */
+    public int getKilohetoSporakSzama() { return kilohetoSporakSzama; }
 
-    public void setKilohetoSporakSzama(int kilohetoSporakSzama) {
-        this.kilohetoSporakSzama = kilohetoSporakSzama;
-    }
+    /**
+     * Visszatér az elszórt spórák számával.
+     * @return 
+     */
+    public int getElszortSporakSzama() { return elszortSporakSzama; }
 
-    public int getElszortSporakSzama() {
-        return elszortSporakSzama;
-    }
+    /**
+     * Visszatér a növeszthető fonalak számával.
+     * @return 
+     */
+    public int getNoveszthetoFonalakSzama() { return noveszthetoFonalakSzama; }
 
-    public void setElszortSporakSzama(int elszortSporakSzama) {
-        this.elszortSporakSzama = elszortSporakSzama;
-    }
-
-    public int getNoveszthetoFonalakSzama() {
-        return noveszthetoFonalakSzama;
-    }
-
-    public void setNoveszthetoFonalakSzama(int noveszthetoFonalakSzama) {
-        this.noveszthetoFonalakSzama = noveszthetoFonalakSzama;
-    }
-
-    public List<GombaFonal> getGombaFonalak() {
-        return gombaFonalak;
-    }
-
-    public void setGombaFonalak(GombaFonal gombaFonal) {
-        gombaFonalak.add(gombaFonal);
-    }
-
-    public void setGombaFonalak(List<GombaFonal> fonalak) {
-        this.gombaFonalak.addAll(fonalak);
-    }
+    /**
+     * Visszatér a gombatest gombafonalaival.
+     * @return 
+     */
+    public List<GombaFonal> getGombaFonalak() { return gombaFonalak; }
 }
