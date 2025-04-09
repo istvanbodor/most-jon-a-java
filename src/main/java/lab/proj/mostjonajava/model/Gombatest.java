@@ -112,10 +112,15 @@ public class Gombatest {
                 } 
                 // Ha csak egyik oldalról sikerült, visszarakjuk
                 else {
-                    if (honnanTorolve && !fon.getHova().getGombafonalak().contains(fon)) {
+                    // Ha egyik oldal sem tudott törölni, nem csinálunk semmit
+                    if (!honnanTorolve && !hovaTorolve) {
+                        return;
+                    }
+                    // Visszarakás csak akkor, ha egyik oldalról töröltünk
+                    if (honnanTorolve) {
                         fon.getHova().getGombafonalak().add(fon);
                     }
-                    if (hovaTorolve && !fon.getHonnan().getGombafonalak().contains(fon)) {
+                    if (hovaTorolve) {
                         fon.getHonnan().getGombafonalak().add(fon);
                     }
                 }

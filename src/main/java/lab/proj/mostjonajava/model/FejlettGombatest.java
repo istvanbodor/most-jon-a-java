@@ -35,6 +35,7 @@ public class FejlettGombatest extends Gombatest {
     public void sporaKiloves(Tekton celTekton, int mennyiseg) {
         hivasLog("sporaKiloves(Tekton tekton, int mennyiseg)", List.of("tekton: Tekton", "mennyiseg: int"), 0);
 
+        //feltételek ellenőrzése
         if (!getTekton().szomszedSzomszedEllenorzese(celTekton) || getKilohetoSporakSzama() < mennyiseg) {
             log("Spora kilovese sikertelen.");
             return;
@@ -43,6 +44,7 @@ public class FejlettGombatest extends Gombatest {
         setKilohetoSporakSzama(getKilohetoSporakSzama() - mennyiseg);
         setElszortSporakSzama(getElszortSporakSzama() + mennyiseg);
 
+        //random alapján spórák létrehozésa
         Random rand = new Random();
         for (int i = 0; i < mennyiseg; i++) {
             Spora spora = switch (rand.nextInt(6)) {
@@ -53,8 +55,9 @@ public class FejlettGombatest extends Gombatest {
                 case 4 -> new GyorsitoSpora();
                 default -> new SimaSpora();
             };
+            //céltektonhoz hozzáadjuk a spórákat
             celTekton.getSporak().add(spora);
         }
-        log("Spora(k) kilovese sikeres volt: " + mennyiseg + " db");
+        log("Sporak kilovese sikeres volt.");
     }
 }
