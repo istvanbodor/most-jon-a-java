@@ -153,10 +153,10 @@ public abstract class Tekton {
      * Visszaadja a tektonont összekötő gombafonalakat.
      * @return
      */
-    public List<GombaFonal> getGombafonalak() {
+    /*public List<GombaFonal> getGombafonalak() {
         hivasLog("getGombafonal()", List.of(), 1);
         return gombafonalak;
-    }
+    }*/
 
     /**
      * Törlődik a megadott fonal - a FonalElteto (ebben fix) és lehet az EltunoFonalas tektonba override-ol
@@ -164,7 +164,9 @@ public abstract class Tekton {
      */
     public void fonalTorlese(GombaFonal fonal) {
         hivasLog("fonalTorlese(GombaFonal fonal)", List.of("fonal: Gombafonal"), 1);
-        gombafonalak.remove(fonal);
+        fonal.getHonnan().getGombafonalak().remove(fonal);
+        fonal.getHova().getGombafonalak().remove(fonal);
+        fonal.getGombatest().getGombaFonalak().remove(fonal);
         log("Fonal torlese sikeres volt.");
     }
 
@@ -204,5 +206,27 @@ public abstract class Tekton {
         hivasLog("setGombatest(Gombatest gombatest)", List.of("gombatest: Gombatest"), 0);
         this.gombatest = gombatest;
         log("Gombatest beallitasra kerult");
+    }
+
+    /**
+     * Bizonyos tektonoknál (pl. Eltűnő fonalas) számolni kell az eltelt időt, ezt valósítja meg ez a fügvény.
+     */
+    public void korFrissites() {
+        hivasLog("korFrissites()", List.of(), 0);
+        if (fonalakElettartama == -1) return; // ez nem tűnik el idővel
+
+        fonalakElettartama--;
+    
+        if (fonalakElettartama == 0) {
+            List<GombaFonal> torlendoFonalak = new ArrayList<>(getGombafonalak());
+            for (GombaFonal fonal : torlendoFonalak) {
+                fonal.getGombatest().fonalTorles(fonal);
+                fonal.getHonnan().getGombafonalak().remove(fonal);
+                fonal.getHova().getGombafonalak().remove(fonal);
+            }
+    
+            fonalakElettartama = 3;
+            log("Fonalak torlese megtortent az EltunoFonalasTektonon.");
+        }
     }
 }

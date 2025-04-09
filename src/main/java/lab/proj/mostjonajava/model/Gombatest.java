@@ -74,16 +74,14 @@ public class Gombatest {
     
         // eltávolítás a gombatestből
         gombaFonalak.remove(fonal);
-    
-        // eltávolítás a tektonokból, azt még meg kell oldani, hogy marad meg ha az egyik tekton FonalElteto
         Tekton honnan = fonal.getHonnan();
         Tekton hova = fonal.getHova();
-        honnan.fonalTorlese(fonal);
-        hova.fonalTorlese(fonal);
+        honnan.getGombafonalak().remove(fonal); 
+        hova.getGombafonalak().remove(fonal); 
+            
     
         // megmaradt fonalak bejárása: melyik tekton éri még el a gombatestet?
         List<Tekton> elerhetoTektonok = new ArrayList<>();
-
         dfsTektonBejaras(tekton, elerhetoTektonok);
     
         // minden olyan fonalat törlünk, ami olyan tektonban van, amely már nem kapcsolódik a gombatesthez
@@ -123,8 +121,8 @@ public class Gombatest {
         
         List<GombaFonal> torlendoFonalak = new ArrayList<>(gombaFonalak);
         for (GombaFonal fonal : torlendoFonalak) {
-            fonal.getHonnan().fonalTorlese(fonal);
-            fonal.getHova().fonalTorlese(fonal);
+            fonal.getHonnan().getGombafonalak().remove(fonal);
+            fonal.getHova().getGombafonalak().remove(fonal);
         }
         gombaFonalak.clear();
         tekton.setGombatest(null);

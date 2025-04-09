@@ -15,7 +15,6 @@ public class EltunoFonalasTekton extends Tekton {
     /**
      * A tekton konstruktora.
      */
-
     public EltunoFonalasTekton() {
         super(3);
         hivasLog("EltunoFonalasTekton()", List.of(), 1);
@@ -47,21 +46,4 @@ public class EltunoFonalasTekton extends Tekton {
 
         log("A tekton kettetort.");
     }
-
-    //TODO
-    //ezzel mi legyen? inkább nem a controllerben kéne?
-    // + valami függvény overrideja nem kell ide? mert csak egy idő után tünnek el, inkább azt is a controllerben?
-    /**
-     * Bizonyos tektonoknál (pl. Eltűnő fonalas) számolni kell az eltelt időt, ezt valósítja meg ez a fügvény.
-     */
-    /*public void eletIdoCsokkentes(GombaFonal gombafonal) {
-        hivasLog("eletIdoCsokkentes(GombaFonal gombafonal)", List.of("gombafonal: Gombafonal"), 0);
-        fonalakElettartama--;
-        log("Eletido csokkentve.");
-        if (fonalakElettartama <= 0) {
-            gombafonal.fonalTorlese(gombafonal);
-            fonalakElettartama = 1;
-        }
-
-    }*/
 }

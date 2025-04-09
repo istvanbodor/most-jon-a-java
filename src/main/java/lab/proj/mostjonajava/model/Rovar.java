@@ -91,8 +91,6 @@ public class Rovar {
         }
         if (torlendoFonal == null) { log("Nem talalhato konkret GombaFonal a ket tekton kozott."); return; }
 
-        honnan.fonalTorlese(torlendoFonal);
-        hova.fonalTorlese(torlendoFonal);
         torlendoFonal.getGombatest().fonalTorles(torlendoFonal);
         log("Fonalvagas vege: fonal(ak) sikeresen torolve.");
     }
@@ -178,5 +176,14 @@ public class Rovar {
         lepesSzam = ertek;
     }
 
+    /**
+     * Minden kör végén resetelődik a lépések száma, bénulási és fonal vágási képesség.
+     */
+    public void korFrissites() {
+        hivasLog("korFrissites()", List.of(), 0);
+        benulas = false;
+        vagoKepesseg = true;
+        lepesSzam = 2; 
+    }
 }
 
