@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public abstract class Jatekos {
+    
     private String nev;
     private int pont = 0;
     private boolean aktiv = true;

@@ -35,6 +35,9 @@ public abstract class Tekton {
         log("Tekton letrejott.");
     }
 
+    //TODO
+    //szomszédosságot gondoljuk át, kivel szomszédos eredetileg egy tekton, ha ketté törik kivel lesz szomszédos az új,
+    //azon a tektonon kívük, akiből kivált?
     /**
      * Egy tekton ketté törik. Minden származtatott osztályban külön van implementálva.
      */

@@ -42,9 +42,12 @@ public class FungoriumApplication extends Application {
             parancs = parameterek[0];
 
             switch (parancs) {
+                case MENTES -> mentes(parameterek);
+                case BETOLTOES -> betoltes(parameterek);
+                case MAKE -> make(parameterek);
+                case ALLAPOT -> allapot(parameterek);
                 case JATEKINDITAS -> jatekInditasa(parameterek);
                 case FONALNOVESZTES -> testFonalNovesztes(parameterek);
-                case SPORATERMELES -> testSporaTermeles(parameterek);
                 case SIMASPORASZORAS -> testSimaSporaSzoras(parameterek);
                 case FEJLETTSPORASZORAS -> testFejlettSporaSzoras(parameterek);
                 case GOMBATESTNOVESZTES -> testGombaTestNovesztes(parameterek);
@@ -58,7 +61,9 @@ public class FungoriumApplication extends Application {
                 case LASSITOSPORAHATASKIFEJTESE -> testLassitoSporaHatasKifejtese(parameterek);
                 case GYORSITOSPORAHATASKIFEJTESE -> testGyorsitoSporaHatasKifejtese(parameterek);
                 case VAGASBENITOSPORAHATASKIFEJTESE -> testVagasBenitoSporaHatasKifejtese(parameterek);
+                case OSZTODOSPORAHATASKIFEJTESE -> testOsztodoSporaHatasKiejtese(parameterek);
                 case SIMASPORAHATASKIFEJTESE -> testSimaSporaHatasKifejtese(parameterek);
+                case ROVARELFOGYASZTASA -> rovarelfogyasztasa(parameterek);
                 case FONALFELSZIVODAS -> testFonalFelszivodas(parameterek);
                 case KILEPES -> System.exit(0);
                 default -> hibaLog("Nem letezo parancsot adtal meg!");

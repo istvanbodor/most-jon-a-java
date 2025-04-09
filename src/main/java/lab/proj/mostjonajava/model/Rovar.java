@@ -79,7 +79,7 @@ public class Rovar {
         }
 
         GombaFonal torlendoFonal = null;
-        for (GombaFonal fonal : honnan.getGombafonalak()) {
+        for (GombaFonal fonal : honnan.getGombafonal()) {
             if ((fonal.getHonnan().equals(honnan) && fonal.getHova().equals(hova)) || (fonal.getHova().equals(honnan) && fonal.getHonnan().equals(hova))) {
                 torlendoFonal = fonal;
                 break;

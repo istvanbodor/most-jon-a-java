@@ -89,7 +89,7 @@ public class Gombatest {
         // minden olyan fonalat törlünk, ami olyan tektonban van, amely már nem kapcsolódik a gombatesthez
         for (Tekton tek : List.of(honnan, hova)) {
             List<GombaFonal> torlendoFonalak = new ArrayList<>();
-            for (GombaFonal fon : tek.getGombafonalak()) {    
+            for (GombaFonal fon : tek.getGombafonal()) {    
                 if (!elerhetoTektonok.contains(fon.getHonnan()) || !elerhetoTektonok.contains(fon.getHova()))
                     torlendoFonalak.add(fon);
             }

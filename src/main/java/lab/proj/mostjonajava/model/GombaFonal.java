@@ -26,14 +26,32 @@ public class GombaFonal {
         log("Fonal letrejott a ket tekton kozott");
     }
 
-    //TODO
+    /**
+     * Ha a gombafonal egyik tektonján van egy bénult rovar akkor azt a fonal meg tudja enni és helyére gombatest nő.
+     * @param rovar
+     */
     public void rovarElfogyasztas(Rovar rovar){
+        hivasLog("rovarElfogyasztas(Rovar rovar)", List.of("rovar: Rovar"), 1);
+    
+        Tekton rovarTektonja = rovar.getTekton();
 
-    }
+        if (!(rovarTektonja.equals(honnan) || rovarTektonja.equals(hova))) {
+            log("A rovar nem a fonal egyik végén van, nem fogyasztható el.");
+            return;
+        }
 
-    //TODO
-    public void TestNovesztes(Tekton tekton){
+        if (!rovar.getBenulas()) {
+            log("A rovar nincs lebénulva, nem fogyasztható el.");
+            return;
+        }
 
+        rovarTektonja.getRovarok().remove(rovar);
+        rovar.getRovarasz().getRovarok().remove(rovar);
+
+        Gombatest ujGombatest = new Gombatest(rovarTektonja, gombatest.getGombasz());
+        getGombatest().getGombasz().getGombatestek().add(ujGombatest);
+        rovarTektonja.setGombatest(ujGombatest);
+        log("Új Gombatest letrejott a rovar helyén.");
     }
 
     /**

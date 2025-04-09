@@ -13,6 +13,7 @@ public class Rovarasz extends Jatekos {
 
     private static int nextId = 1;
     private int id;
+    
     private List<Rovar> rovarok = new ArrayList<>();
 
     /**

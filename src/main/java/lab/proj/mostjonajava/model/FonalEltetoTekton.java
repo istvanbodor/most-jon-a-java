@@ -43,8 +43,11 @@ public class FonalEltetoTekton extends Tekton {
         log("Kettetoeres befejezodott: sporak es fonalak torlodtek, gombatest leválasztva.");
     }
 
+    //TODO
+    //fonal törlésnél alap esetbe nem tűnik el a fonál viszont ha ezt a fonalat direkt elvágják akkor igen
+    // + ha fonalat törlünk akkor ez esetben a másik tektonról még mindig törlődik a fonál kivéve ha az is ilyen típusú
     /**
-     * Fonal törlése esetén itt nem törlődik a fonál -> még pontosan nincs jól megoldva
+     * Fonal törlése esetén itt nem törlődik a fonál
      * @param fonal
      */
     @Override

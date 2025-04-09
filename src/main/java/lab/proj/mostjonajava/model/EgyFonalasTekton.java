@@ -54,6 +54,6 @@ public class EgyFonalasTekton extends Tekton {
      */
     @Override
     public void setGombafonal(GombaFonal fonal) {
-        if(this.getGombafonalak().isEmpty()) this.setGombafonal(fonal);
+        if(this.getGombafonal().isEmpty()) this.setGombafonal(fonal);
     }
 }
