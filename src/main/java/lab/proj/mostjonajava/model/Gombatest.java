@@ -50,17 +50,32 @@ public class Gombatest {
      * @param hova
      */
     public void fonalNovesztes(Tekton honnan, Tekton hova) {
-        hivasLog("fonalNovesztes(Tekton honnan, Tekton hova)", List.of("honnan: Tekton - " + honnan.toString(), "hova: Tekton - " + hova.toString()), 0);
-        if(honnan.szomszedossagEllenorzese(hova)) {
-            GombaFonal gombaFonal = new GombaFonal(honnan, hova, this);
-            honnan.setGombafonal(gombaFonal);
-            hova.setGombafonal(gombaFonal);
-            gombaFonalak.add(gombaFonal);
-            noveszthetoFonalakSzama--;
-            log("Fonalnovesztes sikeres");
-        }
-        else {
+        hivasLog("fonalNovesztes(Tekton honnan, Tekton hova)", 
+                List.of("honnan: Tekton - " + honnan.toString(), 
+                    "hova: Tekton - " + hova.toString()), 0);
+        
+        if(!honnan.szomszedossagEllenorzese(hova) || noveszthetoFonalakSzama <= 0) {
             log("Nem novesztheto gombafonal");
+            return;
+        }
+
+        GombaFonal gombaFonal = new GombaFonal(honnan, hova, this);
+        
+        honnan.setGombafonal(gombaFonal);
+        
+        if(honnan.getGombafonalak().contains(gombaFonal)) {
+            hova.setGombafonal(gombaFonal);
+            
+            if(hova.getGombafonalak().contains(gombaFonal)) {
+                this.gombaFonalak.add(gombaFonal);
+                noveszthetoFonalakSzama--;
+                log("Fonalnovesztés sikeres");
+            } else {
+                honnan.getGombafonalak().remove(gombaFonal);
+                log("Fonalnovesztes sikertelen");
+            }
+        } else {
+            log("Fonalnovesztes sikertelen");
         }
     }
 
@@ -71,28 +86,39 @@ public class Gombatest {
      */
     public void fonalTorles(GombaFonal fonal) {
         hivasLog("fonalTorles(GombaFonal fonal)", List.of("fonal: Gombafonal"), 2);
-    
-        // eltávolítás a gombatestből
+        
+        // 1. A fő fonal mindenképp törlődik mindenhonnan
+        fonal.getHonnan().getGombafonalak().remove(fonal);
+        fonal.getHova().getGombafonalak().remove(fonal);
         gombaFonalak.remove(fonal);
-        Tekton honnan = fonal.getHonnan();
-        Tekton hova = fonal.getHova();
-        honnan.getGombafonalak().remove(fonal); 
-        hova.getGombafonalak().remove(fonal); 
-            
-    
-        // megmaradt fonalak bejárása: melyik tekton éri még el a gombatestet?
+        
+        // 2. DFS bejárás a levágott ágak keresésére
         List<Tekton> elerhetoTektonok = new ArrayList<>();
         dfsTektonBejaras(tekton, elerhetoTektonok);
-    
-        // minden olyan fonalat törlünk, ami olyan tektonban van, amely már nem kapcsolódik a gombatesthez
-        for (Tekton tek : List.of(honnan, hova)) {
-            List<GombaFonal> torlendoFonalak = new ArrayList<>();
-            for (GombaFonal fon : tek.getGombafonalak()) {    
-                if (!elerhetoTektonok.contains(fon.getHonnan()) || !elerhetoTektonok.contains(fon.getHova()))
-                    torlendoFonalak.add(fon);
-            }
-            for (GombaFonal torolheto : torlendoFonalak) {
-                tek.fonalTorlese(torolheto);
+        
+        // 3. Levágott ágak törlése (kivéve ha mindkét végük FonalElteto)
+        List<GombaFonal> osszesFonal = new ArrayList<>(gombaFonalak);
+        for (GombaFonal fon : osszesFonal) {
+            if (!elerhetoTektonok.contains(fon.getHonnan()) || 
+                !elerhetoTektonok.contains(fon.getHova())) {
+                
+                // Törlés próbálkozás mindkét oldalról
+                boolean honnanTorolve = fon.getHonnan().getGombafonalak().remove(fon);
+                boolean hovaTorolve = fon.getHova().getGombafonalak().remove(fon);
+                
+                // Ha mindkettőből töröltük, akkor gombatestből is
+                if (honnanTorolve && hovaTorolve) {
+                    gombaFonalak.remove(fon);
+                } 
+                // Ha csak egyik oldalról sikerült, visszarakjuk
+                else {
+                    if (honnanTorolve && !fon.getHova().getGombafonalak().contains(fon)) {
+                        fon.getHova().getGombafonalak().add(fon);
+                    }
+                    if (hovaTorolve && !fon.getHonnan().getGombafonalak().contains(fon)) {
+                        fon.getHonnan().getGombafonalak().add(fon);
+                    }
+                }
             }
         }
         log("Fonal torlese sikeres.");
@@ -238,5 +264,23 @@ public class Gombatest {
     public List<GombaFonal> getGombaFonalak() {
         hivasLog("getGombaFonalak()", List.of(), 0);
         return gombaFonalak;
+    }
+
+    /**
+     * Minden kör végén resetelődik a növeszthető fonalak száma és termelődik egy spóra
+     */
+    public void korFrissites() {
+        hivasLog("korFrissites()", List.of(), 0);
+        
+        if (kilohetoSporakSzama < 10) { 
+            kilohetoSporakSzama++;
+        }
+        
+        noveszthetoFonalakSzama = 1;
+        
+        if (elszortSporakSzama >= 10) {
+            log("A gombatest elpusztul");
+            elpusztulas();
+        }
     }
 }

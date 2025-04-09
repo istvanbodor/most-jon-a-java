@@ -36,9 +36,6 @@ public abstract class Tekton {
         log("Tekton letrejott.");
     }
 
-    //TODO
-    //szomszédosságot gondoljuk át, kivel szomszédos eredetileg egy tekton, ha ketté törik kivel lesz szomszédos az új,
-    //azon a tektonon kívük, akiből kivált?
     /**
      * Egy tekton ketté törik. Minden származtatott osztályban külön van implementálva.
      */
@@ -153,10 +150,10 @@ public abstract class Tekton {
      * Visszaadja a tektonont összekötő gombafonalakat.
      * @return
      */
-    /*public List<GombaFonal> getGombafonalak() {
+    public List<GombaFonal> getGombafonalak() {
         hivasLog("getGombafonal()", List.of(), 1);
         return gombafonalak;
-    }*/
+    }
 
     /**
      * Törlődik a megadott fonal - a FonalElteto (ebben fix) és lehet az EltunoFonalas tektonba override-ol
@@ -164,10 +161,8 @@ public abstract class Tekton {
      */
     public void fonalTorlese(GombaFonal fonal) {
         hivasLog("fonalTorlese(GombaFonal fonal)", List.of("fonal: Gombafonal"), 1);
-        fonal.getHonnan().getGombafonalak().remove(fonal);
-        fonal.getHova().getGombafonalak().remove(fonal);
-        fonal.getGombatest().getGombaFonalak().remove(fonal);
-        log("Fonal torlese sikeres volt.");
+        getGombafonalak().remove(fonal);
+        log("Fonal torlese sikeres.");
     }
 
     /**
@@ -205,6 +200,9 @@ public abstract class Tekton {
     public void setGombatest(Gombatest gombatest) {
         hivasLog("setGombatest(Gombatest gombatest)", List.of("gombatest: Gombatest"), 0);
         this.gombatest = gombatest;
+        gombatest.setTekton(this);
+        gombatest.getGombasz().getGombatestek().add(gombatest);
+
         log("Gombatest beallitasra kerult");
     }
 
@@ -220,9 +218,9 @@ public abstract class Tekton {
         if (fonalakElettartama == 0) {
             List<GombaFonal> torlendoFonalak = new ArrayList<>(getGombafonalak());
             for (GombaFonal fonal : torlendoFonalak) {
-                fonal.getGombatest().fonalTorles(fonal);
                 fonal.getHonnan().getGombafonalak().remove(fonal);
                 fonal.getHova().getGombafonalak().remove(fonal);
+                fonal.getGombatest().fonalTorles(fonal);
             }
     
             fonalakElettartama = 3;

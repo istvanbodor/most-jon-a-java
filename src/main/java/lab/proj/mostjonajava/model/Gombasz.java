@@ -42,7 +42,6 @@ public class Gombasz extends Jatekos {
                 tekton.getSporak().remove(tekton.getSporak().get(0));
             }
             Gombatest ujGombatest = new Gombatest(tekton, this);
-            getGombatestek().add(ujGombatest);
             tekton.setGombatest(ujGombatest);
 
             setPont(getPont() + 1);

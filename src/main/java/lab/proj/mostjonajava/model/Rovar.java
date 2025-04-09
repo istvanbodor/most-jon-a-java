@@ -1,5 +1,6 @@
 package lab.proj.mostjonajava.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static lab.proj.mostjonajava.utils.Logger.hivasLog;
@@ -61,7 +62,8 @@ public class Rovar {
         if (!tekton.getSporak().isEmpty()) {
             List<Spora> sporak = tekton.getSporak();
             Spora utolsoSpora = sporak.get(sporak.size() - 1);
-            for (Spora spora : sporak) {
+            List<Spora> torlendoSporak = new ArrayList<>(sporak);
+            for (Spora spora : torlendoSporak) {
                 rovarasz.setPont(rovarasz.getPont() + spora.getTapanyagErtek());
                 tekton.getSporak().remove(spora);
             }
@@ -153,7 +155,7 @@ public class Rovar {
      * @return 
      */
     public Tekton getTekton(){
-        hivasLog("getTkekton()", List.of(), 1);
+        hivasLog("getTekton()", List.of(), 1);
 
         return honnan;
     }
