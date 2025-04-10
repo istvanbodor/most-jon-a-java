@@ -24,7 +24,7 @@ public class BenitoSpora extends Spora {
     @Override
     public void hatasKifejtese(Rovar rovar) {
         hivasLog("hatasKifejtese(Rovar rovar)", List.of("rovar: Rovar"), 0);
-        rovar.setBenulas(true);
+        rovar.setBenulas(true); 
         log("Benito spora megtette a hatasat.");
     }
 }

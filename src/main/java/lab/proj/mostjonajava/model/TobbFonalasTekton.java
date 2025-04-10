@@ -27,23 +27,23 @@ public class TobbFonalasTekton extends Tekton {
     public void ketteTores() {
         hivasLog("ketteTores()", List.of(), 0);
     
-        // 1. Új tekton létrehozása
+        // uj tekton letrehozasa
         TobbFonalasTekton ujTekton = new TobbFonalasTekton();
         getSzomszedosTektonok().add(ujTekton);
         
-        // 2. Gombatest elpusztítása ha van
+        // gombatest elpusztitasa, ha van rajta
         if (this.getGombatest() != null) {
             this.getGombatest().elpusztulas();
             this.setGombatest(null);
         }
     
-        // 3. Minden fonal törlése a tektonról
+        // minden fonal torlese a tektonrol
         List<GombaFonal> fonalak = new ArrayList<>(this.getGombafonalak());
         for (GombaFonal fonal : fonalak) {
-            fonal.getGombatest().fonalTorles(fonal); // Teljes törlés mindenhonnan
+            fonal.getGombatest().fonalTorles(fonal);
         }
     
-        // 4. Spórák törlése
+        // minden spora torlese a tektonbol
         this.getSporak().clear();
         log("A tekton kettetort.");
     }
