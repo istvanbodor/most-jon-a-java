@@ -44,8 +44,8 @@ public class GombaFonal {
         rovar.getRovarasz().getRovarok().remove(rovar);
 
         Gombatest ujGombatest = new Gombatest(rovarTektonja, gombatest.getGombasz());
-        rovarTektonja.setGombatest(ujGombatest);
-        log("Gombatest letrejott.");
+        rovarTektonja.setGombatest(ujGombatest); //ha TestNelkuliTektonrol van szó akkor ebben nem történik semmi
+        log("Rovar elfogyasztva.");
     }
 
     /**

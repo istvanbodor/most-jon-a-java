@@ -45,7 +45,7 @@ public class Gombatest {
 
     /**
      * Egy új fonalat növeszt.
-     * Feltétel: szomszédos a két tekton
+     * Feltétel: szomszédos a két tekton és az egyiken van már a gombatesttől fonál
      * @param honnan
      * @param hova
      */
@@ -54,7 +54,9 @@ public class Gombatest {
                 List.of("honnan: Tekton - " + honnan.toString(), 
                     "hova: Tekton - " + hova.toString()), 0);
         
-        if(!honnan.szomszedossagEllenorzese(hova) || noveszthetoFonalakSzama <= 0) {
+        boolean kapcsolodik = gombaFonalak.stream().anyMatch(f -> f.getHonnan().equals(honnan) || f.getHova().equals(honnan) || f.getHonnan().equals(hova) || f.getHova().equals(hova));
+        
+        if(!honnan.szomszedossagEllenorzese(hova) || noveszthetoFonalakSzama <= 0 || !kapcsolodik) {
             log("Nem novesztheto gombafonal");
             return;
         }
@@ -63,6 +65,7 @@ public class Gombatest {
         
         honnan.setGombafonal(gombaFonal);
         
+        //egyfonalas miatt ellenőrzés ->ha az egyik tektonhoz nem adja hozzá akkor a másikhoz se
         if(honnan.getGombafonalak().contains(gombaFonal)) {
             hova.setGombafonal(gombaFonal);
             
@@ -78,6 +81,14 @@ public class Gombatest {
             log("Fonalnovesztes sikertelen");
         }
     }
+
+    //TODO Elolvasni:
+    //néha gombafonal törlésnél a tekton.getGombafonalak().remove(fonal) függvény hívódik meg,
+    //ez abban az esetben ha a fonal tekton típustól függetlenül kell hogy törlődjön, pl. ha azt a fonalat vágjuk, azon a tektonon van,
+    //ami széttörik vagy mikor a hozzá tartozó gombatest elpusztul
+    //
+    //néha viszont a tekton.gombafonalTorlese(fonal) hívódik meg, ez tektonfüggő hívás, tehát pl. ha elszakad a gombatesttől akkor 
+    //két fonal éltető között megmarad a fonál
 
     /**
      * Ha egy fonalat törlünk, akkor más fonalak már nem biztos, hogy összeköttetésben maradnak a gombatestükkel.
@@ -102,7 +113,7 @@ public class Gombatest {
             if (!elerhetoTektonok.contains(fon.getHonnan()) || 
                 !elerhetoTektonok.contains(fon.getHova())) {
                 
-                // Törlés próbálkozás mindkét oldalról
+                // Törlés próbálkozás mindkét oldalról (ha mindkettő fonal éltető akkor meg kell hagyni, ha csak az egyikből akkor oda visszarakjuk)
                 boolean honnanTorolve = fon.getHonnan().getGombafonalak().remove(fon);
                 boolean hovaTorolve = fon.getHova().getGombafonalak().remove(fon);
                 
