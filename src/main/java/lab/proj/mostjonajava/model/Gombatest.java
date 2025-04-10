@@ -71,7 +71,9 @@ public class Gombatest {
             
             if(hova.getGombafonalak().contains(gombaFonal)) {
                 this.gombaFonalak.add(gombaFonal);
-                noveszthetoFonalakSzama--;
+                if (honnan.getSporak().isEmpty() && hova.getSporak().isEmpty()) {
+                    noveszthetoFonalakSzama--;
+                }
                 log("Fonalnovesztes sikeres");
             } else {
                 honnan.getGombafonalak().remove(gombaFonal);
