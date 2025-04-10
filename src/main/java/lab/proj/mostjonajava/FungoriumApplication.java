@@ -108,9 +108,7 @@ public class FungoriumApplication extends Application {
 
     private static void testFonalNovesztes(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 4)) return;
-        Gombatest gombatest = new Gombatest();
-        gombatest.fonalNovesztes(new EgyFonalasTekton(), new EgyFonalasTekton());
-
+        parameterek[0].fonalNovesztes(parameterek[1], parameterek[2]);
     }
 
     private static void testSporaTermeles(String[] parameterek) {
