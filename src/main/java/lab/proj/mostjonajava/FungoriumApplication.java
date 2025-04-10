@@ -134,8 +134,7 @@ public class FungoriumApplication extends Application {
 
     private static void testSimaSporaSzoras(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 3)) return;
-        Gombatest gombatest = new Gombatest();
-        gombatest.sporaKiloves(new EgyFonalasTekton());
+        parameterek[0].sporaKiloves(parameterek[1]);
     }
 
     private static void testFejlettSporaSzoras(String[] parameterek) {

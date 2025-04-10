@@ -69,7 +69,7 @@ public class Gombatest {
             if(hova.getGombafonalak().contains(gombaFonal)) {
                 this.gombaFonalak.add(gombaFonal);
                 noveszthetoFonalakSzama--;
-                log("Fonalnovesztés sikeres");
+                log("Fonalnovesztes sikeres");
             } else {
                 honnan.getGombafonalak().remove(gombaFonal);
                 log("Fonalnovesztes sikertelen");
@@ -171,6 +171,11 @@ public class Gombatest {
         hivasLog("sporaKiloves(Tekton tekton, int mennyiseg)", List.of("tekton: Tekton", "mennyiseg: int"), 0);
 
         if (!tekton.szomszedossagEllenorzese(celTekton) || kilohetoSporakSzama < mennyiseg) {
+            log("Spora kilovese sikertelen.");
+            return;
+        }
+
+        if(this.getKilohetoSporakSzama() > mennyiseg){
             log("Spora kilovese sikertelen.");
             return;
         }
