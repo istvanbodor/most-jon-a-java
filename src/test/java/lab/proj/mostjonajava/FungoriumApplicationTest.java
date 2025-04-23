@@ -92,16 +92,18 @@ class FungoriumApplicationTest {
      * - t2-n nincs Gombatest
      */
     private static List<Tekton> letrehozPalya2() {
-        // 1) Két tekton
-        Tekton t1 = new TobbFonalasTekton();
-        Tekton t2 = new TobbFonalasTekton();
+        TobbFonalasTekton t1 = new TobbFonalasTekton();
+        TobbFonalasTekton t2 = new TobbFonalasTekton();
 
-        // 2) Gombatest a t1-en
+        // ─── IDE KELL HOZZÁADNI! ───
+        t1.getSzomszedosTektonok().add(t2);
+        t2.getSzomszedosTektonok().add(t1);
+        // ────────────────────────────
+
         Gombasz gombasz = new Gombasz("G2");
         Gombatest gt = new Gombatest(t1, gombasz);
         t1.setGombatest(gt);
 
-        // 3) Visszaadjuk
         return List.of(t1, t2);
     }
 
@@ -167,30 +169,35 @@ class FungoriumApplicationTest {
         }
     }
 
-    /*
     @Test
-    void tesztFonalNovesztes() {
-        // 1) Pálya előkészítése és kiírás
+    void tesztFonalNovesztesPalya2() {
+        // 1) Pálya előkészítése
         List<Tekton> palya2 = letrehozPalya2();
-        System.out.println("=== PALYA2 KEZDETE ===");
-        palya2.forEach(System.out::println);
-
-        // 2) Fonal növesztés: gombatest ID és tekton-ek
         Tekton t1 = palya2.get(0);
         Tekton t2 = palya2.get(1);
         Gombatest gt = t1.getGombatest();
 
-        System.out.println("FONALNOVESZTES");                 // elvárt címsor
-        gt.fonalNovesztes(t1, t2);                             // maga a növesztés
+        // 1a) Kiinduló állapot: még nincs fonal
+        assertTrue(t1.getGombafonalak().isEmpty(), "Kiinduláskor ne legyen fonal");
+        assertTrue(t2.getGombafonalak().isEmpty(), "Kiinduláskor t2-n sem");
 
-        // 3) Ellenőrizzük, hogy tényleg létrejött-e a fonal
-        assertFalse(t1.getGombafonalak().isEmpty(), "t1-nek fonal(ak)nak kell keletkezni");
+        // 2) Kiírás (opcionális)
+        System.out.println("=== PALYA2 KEZDETE ===");
+        palya2.forEach(System.out::println);
+
+        // 3) Fonal növesztés
+        System.out.println("FONALNOVESZTES");
+        gt.fonalNovesztes(t1, t2);
+
+        // 4) Ellenőrzés: egy fonal került be t1-ből t2-be
+        assertEquals(1, t1.getGombafonalak().size(), "t1-nek egy fonala kell legyen");
+        assertEquals(1, t2.getGombafonalak().size(), "t2-nek egy fonala kell legyen");
         boolean talalt = t1.getGombafonalak().stream()
-                .anyMatch(f -> f.getHonnan()==t1 && f.getHova()==t2);
-        assertTrue(talalt, "A fonalnak t1->t2 irányban kell megjelennie");
+                .anyMatch(f -> f.getHonnan() == t1 && f.getHova() == t2);
+        assertTrue(talalt, "A fonalnak pontosan t1→t2-nek kell lennie");
 
-        // 4) Pálya állapotának újra kiírása
+        // 5) Végállapot kiírása (opcionális)
         System.out.println("=== PALYA2 VEGE ===");
         palya2.forEach(System.out::println);
-    }*/
+    }
 }

@@ -2,12 +2,12 @@ package lab.proj.mostjonajava.model;
 
 import java.util.List;
 
-import static lab.proj.mostjonajava.utils.Logger.hivasLog;
-import static lab.proj.mostjonajava.utils.Logger.log;
+//import static lab.proj.mostjonajava.utils.Logger.hivasLog;
+//import static lab.proj.mostjonajava.utils.Logger.log;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
-@Data
+//@Data
 public class LassitoSpora extends Spora {
     
     /**
@@ -15,7 +15,7 @@ public class LassitoSpora extends Spora {
      */
     public LassitoSpora() {
         super(15);
-        log("Lassito spora letrejotte.");
+        //log("Lassito spora letrejotte.");
     }
 
     /**
@@ -23,8 +23,8 @@ public class LassitoSpora extends Spora {
      */
     @Override
     public void hatasKifejtese(Rovar rovar) {
-        hivasLog("hatasKifejtese(Rovar rovar)", List.of("rovar: Rovar"), 0);
+        //hivasLog("hatasKifejtese(Rovar rovar)", List.of("rovar: Rovar"), 0);
         rovar.setLepesSzam(rovar.getLepesSzam()-1);
-        log("Lassito spora megtette a hatasat.");
+        //log("Lassito spora megtette a hatasat.");
     }
 }

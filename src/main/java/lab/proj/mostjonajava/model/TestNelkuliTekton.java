@@ -3,8 +3,8 @@ package lab.proj.mostjonajava.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import static lab.proj.mostjonajava.utils.Logger.hivasLog;
-import static lab.proj.mostjonajava.utils.Logger.log;
+//import static lab.proj.mostjonajava.utils.Logger.hivasLog;
+//import static lab.proj.mostjonajava.utils.Logger.log;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,7 +17,7 @@ public class TestNelkuliTekton extends Tekton{
      */
     public TestNelkuliTekton() {
         super(-1);
-        hivasLog("TestNelkuliTekton()", List.of(), 1);
+        //hivasLog("TestNelkuliTekton()", List.of(), 1);
     }
 
     /**
@@ -25,7 +25,7 @@ public class TestNelkuliTekton extends Tekton{
      */
     @Override
     public void ketteTores() {
-        hivasLog("ketteTores()", List.of(), 0);
+        //hivasLog("ketteTores()", List.of(), 0);
     
         // uj tekton letrehozasa
         TestNelkuliTekton ujTekton = new TestNelkuliTekton();
@@ -45,7 +45,7 @@ public class TestNelkuliTekton extends Tekton{
     
         // minden spora torlese a tektonbol
         this.getSporak().clear();
-        log("A tekton kettetort.");
+        //log("A tekton kettetort.");
     }
 
     /**
@@ -54,7 +54,7 @@ public class TestNelkuliTekton extends Tekton{
      */
     @Override
     public void setGombatest(Gombatest gombatest) {
-        hivasLog("setGombatest(Gombatest gombatest)", List.of("gombatest: Gombatest"), 0);
-        log("Gombatest beallitasa sikertelen");
+        //hivasLog("setGombatest(Gombatest gombatest)", List.of("gombatest: Gombatest"), 0);
+        //log("Gombatest beallitasa sikertelen");
     }
 }

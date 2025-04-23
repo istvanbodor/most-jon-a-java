@@ -3,8 +3,8 @@ package lab.proj.mostjonajava.model;
 import java.util.List;
 import java.util.Random;
 
-import static lab.proj.mostjonajava.utils.Logger.hivasLog;
-import static lab.proj.mostjonajava.utils.Logger.log;
+//import static lab.proj.mostjonajava.utils.Logger.hivasLog;
+//import static lab.proj.mostjonajava.utils.Logger.log;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -23,21 +23,21 @@ public class FejlettGombatest extends Gombatest {
         setKilohetoSporakSzama(eredeti.getKilohetoSporakSzama());
         setElszortSporakSzama(eredeti.getElszortSporakSzama());
         setNoveszthetoFonalakSzama(eredeti.getNoveszthetoFonalakSzama());
-        log("FejlettGombatest letrejott.");
+        //log("FejlettGombatest letrejott.");
     }
     
     /**
      * Felulirja a gombatest spora kilovo metodusat,
      * a szomszedos tektonok szomszedaira is tud sporat loni.
-     * @param tekton
+     * //@param tekton
      */
     @Override
     public void sporaKiloves(Tekton celTekton, int mennyiseg) {
-        hivasLog("sporaKiloves(Tekton tekton, int mennyiseg)", List.of("tekton: Tekton", "mennyiseg: int"), 0);
+        //hivasLog("sporaKiloves(Tekton tekton, int mennyiseg)", List.of("tekton: Tekton", "mennyiseg: int"), 0);
 
         //feltételek ellenőrzése
         if (!getTekton().szomszedSzomszedEllenorzese(celTekton) || getKilohetoSporakSzama() < mennyiseg) {
-            log("Spora kilovese sikertelen.");
+            //log("Spora kilovese sikertelen.");
             return;
         }
 
@@ -58,6 +58,6 @@ public class FejlettGombatest extends Gombatest {
             //céltektonhoz hozzáadjuk a spórákat
             celTekton.getSporak().add(spora);
         }
-        log("Sporak kilovese sikeres volt.");
+        //log("Sporak kilovese sikeres volt.");
     }
 }

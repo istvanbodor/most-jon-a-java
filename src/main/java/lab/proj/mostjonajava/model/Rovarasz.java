@@ -3,8 +3,8 @@ package lab.proj.mostjonajava.model;
 import java.util.List;
 import java.util.ArrayList;
 
-import static lab.proj.mostjonajava.utils.Logger.hivasLog;
-import static lab.proj.mostjonajava.utils.Logger.log;
+//import static lab.proj.mostjonajava.utils.Logger.hivasLog;
+//import static lab.proj.mostjonajava.utils.Logger.log;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @Data
@@ -22,10 +22,10 @@ public class Rovarasz extends Jatekos {
      */
     public Rovarasz(String nev) {
         super(nev);
-        hivasLog("Rovarasz(String nev)", List.of("nev: String - " + nev), 1);
+        //hivasLog("Rovarasz(String nev)", List.of("nev: String - " + nev), 1);
         this.id = nextId++;
         rovarok = new ArrayList<>();
-        log("Rovarasz letrejott");
+        //log("Rovarasz letrejott");
     }
 
     /**
@@ -39,7 +39,7 @@ public class Rovarasz extends Jatekos {
      * @return
      */
     public List<Rovar> getRovarok() {
-        hivasLog("getRovarok()", List.of(), 1);
+        //hivasLog("getRovarok()", List.of(), 1);
         return rovarok;
     }
     
