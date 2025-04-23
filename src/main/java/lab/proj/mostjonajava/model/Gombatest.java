@@ -147,9 +147,9 @@ public class Gombatest {
     /**
      * Megsemmisíti a gombatestet, az összes fonalával együtt.
      */
-    public void elpusztulas() { 
+    /*public void elpusztulas() {
        // hivasLog("elpusztulas()", List.of(), 0);
-        
+
         List<GombaFonal> torlendoFonalak = new ArrayList<>(gombaFonalak);
         for (GombaFonal fonal : torlendoFonalak) {
             fonal.getHonnan().getGombafonalak().remove(fonal);
@@ -158,9 +158,24 @@ public class Gombatest {
         gombaFonalak.clear();
         tekton.setGombatest(null);
         gombasz.getGombatestek().remove(this);
-        
+
         //log("A gombatest elpusztult");
+    }*/
+    public void elpusztulas() {
+        // csak akkor pusztuljon el, ha kifogyott a kilőhető spórából
+        // ÉS már lőtt ki legalább egyet (tehát ne töröljük azokat, amiket még nem használtak)
+        if (getKilohetoSporakSzama() == 0 && getElszortSporakSzama() > 0) {
+            Tekton t = getTekton();
+            if (t != null) {
+                // eltávolítjuk a tektonról
+                t.setGombatest(null);
+            }
+            // levesszük a gombász listájából is
+            getGombasz().getGombatestek().remove(this);
+        }
+        // különben nem történik semmi
     }
+
 
     /**
      * Spórákat lő ki szomszédos tektonra, random generátor segítségével.

@@ -97,6 +97,7 @@ class FungoriumApplicationTest {
      * - t1 és t2 között fonal nélkül
      * - t1-en van egy Gombatest
      * - t2-n nincs Gombatest
+     * - van t3 is
      */
     private static List<Tekton> letrehozPalya2() {
         TobbFonalasTekton t1 = new TobbFonalasTekton();
@@ -113,6 +114,7 @@ class FungoriumApplicationTest {
         Gombasz gombasz = new Gombasz("G2");
         Gombatest gt = new Gombatest(t1, gombasz);
         t1.setGombatest(gt);
+        gt.setElszortSporakSzama(10);
 
         return List.of(t1, t2, t3);
     }
@@ -127,6 +129,7 @@ class FungoriumApplicationTest {
         // t1-en van gombatest
         Tekton t1 = palya2.get(0);
         assertNotNull(t1.getGombatest(), "t1-nek kell, hogy legyen Gombatest");
+        assertEquals(10, t1.getGombatest().getElszortSporakSzama(), "Fejlett gombatest 10 spórát szort el");
         // sem spóra, sem rovar nem lett rátenni
         assertTrue(t1.getSporak().isEmpty(), "t1-en ne legyen spóra");
         assertTrue(t1.getRovarok().isEmpty(), "t1-en ne legyen rovar");
@@ -152,7 +155,7 @@ class FungoriumApplicationTest {
      * PÁLYA3 – 3 Tektonból áll, az elsőn egy FejlettGombatest van, sehol nincs fonal,
      * de a szomszédságok be vannak állítva. A gombatest 2 spórát tud kilőni.
      */
-    /*private static List<Tekton> letrehozPalya3() {
+    private static List<Tekton> letrehozPalya3() {
         Tekton t1 = new TobbFonalasTekton();
         Tekton t2 = new TobbFonalasTekton();
         Tekton t3 = new TobbFonalasTekton();
@@ -193,7 +196,7 @@ class FungoriumApplicationTest {
 
         // Fejlett gombatest beállításai
         Gombatest gt = t1.getGombatest();
-        assertEquals(2, gt.getElszortSporakSzama(), "Fejlett gombatest 2 spórát tudjon szórni");
+        assertEquals(2, gt.getKilohetoSporakSzama(), "Fejlett gombatest 2 spórát tudjon szórni");
 
         // Ne legyen fonal sehol
         assertTrue(t1.getGombafonalak().isEmpty(), "T1-en ne legyen gombafonal");
@@ -218,7 +221,101 @@ class FungoriumApplicationTest {
         // Konzolra kiírás (opcionális, fejlesztés közben hasznos lehet)
         System.out.println("=== PÁLYA3 ÁLLAPOTA ===");
         palya3.forEach(System.out::println);
-    } */
+    }
+
+    /**
+     * 4 tektonból álló pálya:
+     * - t1–t2 között fonal
+     * - t1-en FEJLETT gombatest (1 kilőhető spóra)
+     * - t2-on1 spóra
+     * - t3-on 3 spóra
+     * - t4-en sima gombatest (3 elszórt spóra)
+     */
+    private static List<Tekton> letrehozPalya4() {
+        Tekton t1 = new TobbFonalasTekton();
+        Tekton t2 = new TobbFonalasTekton();
+        Tekton t3 = new TobbFonalasTekton();
+        Tekton t4 = new TobbFonalasTekton();
+
+        // szomszédságok: t1–t2–t3–t4
+        t1.getSzomszedosTektonok().add(t2);
+        t2.getSzomszedosTektonok().add(t1);
+        t2.getSzomszedosTektonok().add(t3);
+        t3.getSzomszedosTektonok().add(t2);
+        t3.getSzomszedosTektonok().add(t4);
+        t4.getSzomszedosTektonok().add(t3);
+
+        // 1) FEJLETT gombatest T1-en, 1 kilőhető spóra
+        Gombasz g1 = new Gombasz("G1");
+        Gombatest eredetiGt1 = new Gombatest(t1, g1);
+        eredetiGt1.setKilohetoSporakSzama(1);
+        FejlettGombatest fgt1 = new FejlettGombatest(eredetiGt1);
+        // közben a konstruktora beállítja: t1.setGombatest(this)
+
+        // gombafonal t1–t2
+        GombaFonal f12 = new GombaFonal(t1, t2, fgt1);
+        t1.getGombafonalak().add(f12);
+        t2.getGombafonalak().add(f12);
+
+        // 2) t3-ra 3 spóra
+        t2.getSporak().add(new BenitoSpora());
+        t3.getSporak().add(new GyorsitoSpora());
+        t3.getSporak().add(new LassitoSpora());
+        t3.getSporak().add(new OsztodoSpora());
+        t4.getSporak().add(new GyorsitoSpora());
+        t4.getSporak().add(new LassitoSpora());
+        t4.getSporak().add(new OsztodoSpora());
+
+        // 3) t4-re sima gombatest, 3 elszórt spóra
+        Gombasz g4 = new Gombasz("G4");
+        Gombatest gt4 = new Gombatest(t4, g4);
+        t4.setGombatest(gt4);
+        gt4.setElszortSporakSzama(3);
+
+        return List.of(t1, t2, t3, t4);
+    }
+
+    @Test
+    void tesztPalya4Init() {
+        List<Tekton> palya4 = letrehozPalya4();
+        assertEquals(4, palya4.size(), "Pálya4-nek 4 tektonból kell állnia");
+
+        Tekton t1 = palya4.get(0), t2 = palya4.get(1), t3 = palya4.get(2), t4 = palya4.get(3);
+
+        // 1) Szomszédságok
+        assertTrue(t1.getSzomszedosTektonok().contains(t2), "T1 szomszédja legyen T2");
+        assertTrue(t2.getSzomszedosTektonok().contains(t1), "T2 szomszédja legyen T1");
+        assertTrue(t2.getSzomszedosTektonok().contains(t3), "T2 szomszédja legyen T3");
+        assertTrue(t3.getSzomszedosTektonok().contains(t2), "T3 szomszédja legyen T2");
+        assertTrue(t3.getSzomszedosTektonok().contains(t4), "T3 szomszédja legyen T4");
+        assertTrue(t4.getSzomszedosTektonok().contains(t3), "T4 szomszédja legyen T3");
+
+        // 2) Fonal-összeköttetések: csak t1–t2 között
+        assertEquals(1, t1.getGombafonalak().size(), "T1-nek 1 gombafonal legyen");
+        assertEquals(1, t2.getGombafonalak().size(), "T2-nek 1 gombafonal legyen");
+        assertTrue(t3.getGombafonalak().isEmpty(), "T3-on ne legyen gombafonal");
+        assertTrue(t4.getGombafonalak().isEmpty(), "T4-en ne legyen gombafonal");
+
+        // 3) Spórák: t2-en 1, t3-on 3, máshol nincs
+        assertEquals(0, t1.getSporak().size(), "T1-en ne legyen spóra");
+        assertEquals(1, t2.getSporak().size(), "T2-nek 1 spórája legyen");
+        assertEquals(3, t3.getSporak().size(), "T3-nak 3 spórája legyen");
+        assertEquals(3, t4.getSporak().size(), "T4-en 3 spóra");
+
+        // 4) Gombatestek
+        assertTrue(t1.getGombatest() instanceof FejlettGombatest, "T1-en fejlett gombatest legyen");
+        FejlettGombatest fgt1 = (FejlettGombatest) t1.getGombatest();
+        assertEquals(1, fgt1.getKilohetoSporakSzama(), "Fejlett gombatestnek 1 kilőhető spórája legyen");
+
+        assertNotNull(t4.getGombatest(), "T4-en sima gombatest legyen");
+        assertEquals(Gombatest.class, t4.getGombatest().getClass(), "T4-en tényleg sima Gombatest legyen");
+        assertEquals(3, t4.getGombatest().getElszortSporakSzama(), "T4 gombatestének 3 elszórt spórája legyen");
+
+        // 5) Konzolra íratás (opcionális)
+        System.out.println("=== PÁLYA4 ÁLLAPOTA ===");
+        palya4.forEach(System.out::println);
+    }
+
 
     /*
     @Test
@@ -294,23 +391,23 @@ class FungoriumApplicationTest {
     @Test
     void tesztSikertelenFonalNovesztesNemSzomszedosTektonok() {
         // 1) Pálya előkészítése: 3 tekton, csak t1–t2 szomszédos
-        List<Tekton> palya2 = letrehozPalya2();
-        Tekton t1 = palya2.get(0);
-        Tekton t2 = palya2.get(1);
-        Tekton t3 = palya2.get(2);
+        List<Tekton> palya3 = letrehozPalya3();
+        Tekton t1 = palya3.get(0);
+        Tekton t2 = palya3.get(1);
+        Tekton t3 = palya3.get(2);
         Gombatest gt = t1.getGombatest();
 
         // 2) Kiírás a kezdeti állapotról
-        out.println("=== PALYA2 KEZDETE ===");
-        palya2.forEach(out::println);
+        out.println("=== PALYA3 KEZDETE ===");
+        palya3.forEach(out::println);
 
         // 3) Fonal növesztés nem szomszédos tektonok között
         out.println("FONALNOVESZTES");
         gt.fonalNovesztes(t1, t3);
 
         // 4) Kiírás a végső állapotról
-        out.println("=== PALYA2 VEGE ===");
-        palya2.forEach(out::println);
+        out.println("=== PALYA3 VEGE ===");
+        palya3.forEach(out::println);
 
         // 5) Ellenőrzés: nem jöhetett létre fonal
         assertTrue(t1.getGombafonalak().isEmpty(), "t1-nek NEM szabad fonalnak lennie");
@@ -367,8 +464,7 @@ class FungoriumApplicationTest {
         palya1.forEach(System.out::println);
     }
 
-    //nem működik
-    /*@Test
+    @Test
     void tesztFejlettSporaSzorasPalya3() {
         // 1) Pálya előkészítése
         List<Tekton> palya3 = letrehozPalya3();
@@ -390,11 +486,108 @@ class FungoriumApplicationTest {
         // 6) Kiírás: végállapot
         System.out.println("=== PALYA3 VEGE ===");
         palya3.forEach(System.out::println);
-    }*/
+    }
 
-    //Kihagytam: Teszteset8 — Fejlett spóra szórás, a szomszéd szomszédjára
-    //Kihagytam: Teszteset9 — Fejlett spóra szórás, kevés spórával
-    //kihagytam: Teszteset10 — Fejlett spóra szórás, nem szomszédos tektonra
+    @Test
+    void tesztFejlettSporaSzorasMasodfokuPalya3() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya3 = letrehozPalya3();
+        Tekton t1 = palya3.get(0);
+        Tekton t3 = palya3.get(2);
+        Gombatest gt = t1.getGombatest();
+
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA3 KEZDETE ===");
+        palya3.forEach(System.out::println);
+
+        // 3) Előfeltételek ellenőrzése
+        //   t1 és t3 másodfokú szomszédok legyenek
+        assertTrue(t1.szomszedSzomszedEllenorzese(t3),
+                "T1-nek és T3-nak másodfokú szomszédnak kell lenniük");
+        //   legyen elegendő kilőhető spóra
+        assertEquals(2, gt.getKilohetoSporakSzama(),
+                "Kezdetben 2 kilőhető spóra");
+        //   és a cél tektonon (T3) ne legyen spóra
+        assertTrue(t3.getSporak().isEmpty(),
+                "T3-on kezdetben ne legyen spóra");
+
+        // 4) Művelet: spóra kilövés T3-ra (2 darab)
+        gt.sporaKiloves(t3, 2);
+
+        // 5) Eredmény ellenőrzése
+        assertEquals(0, gt.getKilohetoSporakSzama(),
+                "Kilövés után 0 kilőhető spóra maradjon");
+        assertEquals(2, t3.getSporak().size(),
+                "T3-on 2 új spórának kell lennie");
+
+        // 6) Kiírás: végállapot
+        System.out.println("=== PALYA3 VEGE ===");
+        palya3.forEach(System.out::println);
+    }
+
+    @Test
+    void tesztFejlettSporaSzorasKevessporavalPalya3() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya3 = letrehozPalya3();
+        Tekton t1 = palya3.get(0);
+        Tekton t3 = palya3.get(2);
+        Gombatest gt = t1.getGombatest();
+
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA3 KEZDETE ===");
+        palya3.forEach(System.out::println);
+
+        // 3) Előfeltételek ellenőrzése
+        assertTrue(t1.szomszedSzomszedEllenorzese(t3),
+                "T1 és T3 legyenek másodfokú szomszédok");
+        assertEquals(2, gt.getKilohetoSporakSzama(),
+                "Kezdetben 2 kilőhető spóra");
+        assertTrue(t3.getSporak().isEmpty(),
+                "T3-on kezdetben ne legyen spóra");
+
+        // 4) Művelet: spóra kilövés (3 darab, ennél több nincs)
+        gt.sporaKiloves(t3, 3);
+
+        // 5) Eredmény ellenőrzése
+        // — mivel nincs elég spóra, nem csökken a kilőhető spórák száma
+        assertEquals(2, gt.getKilohetoSporakSzama(),
+                "Kevés spóra miatt maradjon 2 kilőhető spóra");
+        // — és T3-on továbbra sem jelenik meg új spóra
+        assertTrue(t3.getSporak().isEmpty(),
+                "Kevés spóra miatt ne kerüljön spóra T3-ra");
+
+        // 6) Kiírás: végállapot
+        System.out.println("=== PALYA3 VEGE ===");
+        palya3.forEach(System.out::println);
+    }
+
+    @Test
+    void tesztFejlettSporaSzorasNemSzomszedPalya4() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya4 = letrehozPalya4();
+        Tekton t1 = palya4.get(0);
+        Tekton t4 = palya4.get(3);
+        FejlettGombatest fejlettGt = (FejlettGombatest) t1.getGombatest();
+
+        // 2) Kezdeti állapot kiírás
+        System.out.println("=== PALYA4 KEZDETE ===");
+        palya4.forEach(System.out::println);
+
+        // 3) Előfeltételek
+        assertEquals(1, fejlettGt.getKilohetoSporakSzama(), "Kezdetben 1 kilőhető spóra");
+
+        // 4) Próbálkozunk t1 → t4 (nem elég közel)
+        fejlettGt.sporaKiloves(t4, 1);
+
+        // 5) Utófeltételek ellenőrzése
+        // mert t4 túl távoli, nem szórunk semmit, a készlet nem változik
+        assertEquals(1, fejlettGt.getKilohetoSporakSzama(), "Nem szomszédosra ne csökkenjen a készlet");
+        assertEquals(3, t4.getSporak().size(), "3 spóra volt itt alapból, ne legyen több");
+
+        // 6) Végállapot kiírás
+        System.out.println("=== PALYA4 VEGE ===");
+        palya4.forEach(System.out::println);
+    }
 
     @Test
     void tesztGombatestLetrehozasPalya2() {
@@ -464,5 +657,193 @@ class FungoriumApplicationTest {
         // --- Végső állapot kiírása ---
         System.out.println("=== PALYA2 VEGE ===");
         palya2.forEach(System.out::println);
+    }
+
+    @Test
+    void tesztGombatestNovesztesHianyzoFeltetelekkelPalya4() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya4 = letrehozPalya4();
+        Tekton t2 = palya4.get(1);  // 2. tektonon próbáljuk növeszteni
+
+        // 2) Kezdő állapot kiírása
+        System.out.println("=== PALYA4 KEZDETE ===");
+        palya4.forEach(System.out::println);
+
+        // 3) Fejléc a parancshoz
+        System.out.println("GOMBATESTNOVESZTES");
+
+        // 4) Próbáljuk meg növeszteni a gombatestet T2-n, amihez nincs elegendő spóra
+        boolean novesztheto = t2.gombatestNoveszthetoE();
+        assertFalse(novesztheto, "Ennél a tektonnál NEM szabad gombatestet növeszteni");
+
+        // 5) Ellenőrizzük, hogy nem jött létre új gombatest, de a fonal továbbra is megvan
+        assertNull(t2.getGombatest(), "T2-n továbbra sem lehet gombatest");
+        assertEquals(1, t2.getGombafonalak().size(),
+                "T2-n csak az eredeti fonal maradjon meg");
+
+        // 6) Végállapot kiírása
+        System.out.println("=== PALYA4 VEGE ===");
+        palya4.forEach(System.out::println);
+    }
+
+    @Test
+    void tesztGombatestNovesztesNincsFonalPalya4() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya4 = letrehozPalya4();
+        Tekton t3 = palya4.get(2);  // 3. tektonon próbáljuk növeszteni
+
+        // 2) Kezdő állapot kiírása
+        System.out.println("=== PALYA4 KEZDETE ===");
+        palya4.forEach(System.out::println);
+
+        // 3) Fejléc a parancshoz
+        System.out.println("GOMBATESTNOVESZTES");
+
+        // 4) Ellenőrzés: van-e elegendő spóra, de nincs fonal
+        assertEquals(3, t3.getSporak().size(), "T3-on legyen pontosan 3 spóra");
+        assertTrue(t3.getGombafonalak().isEmpty(), "T3-on ne legyen fonal");
+
+        // 5) Próbáljuk meg növeszteni a gombatestet T3-on
+        boolean novesztheto = t3.gombatestNoveszthetoE();
+        assertFalse(novesztheto, "T3-on NEM szabad gombatestet növeszteni");
+
+        // 6) Ellenőrizzük, hogy valóban nem jött létre gombatest
+        assertNull(t3.getGombatest(), "T3-on továbbra sincs gombatest");
+
+        // 7) Végállapot kiírása
+        System.out.println("=== PALYA4 VEGE ===");
+        palya4.forEach(System.out::println);
+    }
+
+    @Test
+    void tesztGombatestFejlesztes3SporavalPalya4() {
+        // 1) Pálya előkészítése és kiírás
+        List<Tekton> palya4 = letrehozPalya4();
+        System.out.println("=== PALYA4 KEZDETE ===");
+        palya4.forEach(System.out::println);
+
+        // 2) A sima gombatestet tartalmazó tekton kiválasztása (t4)
+        Tekton t4 = palya4.get(3);
+        Gombatest eredetiGt4 = t4.getGombatest();
+        assertNotNull(eredetiGt4, "T4-nek kell, hogy legyen Gombatest");
+
+        // 3) Előfeltétel: legalább 3 spóra a tektonon
+        assertTrue(t4.getSporak().size() >= 3 ||
+                        eredetiGt4.getElszortSporakSzama() >= 3,
+                "T4-en kell lennie legalább 3 spórának");
+
+        // 4) Gombatest fejleszthetőségének ellenőrzése
+        assertTrue(t4.gombatestFejleszthetoE(), "Gombatestet fejleszthetnünk kell");
+
+        // 5) Fejlesztés
+        t4.setGombatest(new FejlettGombatest(eredetiGt4));
+
+        // 6) Ellenőrzés: most fejlett Gombatest
+        Gombatest ujGt4 = t4.getGombatest();
+        assertNotNull(ujGt4, "Fejlesztés után is legyen Gombatest");
+        assertTrue(ujGt4 instanceof FejlettGombatest, "Gombatestnek fejlett példánynak kell lennie");
+        assertSame(t4, ujGt4.getTekton(), "A fejlett Gombatest a megfelelő tektonhoz kell tartozzon");
+
+        // 7) Pálya végállapot kiírása
+        System.out.println("=== PALYA4 VEGE ===");
+        palya4.forEach(System.out::println);
+    }
+
+    //it amugy lkehet hogy ugy kéne, hogy megpróbáljuk fejleszteni, de false az eredmény
+    @Test
+    void tesztGombatestFejlesztesSikertelenPalya1() {
+        // 1) Előkészítés: pálya1
+        List<Tekton> palya1 = letrehozPalya1();
+
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PÁLYA1 KEZDETE ===");
+        palya1.forEach(System.out::println);
+
+        // 3) Megkíséreljük a gombatest fejlesztését a 3. tektonon (index 2)
+        Tekton t3 = palya1.get(2);
+        boolean fejlesztheto = t3.gombatestFejleszthetoE();
+
+        // 4) Elvárt: NEM fejleszthető
+        assertFalse(fejlesztheto, "T3-on nem szabad gombatestet fejleszteni");
+
+        System.out.println("GOMBATESTFEJLESZTES");
+
+        if (fejlesztheto) {
+            // csak ha mégis true lenne (soha nem lesz), de itt nem fut
+            FejlettGombatest fgt = new FejlettGombatest(t3.getGombatest());
+            t3.setGombatest(fgt);
+        } else {
+            System.out.println("A tekton gombateste nem fejlesztheto!");
+        }
+
+        // 5) Kiírás: végállapot
+        System.out.println("=== PÁLYA1 VEGE ===");
+        palya1.forEach(System.out::println);
+
+        // 6) Utóellenőrzés: továbbra se legyen gombatest a 3. tektonon
+        assertNull(t3.getGombatest(), "T3-hoz nem szabad új gombatestet állítani");
+    }
+
+    @Test
+    void tesztGombatestElpusztulKapacitasAlapjanPalya2() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya2 = letrehozPalya2();
+        Tekton t1 = palya2.get(0);
+        Gombatest gt = t1.getGombatest();
+        Gombasz gs = gt.getGombasz();
+
+        // 2) Előfeltételek
+        assertNotNull(gt, "T1-en kell legyen Gombatest");
+        // beállítjuk, hogy a gombatestnél elfogyott a kilőhető spóra
+        gt.setKilohetoSporakSzama(0);
+
+        // 3) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA2 KEZDETE ===");
+        palya2.forEach(System.out::println);
+
+        // 4) GOMBATESTELPUSZTUL parancs
+        System.out.println("GOMBATESTELPUSZTUL");
+        gt.elpusztulas();
+
+        // 5) Kiírás: végállapot
+        System.out.println("=== PALYA2 VEGE ===");
+        palya2.forEach(System.out::println);
+
+        // 6) Utóellenőrzések
+        assertNull(t1.getGombatest(), "A gombatestnek el kellett pusztulnia és eltűnnie a tektonról");
+        assertFalse(gs.getGombatestek().contains(gt),
+                "A gombasz nyilvántartásából is el kell távolítani a gombatestet");
+    }
+
+    @Test
+    void tesztSikertelenGombatestElpusztulasPalya1() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya1 = letrehozPalya1();
+        Gombatest gt =  palya1.get(0).getGombatest();
+
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA1 KEZDETE ===");
+        palya1.forEach(System.out::println);
+
+        // 3) Parancs
+        System.out.println("GOMBATESTELPUSZTUL");
+
+        // 4) Előfeltétel: még van kilőhető spóra
+        int kezdoKapacitas = gt.getKilohetoSporakSzama();
+        assertTrue(kezdoKapacitas > 0, "Előfeltétel: van még kilőhető spóra");
+
+        // 5) Meghívjuk az elpusztulást
+        gt.elpusztulas();
+
+        // 6) Ellenőrzések
+        // – a kapacitás nem változott
+        assertEquals(kezdoKapacitas, gt.getKilohetoSporakSzama(),
+                "A kilőhető spórák száma ne változzon");
+        // – a gombatest nem pusztult el
+        assertNotNull( palya1.get(0).getGombatest(), "A gombatestnak nem szabad elpusztulnia");
+
+        // 7) Kiírás: végállapot
+        System.out.println("=== PALYA1 VEGE ===");
+        palya1.forEach(System.out::println);
     }
 }

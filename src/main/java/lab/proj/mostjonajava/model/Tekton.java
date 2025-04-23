@@ -59,14 +59,17 @@ public abstract class Tekton {
         sb.append("\n");
 
         // 3) Gombatest
+        sb.append("  Gombatest: ");
         if (gombatest != null) {
-            sb.append("  Gombatest: ID=").append(gombatest.getId())
+            String tipus = gombatest.getClass().getSimpleName(); // "Gombatest" vagy "FejlettGombatest"
+            sb.append(tipus)
+                    .append("[ID=").append(gombatest.getId())
                     .append(", kiloSpora=").append(gombatest.getKilohetoSporakSzama())
                     .append(", elSzortSpora=").append(gombatest.getElszortSporakSzama())
                     .append(", novelhetoFonalSzama=").append(gombatest.getNoveszthetoFonalakSzama())
-                    .append("\n");
+                    .append("]\n");
         } else {
-            sb.append("  Gombatest: nincs\n");
+            sb.append("nincs\n");
         }
 
         // 4) Spórák
@@ -274,12 +277,13 @@ public abstract class Tekton {
      * @param gombatest
      */
     public void setGombatest(Gombatest gombatest) {
-        //hivasLog("setGombatest(Gombatest gombatest)", List.of("gombatest: Gombatest"), 0);
+        // null-beállításkor csak törlünk, de nem hívunk rajta módszereket
         this.gombatest = gombatest;
-        gombatest.setTekton(this);
-        gombatest.getGombasz().getGombatestek().add(gombatest);
-
-        //log("Gombatest beallitasra kerult");
+        if (gombatest != null) {
+            // csak akkor állítjuk be a kétirányú kapcsolatot, ha tényleg van Gombatest
+            gombatest.setTekton(this);
+            gombatest.getGombasz().getGombatestek().add(gombatest);
+        }
     }
 
     /**

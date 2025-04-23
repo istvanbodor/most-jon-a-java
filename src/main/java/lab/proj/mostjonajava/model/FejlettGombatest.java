@@ -37,18 +37,17 @@ public class FejlettGombatest extends Gombatest {
      */
     @Override
     public void sporaKiloves(Tekton celTekton, int mennyiseg) {
-        //hivasLog("sporaKiloves(Tekton tekton, int mennyiseg)", List.of("tekton: Tekton", "mennyiseg: int"), 0);
+        boolean direktSzomszed = getTekton().szomszedossagEllenorzese(celTekton);
+        boolean masodikFoku = getTekton().szomszedSzomszedEllenorzese(celTekton);
 
-        //feltételek ellenőrzése
-        if (!getTekton().szomszedSzomszedEllenorzese(celTekton) || getKilohetoSporakSzama() < mennyiseg) {
-            //log("Spora kilovese sikertelen.");
+        // most már engedi a közvetlen és a másodikfokú szomszédot is
+        if (!(direktSzomszed || masodikFoku) || getKilohetoSporakSzama() < mennyiseg) {
             return;
         }
 
         setKilohetoSporakSzama(getKilohetoSporakSzama() - mennyiseg);
         setElszortSporakSzama(getElszortSporakSzama() + mennyiseg);
 
-        //random alapján spórák létrehozésa
         Random rand = new Random();
         for (int i = 0; i < mennyiseg; i++) {
             Spora spora = switch (rand.nextInt(6)) {
@@ -59,9 +58,7 @@ public class FejlettGombatest extends Gombatest {
                 case 4 -> new GyorsitoSpora();
                 default -> new SimaSpora();
             };
-            //céltektonhoz hozzáadjuk a spórákat
             celTekton.getSporak().add(spora);
         }
-        //log("Sporak kilovese sikeres volt.");
     }
 }
