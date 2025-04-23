@@ -32,7 +32,6 @@ public abstract class Tekton {
         sb.append("Tekton[").append(id).append("]\n");
 
         // 1) Szomszédok
-        //Ez ninc jól, é nem tudom hogy hogyan lehetne helyesen
         sb.append("  Szomszedok: ");
         if (szomszedosTektonok.isEmpty()) {
             sb.append("nincs");
@@ -48,10 +47,8 @@ public abstract class Tekton {
         if (gombafonalak.isEmpty()) {
             sb.append("nincs");
         } else {
-            // minden fonál másik végén lévő tekton ID-ja
             String kapcsolatok = gombafonalak.stream()
                     .map(f -> {
-                        // ha this a honnan, akkor hova kell, egyébként honnan
                         Tekton masik = f.getHonnan().equals(this) ? f.getHova() : f.getHonnan();
                         return String.valueOf(masik.getId());
                     })
@@ -61,7 +58,7 @@ public abstract class Tekton {
         }
         sb.append("\n");
 
-        // 2) Gombatest
+        // 3) Gombatest
         if (gombatest != null) {
             sb.append("  Gombatest: ID=").append(gombatest.getId())
                     .append(", kiloSpora=").append(gombatest.getKilohetoSporakSzama())
@@ -72,7 +69,7 @@ public abstract class Tekton {
             sb.append("  Gombatest: nincs\n");
         }
 
-  // 3) Spórák a tektonon
+        // 4) Spórák
         sb.append("  Sporak: ");
         if (sporak.isEmpty()) {
             sb.append("nincs");
@@ -83,7 +80,7 @@ public abstract class Tekton {
         }
         sb.append("\n");
 
-        // 4) Rovarok
+        // 5) Rovarok
         sb.append("  Rovarok: ");
         if (rovarok.isEmpty()) {
             sb.append("nincsenek");

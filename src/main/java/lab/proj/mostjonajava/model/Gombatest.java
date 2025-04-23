@@ -8,6 +8,8 @@ import java.util.Random;
 //import static lab.proj.mostjonajava.utils.Logger.log;
 import lombok.Data;
 
+import static java.lang.System.out;
+
 @Data
 public class Gombatest {
 
@@ -36,6 +38,9 @@ public class Gombatest {
      * @param gombasz
      */
     public Gombatest(Tekton tekton, Gombasz gombasz) {
+        /*if (tekton.getSporak().size() < 3) {
+            return;
+        }*/
         this.id = nextId++;
         this.gombasz = gombasz;
         this.tekton = tekton;
@@ -50,22 +55,20 @@ public class Gombatest {
      * @param hova
      */
     public void fonalNovesztes(Tekton honnan, Tekton hova) {
-        // 1) Csak az alapfeltételek maradnak:
+        // csak az alapfeltételek:
         if (!honnan.szomszedossagEllenorzese(hova)
                 || noveszthetoFonalakSzama <= 0) {
+            out.println("Fonalnovesztes sikeretelen");
             return;
         }
 
-        // 2) Új fonal létrehozása
+        // ... a sikeres ág marad így ...
         GombaFonal gombaFonal = new GombaFonal(honnan, hova, this);
-
-        // 3) A fonalat minden érintett listához hozzáadjuk
         honnan.getGombafonalak().add(gombaFonal);
         hova.getGombafonalak().add(gombaFonal);
         this.gombaFonalak.add(gombaFonal);
-
-        // 4) Levonjuk a felhasználható fonal keretet
         noveszthetoFonalakSzama--;
+        out.println("Fonalnovesztes sikeres");
     }
 
     //TODO Elolvasni:
@@ -165,15 +168,7 @@ public class Gombatest {
      * @param mennyiseg
      */
     public void sporaKiloves(Tekton celTekton, int mennyiseg) {
-        //hivasLog("sporaKiloves(Tekton tekton, int mennyiseg)", List.of("tekton: Tekton", "mennyiseg: int"), 0);
-
         if (!tekton.szomszedossagEllenorzese(celTekton) || kilohetoSporakSzama < mennyiseg) {
-            //log("Spora kilovese sikertelen.");
-            return;
-        }
-
-        if(this.getKilohetoSporakSzama() > mennyiseg){
-            //log("Spora kilovese sikertelen.");
             return;
         }
 
@@ -192,7 +187,6 @@ public class Gombatest {
             };
             celTekton.getSporak().add(spora);
         }
-        //log("Sporak kilovese sikeres volt.");
     }
 
     /**

@@ -23,9 +23,13 @@ public class FejlettGombatest extends Gombatest {
         setKilohetoSporakSzama(eredeti.getKilohetoSporakSzama());
         setElszortSporakSzama(eredeti.getElszortSporakSzama());
         setNoveszthetoFonalakSzama(eredeti.getNoveszthetoFonalakSzama());
-        //log("FejlettGombatest letrejott.");
+
+        // FONTOS! A tektonnak vissza kell mutatnia erre a példányra
+        if (getTekton() != null) {
+            getTekton().setGombatest(this);
+        }
     }
-    
+
     /**
      * Felulirja a gombatest spora kilovo metodusat,
      * a szomszedos tektonok szomszedaira is tud sporat loni.
