@@ -60,16 +60,15 @@ public class FungoriumApplication extends Application {
                 case LASSITOSPORAHATASKIFEJTESE -> testLassitoSporaHatasKifejtese(parameterek);
                 case GYORSITOSPORAHATASKIFEJTESE -> testGyorsitoSporaHatasKifejtese(parameterek);
                 case VAGASBENITOSPORAHATASKIFEJTESE -> testVagasBenitoSporaHatasKifejtese(parameterek);
-                case OSZTODOSPORAHATASKIFEJTESE -> testOsztodoSporaHatasKiejtese(parameterek);
+                //case OSZTODOSPORAHATASKIFEJTESE -> testOsztodoSporaHatasKiejtese(parameterek);
                 case SIMASPORAHATASKIFEJTESE -> testSimaSporaHatasKifejtese(parameterek);
-                case ROVARELFOGYASZTASA -> rovarelfogyasztasa(parameterek);
+                //case ROVARELFOGYASZTASA -> rovarelfogyasztasa(parameterek);
                 case FONALFELSZIVODAS -> testFonalFelszivodas(parameterek);
                 case KILEPES -> System.exit(0);
                 default -> hibaLog("Nem letezo parancsot adtal meg!");
             }
         }
     }
-
 
     private static void mentes(String[] parameterek) { }
 
@@ -108,28 +107,36 @@ public class FungoriumApplication extends Application {
 
     private static void testFonalNovesztes(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 4)) return;
-        parameterek[0].fonalNovesztes(parameterek[1], parameterek[2]);
+       // parameterek[0].fonalNovesztes(parameterek[1], parameterek[2]);
     }
 
     private static void testSporaTermeles(String[] parameterek) {
+        // legalább 2 paraméter: a parancs és a gombatest ID
         if (parameterVizsgalat(parameterek, 2)) return;
 
+        // 1) ID parse
+        int gtId;
+        try {
+            gtId = Integer.parseInt(parameterek[1]);
+        } catch (NumberFormatException e) {
+            hibaLog("Érvénytelen Gombatest ID: " + parameterek[1]);
+            return;
+        }
 
-//        int gombaId = Integer.parseInt(parameterek[1]);
-//
-//        Gombatest gombatest = Jatek.gombaszok.stream()
-//                .flatMap(it -> it.getGombatestek().stream())
-//                .filter(it -> it.getId() == gombaId)
-//                .findFirst()
-//                .orElse(null);
-//
-//        if (gombatest == null) {
-//            hibaLog("Nincs gombatest ilyen ID-val!");
-//            return;
-//        }
-        Gombatest gombatest = new Gombatest();
-        gombatest.sporaTermeles();
+        // 2) Gombatest keresése a Játékból
+        Gombatest gt = jatek.keresGombatestById(gtId);
+        if (gt == null) {
+            hibaLog("Nincs gombatest ilyen ID-val: " + gtId);
+            return;
+        }
 
+        // 3) Előtte–utána számlálás
+        int elotteKilotheto = gt.getKilohetoSporakSzama();
+        gt.korFrissites();  // ez termel +1 spórát (kilőhetőként) ha <10
+        int utanaKilotheto = gt.getKilohetoSporakSzama();
+
+        // 4) Eredmény kiírása
+        log("Spora termeles teszt: elotte=" + elotteKilotheto + ", utan=" + utanaKilotheto);
     }
 
     private static void testSimaSporaSzoras(String[] parameterek) {

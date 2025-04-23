@@ -2,12 +2,17 @@ package lab.proj.mostjonajava.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static lab.proj.mostjonajava.utils.Logger.hivasLog;
 import static lab.proj.mostjonajava.utils.Logger.log;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+//@Data
+@Getter
+@Setter
 public abstract class Tekton {
 
     private static int nextId = 1;
@@ -20,6 +25,79 @@ public abstract class Tekton {
     private List<Spora> sporak;
 
     private Gombatest gombatest;
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Tekton[").append(id).append("]\n");
+
+        // 1) Szomszédok
+        sb.append("  Szomszedok: ");
+        if (szomszedosTektonok.isEmpty()) {
+            sb.append("nincs");
+        } else {
+            sb.append(szomszedosTektonok.stream()
+                    .map(t -> String.valueOf(t.getId()))
+                    .collect(Collectors.joining(", ")));
+        }
+        sb.append("\n");
+
+        // 2) Gombafonal-összeköttetések
+        sb.append("  Gombafonal-osszekottetesek: ");
+        if (gombafonalak.isEmpty()) {
+            sb.append("nincs");
+        } else {
+            // minden fonál másik végén lévő tekton ID-ja
+            String kapcsolatok = gombafonalak.stream()
+                    .map(f -> {
+                        // ha this a honnan, akkor hova kell, egyébként honnan
+                        Tekton masik = f.getHonnan().equals(this) ? f.getHova() : f.getHonnan();
+                        return String.valueOf(masik.getId());
+                    })
+                    .distinct()
+                    .collect(Collectors.joining(", "));
+            sb.append(kapcsolatok);
+        }
+        sb.append("\n");
+
+        // 2) Gombatest
+        if (gombatest != null) {
+            sb.append("  Gombatest: ID=").append(gombatest.getId())
+                    .append(", kiloSpora=").append(gombatest.getKilohetoSporakSzama())
+                    .append(", elSzortSpora=").append(gombatest.getElszortSporakSzama())
+                    .append(", novelhetoFonalSzama=").append(gombatest.getNoveszthetoFonalakSzama())
+                    .append("\n");
+        } else {
+            sb.append("  Gombatest: nincs\n");
+        }
+
+        // 3) Spórák a tektonon
+        sb.append("  Sporak: ");
+        if (sporak.isEmpty()) {
+            sb.append("nincs");
+        } else {
+            sb.append(sporak.stream()
+                    .map(sp -> sp.getClass().getSimpleName() + "(tap=" + sp.getTapanyag() + ")")
+                    .collect(Collectors.joining(", ")));
+        }
+        sb.append("\n");
+
+        // 4) Rovarok
+        sb.append("  Rovarok: ");
+        if (rovarok.isEmpty()) {
+            sb.append("nincsenek");
+        } else {
+            sb.append(rovarok.stream()
+                    .map(r -> String.format(
+                            "ID=%d, lepSz=%d, benult=%b, vago=%b",
+                            r.getId(), r.getLepesSzam(), r.getBenulas(), r.getVagoKepesseg()
+                    ))
+                    .collect(Collectors.joining(" | ")));
+        }
+        sb.append("\n");
+
+        return sb.toString();
+    }
 
     /**
      * Tekton konstruktora, amely paraméterként átveszi az élettartamot.

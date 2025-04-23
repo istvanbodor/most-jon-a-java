@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 
 
 @EqualsAndHashCode(callSuper = true)
-@Data
+//@Data
 public class EgyFonalasTekton extends Tekton {
 
     /**

@@ -64,7 +64,7 @@ public class Rovar {
             Spora utolsoSpora = sporak.get(sporak.size() - 1);
             List<Spora> torlendoSporak = new ArrayList<>(sporak);
             for (Spora spora : torlendoSporak) {
-                rovarasz.setPont(rovarasz.getPont() + spora.getTapanyagErtek());
+                rovarasz.setPont(rovarasz.getPont() + spora.getTapanyag());
                 tekton.getSporak().remove(spora);
             }
             utolsoSpora.hatasKifejtese(this);
