@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import lab.proj.mostjonajava.game.Jatek;
 import lab.proj.mostjonajava.model.*;
 
 import java.io.BufferedReader;
@@ -16,6 +15,8 @@ import java.util.List;
 import static lab.proj.mostjonajava.utils.Logger.hibaLog;
 import static lab.proj.mostjonajava.utils.Logger.log;
 import static lab.proj.mostjonajava.utils.Parancsok.*;
+
+import lab.proj.mostjonajava.model.Jatek;
 
 public class FungoriumApplication extends Application {
     public static Jatek jatek;
@@ -140,14 +141,49 @@ public class FungoriumApplication extends Application {
     }
 
     private static void testSimaSporaSzoras(String[] parameterek) {
+        // várunk három elemet: 0=parancs, 1=gombatestId, 2=celTektonId
         if (parameterVizsgalat(parameterek, 3)) return;
-        parameterek[0].sporaKiloves(parameterek[1]);
+
+        int gtId;
+        int celId;
+        try {
+            gtId  = Integer.parseInt(parameterek[1]);
+            celId = Integer.parseInt(parameterek[2]);
+        } catch (NumberFormatException e) {
+            hibaLog("Érvénytelen ID: " + parameterek[1] + " vagy " + parameterek[2]);
+            return;
+        }
+
+        // 2) Gombatest és cél‐tekton lekérdezése a Játékból
+        Gombatest gt  = jatek.keresGombatestById(gtId);
+        Tekton    cel = jatek.keresTektonById(celId);
+        if (gt == null || cel == null) {
+            hibaLog("Nincs ilyen gombatest vagy tekton ID-val: " + gtId + ", " + celId);
+            return;
+        }
+
+        // 3) Hívjuk meg a sporaKiloves metódust
+        gt.sporaKiloves(cel, 1);  // az 1 itt a kilövendő spórák száma
     }
 
     private static void testFejlettSporaSzoras(String[] parameterek) {
-        parameterVizsgalat(parameterek, 3);
-        FejlettGombatest gombatest = new FejlettGombatest();
-        gombatest.sporaKiloves(new EgyFonalasTekton());
+        if (parameterVizsgalat(parameterek, 3)) return;
+
+        // pl. parse-olod a gombatest-id-t
+        int gtId = Integer.parseInt(parameterek[1]);
+        Gombatest eredeti = jatek.keresGombatestById(gtId);
+        if (eredeti == null) {
+            hibaLog("Nincs ilyen Gombatest ID-val: " + gtId);
+            return;
+        }
+
+        // csak így hívható meg a konstruktor
+        FejlettGombatest fejlett = new FejlettGombatest(eredeti);
+
+        // meg a sporaKiloves metódus is így
+        int mennyiseg = Integer.parseInt(parameterek[2]);
+        Tekton cel = jatek.keresTektonById( Integer.parseInt(parameterek[2]) );
+        fejlett.sporaKiloves(cel, mennyiseg);
     }
 
     private static void testGombaTestNovesztes(String[] parameterek) {
@@ -163,9 +199,18 @@ public class FungoriumApplication extends Application {
     private static void testGombaTestFejlesztes(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 2)) return;
 
+        // 1) Létrehozunk egy tekton-t és ráteszünk egy sima Gombatestet
         EgyFonalasTekton tekton = new EgyFonalasTekton();
+        Gombasz gombasz = new Gombasz("teszt");
+        Gombatest alapGt = new Gombatest(tekton, gombasz);
+        tekton.setGombatest(alapGt);
+
+        // 2) Ellenőrizzük, fejleszthető-e
         if (tekton.gombatestFejleszthetoE()) {
-            tekton.setGombatest(new FejlettGombatest());
+            // 3) Ha igen, ebből a gombatestből építjük a FejlettGombatestet
+            FejlettGombatest fejlettGt = new FejlettGombatest(alapGt);
+            tekton.setGombatest(fejlettGt);
+            log("Gombatest fejlesztese sikeres.");
         } else {
             hibaLog("A tekton gombateste nem fejleszthető!");
         }
@@ -187,9 +232,20 @@ public class FungoriumApplication extends Application {
     }
 
     private static void testRovarMozgatas(String[] parameterek) {
-        parameterVizsgalat(parameterek, 3);
-        Rovar rovar = new Rovar("testrovar");
-        rovar.lepes(new EgyFonalasTekton());
+        if (parameterVizsgalat(parameterek, 3)) return;
+
+        // 1) Létrehozunk egy tekton-t és rovaraszt
+        Tekton t = new EgyFonalasTekton();
+        Rovarasz rz = new Rovarasz("teszt");
+
+        // 2) Így kell példányosítani a rovart
+        Rovar rovar = new Rovar(t, rz);
+        // és regisztrálni a modelben:
+        t.getRovarok().add(rovar);
+        rz.getRovarok().add(rovar);
+
+        // 3) Mozgatjuk
+        rovar.lepes( /* ide a cél-Tekton példány */ t );
     }
 
     private static void testSporaFogyasztas(String[] parameterek) {
@@ -247,9 +303,21 @@ public class FungoriumApplication extends Application {
     }
 
     private static void testFonalFelszivodas(String[] parameterek) {
-        parameterVizsgalat(parameterek, 2);
-        EltunoFonalasTekton eltunoFonalasTekton = new EltunoFonalasTekton();
-        eltunoFonalasTekton.eletIdoCsokkentes(new GombaFonal());
+        if (parameterVizsgalat(parameterek, 1)) return;
+
+        EltunoFonalasTekton tekton = new EltunoFonalasTekton();
+        // kérheted, hogy legyen rajta egy fonal is, ha az a cél
+        Tekton masik = new EltunoFonalasTekton();
+        Gombatest gt = new Gombatest(tekton, new Gombasz("dummy"));
+        GombaFonal gf = new GombaFonal(tekton, masik, gt);
+        tekton.setGombafonal(gf);
+
+        // élettartam csökkentése, így eltűnnek a fonalak
+        tekton.korFrissites();
+        // esetleg többször, ha a fonalakElettartama >1
+
+        log("Fonal felszívódás teszt lefutott");
     }
+
 
 }

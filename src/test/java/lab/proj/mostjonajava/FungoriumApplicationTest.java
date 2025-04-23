@@ -7,6 +7,11 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 
 class FungoriumApplicationTest {
 
@@ -79,4 +84,113 @@ class FungoriumApplicationTest {
         System.out.println("=== PÁLYA1 ÁLLAPOTA ===");
         palya1.forEach(tp -> System.out.println(tp));
     }
+
+    /**
+     * Létrehoz egy 2 tektonból álló pályát:
+     * - t1 és t2 között fonal nélkül
+     * - t1-en van egy Gombatest
+     * - t2-n nincs Gombatest
+     */
+    private static List<Tekton> letrehozPalya2() {
+        // 1) Két tekton
+        Tekton t1 = new TobbFonalasTekton();
+        Tekton t2 = new TobbFonalasTekton();
+
+        // 2) Gombatest a t1-en
+        Gombasz gombasz = new Gombasz("G2");
+        Gombatest gt = new Gombatest(t1, gombasz);
+        t1.setGombatest(gt);
+
+        // 3) Visszaadjuk
+        return List.of(t1, t2);
+    }
+
+    @Test
+    void tesztPalya2Init() {
+        List<Tekton> palya2 = letrehozPalya2();
+
+        // pont 2 tekton
+        assertEquals(2, palya2.size(), "palya2-nek 2 tektonból kell állnia");
+
+        // t1-en van gombatest
+        Tekton t1 = palya2.get(0);
+        assertNotNull(t1.getGombatest(), "t1-nek kell, hogy legyen Gombatest");
+        // sem spóra, sem rovar nem lett rátenni
+        assertTrue(t1.getSporak().isEmpty(), "t1-en ne legyen spóra");
+        assertTrue(t1.getRovarok().isEmpty(), "t1-en ne legyen rovar");
+
+        // t2-n semmi extra
+        Tekton t2 = palya2.get(1);
+        assertNull(t2.getGombatest(), "t2-nek NEM szabad Gombatestnek lennie");
+        assertTrue(t2.getSporak().isEmpty(), "t2-n ne legyen spóra");
+        assertTrue(t2.getRovarok().isEmpty(), "t2-n ne legyen rovar");
+
+        // opcionális: konzolra is kiírhatjuk
+        System.out.println("=== PÁLYA2 ÁLLAPOTA ===");
+        palya2.forEach(System.out::println);
+    }
+
+    @Test
+    void tesztJatekinditasEsAllapotParancs() throws Exception {
+        // 1) Be- és kimenet előkészítése
+        String bemenet = String.join("\n",
+                "JATEKINDITAS 2 JANI,EVI",
+                "ALLAPOT",
+                "KILEPES"
+        ) + "\n";
+
+        InputStream eredetiIn = System.in;
+        PrintStream eredetiOut = System.out;
+
+        try {
+            // System.in beállítása
+            ByteArrayInputStream bais = new ByteArrayInputStream(bemenet.getBytes(StandardCharsets.UTF_8));
+            System.setIn(bais);
+
+            // System.out elfogása
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(baos, true, StandardCharsets.UTF_8));
+
+            // 2) Futtatjuk a main-t
+            FungoriumApplication.main(new String[]{});
+
+            // 3) Kiértékeljük a kimenetet
+            String kimenet = baos.toString(StandardCharsets.UTF_8);
+            assertTrue(kimenet.contains("JATEKINDITAS"),     "Hiányzik a „JATEKINDITAS” sor");
+            assertTrue(kimenet.contains("Gombasz letrejott"),"Hiányzik a „Gombasz letrejott” sor");
+            assertTrue(kimenet.contains("Rovarasz letrejott"),"Hiányzik a „Rovarasz letrejott” sor");
+            assertTrue(kimenet.contains("ALLAPOT"),           "Hiányzik az „ALLAPOT” sor");
+        } finally {
+            // visszaállítjuk az eredeti streameket
+            System.setIn(eredetiIn);
+            System.setOut(eredetiOut);
+        }
+    }
+
+    /*
+    @Test
+    void tesztFonalNovesztes() {
+        // 1) Pálya előkészítése és kiírás
+        List<Tekton> palya2 = letrehozPalya2();
+        System.out.println("=== PALYA2 KEZDETE ===");
+        palya2.forEach(System.out::println);
+
+        // 2) Fonal növesztés: gombatest ID és tekton-ek
+        Tekton t1 = palya2.get(0);
+        Tekton t2 = palya2.get(1);
+        Gombatest gt = t1.getGombatest();
+
+        System.out.println("FONALNOVESZTES");                 // elvárt címsor
+        gt.fonalNovesztes(t1, t2);                             // maga a növesztés
+
+        // 3) Ellenőrizzük, hogy tényleg létrejött-e a fonal
+        assertFalse(t1.getGombafonalak().isEmpty(), "t1-nek fonal(ak)nak kell keletkezni");
+        boolean talalt = t1.getGombafonalak().stream()
+                .anyMatch(f -> f.getHonnan()==t1 && f.getHova()==t2);
+        assertTrue(talalt, "A fonalnak t1->t2 irányban kell megjelennie");
+
+        // 4) Pálya állapotának újra kiírása
+        System.out.println("=== PALYA2 VEGE ===");
+        palya2.forEach(System.out::println);
+    }*/
 }
