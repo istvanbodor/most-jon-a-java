@@ -386,6 +386,131 @@ class FungoriumApplicationTest {
         palya5.forEach(System.out::println);
     }
 
+    /**
+     * 2 tektonból álló pálya:
+     * - t1–t2 között fonal
+     * - t1-en sima gombatest
+     * - t1-en egy rovar
+     */
+    private static List<Tekton> letrehozPalya6(){
+        // Tektonok
+        Tekton t1 = new TobbFonalasTekton();
+        Tekton t2 = new TobbFonalasTekton();
+
+        // Szomszédságok: t1–t2
+        t1.getSzomszedosTektonok().add(t2);
+        t2.getSzomszedosTektonok().add(t1);
+
+        // Gombatest t1-en
+        Gombasz g1 = new Gombasz("G1");
+        Gombatest Gt1 = new Gombatest(t1, g1);
+        t1.setGombatest(Gt1);
+
+        // Gombafonal t1–t2
+        GombaFonal f12 = new GombaFonal(t1, t2, Gt1);
+        t1.getGombafonalak().add(f12);
+        t2.getGombafonalak().add(f12);
+
+        // t1-re egy rovar
+        Rovarasz r1 = new Rovarasz("R1");
+        Rovar R1 = new Rovar(t1, r1);
+
+        // Pálya visszaadása
+        return List.of(t1, t2);
+    }
+
+    @Test
+    void tesztPalya6Init() {
+        List<Tekton> palya5 = letrehozPalya5();
+        assertEquals(2, palya5.size(), "Pálya6-nek 2 tektonból kell állnia");
+
+        Tekton t1 = palya5.get(0), t2 = palya5.get(1);
+
+        // Szomszédságok
+        assertTrue(t1.getSzomszedosTektonok().contains(t2), "T1 szomszédja legyen T2");
+        assertTrue(t2.getSzomszedosTektonok().contains(t1), "T2 szomszédja legyen T1");
+
+        // Gombafonal
+        assertEquals(1, t1.getGombafonalak().size(), "T1-nek 1 gombafonal legyen");
+        assertEquals(1, t2.getGombafonalak().size(), "T2-nek 1 gombafonal legyen");
+
+        // Gombatest
+        assertNotNull(t1.getGombatest(), "T1-en legyen gombatest");
+        assertEquals(Gombatest.class, t1.getGombatest().getClass(), "T1-en sima gombatest legyen");
+
+        // Spórák
+        assertEquals(0, t1.getSporak().size(), "T1-en ne legyen spóra");
+        assertEquals(0, t2.getSporak().size(), "T2-nek ne legyen spóra");
+
+        // Rovar
+        assertEquals(1, t1.getRovarok().size(), "T1-en 1 rovar legyen");
+        assertEquals("R1", t1.getRovarok().get(0).getRovarasz().getNev(), "T1-en a rovar neve 'R1' legyen");
+
+        // Konzolra íratás
+        System.out.println("=== PÁLYA6 ÁLLAPOTA ===");
+        palya5.forEach(System.out::println);
+    }
+
+    /**
+     * 2 tektonból álló pálya:
+     * - t1-en sima gombatest
+     * - t2-n 1 sima spóra
+     * - t1-en egy rovar
+     */
+    private static List<Tekton> letrehozPalya7(){
+        // Tektonok
+        Tekton t1 = new TobbFonalasTekton();
+        Tekton t2 = new TobbFonalasTekton();
+
+        // Szomszédságok: t1–t2
+        t1.getSzomszedosTektonok().add(t2);
+        t2.getSzomszedosTektonok().add(t1);
+
+        // Gombatest t1-en
+        Gombasz g1 = new Gombasz("G1");
+        Gombatest Gt1 = new Gombatest(t1, g1);
+        t1.setGombatest(Gt1);
+
+        // t2-re 1 sima spóra
+        t2.getSporak().add(new SimaSpora());
+
+        // t1-re egy rovar
+        Rovarasz r1 = new Rovarasz("R1");
+        Rovar R1 = new Rovar(t1, r1);
+
+        // Pálya visszaadása
+        return List.of(t1, t2);
+    }
+
+    @Test
+    void tesztPalya7Init() {
+        List<Tekton> palya5 = letrehozPalya5();
+        assertEquals(2, palya5.size(), "Pálya7-nek 2 tektonból kell állnia");
+
+        Tekton t1 = palya5.get(0), t2 = palya5.get(1);
+
+        // Szomszédságok
+        assertTrue(t1.getSzomszedosTektonok().contains(t2), "T1 szomszédja legyen T2");
+        assertTrue(t2.getSzomszedosTektonok().contains(t1), "T2 szomszédja legyen T1");
+
+        // Gombatest
+        assertNotNull(t1.getGombatest(), "T1-en legyen gombatest");
+        assertEquals(Gombatest.class, t1.getGombatest().getClass(), "T1-en sima gombatest legyen");
+
+        // Spórák
+        assertEquals(0, t1.getSporak().size(), "T1-en ne legyen spóra");
+        assertEquals(1, t2.getSporak().size(), "T2-nek 1 spórája legyen");
+        assertTrue(t2.getSporak().get(0) instanceof SimaSpora, "T2-n sima spóra legyen");
+
+        // Rovar
+        assertEquals(1, t1.getRovarok().size(), "T1-en 1 rovar legyen");
+        assertEquals("R1", t1.getRovarok().get(0).getRovarasz().getNev(), "T1-en a rovar neve 'R1' legyen");
+
+        // Konzolra íratás
+        System.out.println("=== PÁLYA7 ÁLLAPOTA ===");
+        palya5.forEach(System.out::println);
+    }
+
     /*
     @Test
     void tesztJatekinditasEsAllapotParancs() throws Exception {
@@ -917,12 +1042,115 @@ class FungoriumApplicationTest {
     }
 
     @Test
-    void tesztRovarMozgasa(){
+    void tesztRovarMozgasaSporaEvessel(){
+        // 1) Pálya előkészítése
+        List<Tekton> palya5 = letrehozPalya5();
+        Tekton t1 = palya5.get(0);
+        Tekton t2 = palya5.get(1);
+        Rovar r = palya5.get(0).getRovarok().get(0);
 
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA5 KEZDETE ===");
+        palya5.forEach(System.out::println);
+
+        // 3) Parancs
+        System.out.println("ROVARMOZGATAS");
+
+        // 4) Előfeltétel: t2-n van sima spóra
+        List<Spora> sS = t2.getSporak();
+        assertEquals(1, sS.size(), "Előfeltétel: T2-n pontosan 1 spóra legyen");
+        assertTrue(sS.get(0) instanceof SimaSpora, "T2-n sima spóra legyen");
+
+        // 5) Meghívjuk a lepést
+        r.lepes(t2);
+
+        // 6) Ellenőrzések
+        // – a rovar már ne legyen t1-en
+        assertFalse(t1.getRovarok().contains(r), "A rovarnak el kellett hagynia T1-et");
+        // – a rovar legyen t2-n
+        assertTrue(t2.getRovarok().contains(r), "A rovarnak T2-re kellett lépnie");
+        // – a spóra tűnjön el, mert megette a rovar
+        assertEquals(0, t2.getSporak().size(), "A spórát meg kellett ennie a rovarnak");
+        assertEquals(0, t1.getSporak().size(), "A spórát nem helyezte át másik tektonra");
+
+        // 7) Kiírás: végállapot
+        System.out.println("=== PALYA5 VEGE ===");
+        palya5.forEach(System.out::println);
+    }
+
+    @Test
+    void tesztRovarMozgasaSporaEvesNelkul(){
+        // 1) Pálya előkészítése
+        List<Tekton> palya6 = letrehozPalya5();
+        Tekton t1 = palya6.get(0);
+        Tekton t2 = palya6.get(1);
+        Rovar r = palya6.get(0).getRovarok().get(0);
+        int eredetiLSz = r.getLepesSzam();
+        boolean eredetiVK = r.getVagoKepesseg();
+        boolean eredetiB = r.getBenulas();
+
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA6 KEZDETE ===");
+        palya6.forEach(System.out::println);
+
+        // 3) Parancs
+        System.out.println("ROVARMOZGATAS");
+
+        // 4) Előfeltétel: t2-n van sima spóra
+        assertEquals(0, t2.getSporak().size(), "Előfeltétel: T2-n ne legyen spóra");
+
+        // 5) Meghívjuk a lepést
+        r.lepes(t2);
+
+        // 6) Ellenőrzések
+        // – a rovar már ne legyen t1-en
+        assertFalse(t1.getRovarok().contains(r), "A rovarnak el kellett hagynia T1-et");
+        // – a rovar legyen t2-n
+        assertTrue(t2.getRovarok().contains(r), "A rovarnak T2-re kellett lépnie");
+        // – a spórát nem evett a rovar
+        assertEquals(eredetiLSz, r.getLepesSzam(), "A rovar nem evett olyan spórát, ami változtatná az állapotát");
+        assertEquals(eredetiVK, r.getVagoKepesseg(), "A rovar nem evett olyan spórát, ami változtatná az állapotát");
+        assertEquals(eredetiB, r.getBenulas(), "A rovar nem evett olyan spórát, ami változtatná az állapotát");
+
+        // 7) Kiírás: végállapot
+        System.out.println("=== PALYA6 VEGE ===");
+        palya6.forEach(System.out::println);
     }
 
     @Test
     void tesztRovarMozgasaSikertelen() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya5 = letrehozPalya5();
+        Tekton t1 = palya5.get(0);
+        Tekton t2 = palya5.get(1);
+        Rovar r = palya5.get(0).getRovarok().get(0);
 
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA7 KEZDETE ===");
+        palya5.forEach(System.out::println);
+
+        // 3) Parancs
+        System.out.println("ROVARMOZGATAS");
+
+        // 4) Előfeltétel: t2-n van sima spóra
+        List<Spora> sS = t2.getSporak();
+        assertEquals(1, sS.size(), "Előfeltétel: T2-n pontosan 1 spóra legyen");
+        assertTrue(sS.get(0) instanceof SimaSpora, "T2-n sima spóra legyen");
+
+        // 5) Meghívjuk a lepést
+        r.lepes(t2);
+
+        // 6) Ellenőrzések
+        // – a rovar legyen t1-en
+        assertTrue(t1.getRovarok().contains(r), "A rovarnak T1-en kellett maradnia");
+        // – a rovar ne legyen t2-n
+        assertFalse(t2.getRovarok().contains(r), "A rovarnak nem léphetett T2-re");
+        // – a spórának nem tűnhet el, mert nem ette meg a rovar
+        assertEquals(1, t2.getSporak().size(), "A spórát meg kellett ennie a rovarnak");
+        assertEquals(0, t1.getSporak().size(), "A spórát nem helyezte át másik tektonra");
+
+        // 7) Kiírás: végállapot
+        System.out.println("=== PALYA7 VEGE ===");
+        palya5.forEach(System.out::println);
     }
 }
