@@ -321,11 +321,11 @@ class FungoriumApplicationTest {
      * - t1–t2 között fonal
      * - t1-en sima gombatest
      * - t2-n 1 sima spóra
-     * - t1-en egy rovar
+     * - t1-en egy rovar, a vágóképessége nem aktív
      */
     private static List<Tekton> letrehozPalya5(){
         // Tektonok
-        Tekton t1 = new TobbFonalasTekton();
+        Tekton t1 = new EgyFonalasTekton();
         Tekton t2 = new TobbFonalasTekton();
 
         // Szomszédságok: t1–t2
@@ -348,6 +348,9 @@ class FungoriumApplicationTest {
         // t1-re egy rovar
         Rovarasz r1 = new Rovarasz("R1");
         Rovar R1 = new Rovar(t1, r1);
+
+        //Rovar vágóképessége nem aktív
+        R1.setVagoKepesseg(false);
 
         // Pálya visszaadása
         return List.of(t1, t2);
@@ -510,6 +513,71 @@ class FungoriumApplicationTest {
         System.out.println("=== PÁLYA7 ÁLLAPOTA ===");
         palya5.forEach(System.out::println);
     }
+
+    //ELTUNOFONALTEKTONHOZ
+    /**
+     * 2 tektonból álló pálya:
+     * - t1: EltunoFonalasTekton
+     * - t2: TobbFonalasTekton
+     * - t1–t2 között gombafonal
+     * - t1-en sima gombatest (nincs fejlettség, nincs spóra)
+     */
+    private static List<Tekton> letrehozPalya8() {
+        // Tektonok
+        Tekton t1 = new EltunoFonalasTekton();
+        Tekton t2 = new TobbFonalasTekton();
+
+        // Szomszédságok: t1–t2
+        t1.getSzomszedosTektonok().add(t2);
+        t2.getSzomszedosTektonok().add(t1);
+
+        // Gombatest t1-en
+        Gombasz g1 = new Gombasz("G1");
+        Gombatest Gt1 = new Gombatest(t1, g1);
+        t1.setGombatest(Gt1);
+
+        // Gombafonal t1–t2
+        GombaFonal f12 = new GombaFonal(t1, t2, Gt1);
+        t1.getGombafonalak().add(f12);
+        t2.getGombafonalak().add(f12);
+
+        // Pálya visszaadása
+        return List.of(t1, t2);
+    }
+
+    @Test
+    void tesztPalya8Init() {
+        List<Tekton> palya8 = letrehozPalya8();
+        assertEquals(2, palya8.size(), "Pálya8-nak 2 tektonból kell állnia");
+
+        Tekton t1 = palya8.get(0);
+        Tekton t2 = palya8.get(1);
+
+        // Szomszédságok
+        assertTrue(t1.getSzomszedosTektonok().contains(t2), "T1 szomszédja legyen T2");
+        assertTrue(t2.getSzomszedosTektonok().contains(t1), "T2 szomszédja legyen T1");
+
+        // Gombafonalak
+        assertEquals(1, t1.getGombafonalak().size(), "T1-nek 1 gombafonala legyen");
+        assertEquals(1, t2.getGombafonalak().size(), "T2-nek 1 gombafonala legyen");
+
+        // Gombatest
+        assertNotNull(t1.getGombatest(), "T1-en legyen gombatest");
+        assertEquals(Gombatest.class, t1.getGombatest().getClass(), "T1-en sima gombatest legyen");
+
+        // Spórák
+        assertTrue(t1.getSporak().isEmpty(), "T1-en ne legyen spóra");
+        assertTrue(t2.getSporak().isEmpty(), "T2-en ne legyen spóra");
+
+        // Rovarok
+        assertTrue(t1.getRovarok().isEmpty(), "T1-en ne legyen rovar");
+        assertTrue(t2.getRovarok().isEmpty(), "T2-en ne legyen rovar");
+
+        // Konzolra íratás
+        System.out.println("=== PÁLYA8 ÁLLAPOTA ===");
+        palya8.forEach(System.out::println);
+    }
+
 
     /*
     @Test
@@ -1042,7 +1110,7 @@ class FungoriumApplicationTest {
     }
 
     @Test
-    void tesztRovarMozgasaSporaEvessel(){
+    void tesztRovarMozgasaSporaEvesselPalya5() {
         // 1) Pálya előkészítése
         List<Tekton> palya5 = letrehozPalya5();
         Tekton t1 = palya5.get(0);
@@ -1079,9 +1147,9 @@ class FungoriumApplicationTest {
     }
 
     @Test
-    void tesztRovarMozgasaSporaEvesNelkul(){
+    void tesztRovarMozgasaSporaEvesNelkulPalya6() {
         // 1) Pálya előkészítése
-        List<Tekton> palya6 = letrehozPalya5();
+        List<Tekton> palya6 = letrehozPalya6();
         Tekton t1 = palya6.get(0);
         Tekton t2 = palya6.get(1);
         Rovar r = palya6.get(0).getRovarok().get(0);
@@ -1096,7 +1164,7 @@ class FungoriumApplicationTest {
         // 3) Parancs
         System.out.println("ROVARMOZGATAS");
 
-        // 4) Előfeltétel: t2-n van sima spóra
+        // 4) Előfeltétel: t2-n nincs spóra
         assertEquals(0, t2.getSporak().size(), "Előfeltétel: T2-n ne legyen spóra");
 
         // 5) Meghívjuk a lepést
@@ -1118,16 +1186,16 @@ class FungoriumApplicationTest {
     }
 
     @Test
-    void tesztRovarMozgasaSikertelen() {
+    void tesztRovarMozgasaSikertelenPalya7() {
         // 1) Pálya előkészítése
-        List<Tekton> palya5 = letrehozPalya5();
-        Tekton t1 = palya5.get(0);
-        Tekton t2 = palya5.get(1);
-        Rovar r = palya5.get(0).getRovarok().get(0);
+        List<Tekton> palya7 = letrehozPalya7();
+        Tekton t1 = palya7.get(0);
+        Tekton t2 = palya7.get(1);
+        Rovar r = palya7.get(0).getRovarok().get(0);
 
         // 2) Kiírás: kezdeti állapot
         System.out.println("=== PALYA7 KEZDETE ===");
-        palya5.forEach(System.out::println);
+        palya7.forEach(System.out::println);
 
         // 3) Parancs
         System.out.println("ROVARMOZGATAS");
@@ -1151,6 +1219,144 @@ class FungoriumApplicationTest {
 
         // 7) Kiírás: végállapot
         System.out.println("=== PALYA7 VEGE ===");
+        palya7.forEach(System.out::println);
+    }
+
+    @Test
+    void tesztGombaFonalElvagasaPalya6() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya6 = letrehozPalya6();
+        Tekton t1 = palya6.get(0);
+        Tekton t2 = palya6.get(1);
+        Rovar r = palya6.get(0).getRovarok().get(0);
+
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA6 KEZDETE ===");
+        palya6.forEach(System.out::println);
+
+        // 3) Parancs
+        System.out.println("FONALVAGAS");
+
+        // 4) Előfeltétel: a rovar vágóképessége legyen aktív
+        assertTrue(r.getVagoKepesseg(), "A rovarnak képesnek kell lennie fonalat vágni");
+
+        // 5) Meghívjuk a fonal vágást
+        r.fonalVagas(t2);
+
+        // 6) Ellenőrzések
+        // – a rovar még t1-en van
+        assertTrue(t1.getRovarok().contains(r), "A rovarnak T1-en kellett maradnia");
+        // – a fonal ténylegesen el lett vágva mindkét irányban
+        assertFalse(t1.vanFonalKozottuk(t2), "T1 és T2 között nem lehet fonal");
+        assertFalse(t2.vanFonalKozottuk(t1), "T2 és T1 között nem lehet fonal");
+        // – gombafonalak listája üres mindkét tektonon
+        assertEquals(0, t1.getGombafonalak().size(), "T1-nek nem lehet gombafonala");
+        assertEquals(0, t2.getGombafonalak().size(), "T2-nek nem lehet gombafonala");
+
+        // 7) Kiírás: végállapot
+        System.out.println("=== PALYA6 VEGE ===");
+        palya6.forEach(System.out::println);
+    }
+
+    @Test
+    void tesztGombaFonalElvagasaSikertelenPalya5() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya5 = letrehozPalya5();
+        Tekton t1 = palya5.get(0);
+        Tekton t2 = palya5.get(1);
+        Rovar r = palya5.get(0).getRovarok().get(0);
+
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA5 KEZDETE ===");
+        palya5.forEach(System.out::println);
+
+        // 3) Parancs
+        System.out.println("FONALVAGAS");
+
+        // 4) Előfeltétel: a rovar vágóképessége nem aktív
+        assertFalse(r.getVagoKepesseg(), "A rovar nem lehet képes fonalat vágni");
+
+        // 5) Meghívjuk a fonal vágást
+        r.fonalVagas(t2);
+
+        // 6) Ellenőrzések
+        // – a rovar még t1-en van
+        assertTrue(t1.getRovarok().contains(r), "A rovarnak T1-en kellett maradnia");
+        // – a fonal nem lett elvágva mindkét irányban
+        assertTrue(t1.vanFonalKozottuk(t2), "T1 és T2 között nem lehet fonal");
+        assertTrue(t2.vanFonalKozottuk(t1), "T2 és T1 között nem lehet fonal");
+        // – gombafonalak listája nem üres mindkét tektonon
+        assertEquals(1, t1.getGombafonalak().size(), "T1-nek nem lehet gombafonala");
+        assertEquals(1, t2.getGombafonalak().size(), "T2-nek nem lehet gombafonala");
+
+        // 7) Kiírás: végállapot
+        System.out.println("=== PALYA5 VEGE ===");
         palya5.forEach(System.out::println);
     }
+
+    @Test
+    void tesztEgyFonalasTektonKetteToreseSikeresPalya5() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya5 = letrehozPalya5();
+        Tekton t1 = palya5.get(0);
+        Tekton t2 = palya5.get(1);
+
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA5 KEZDETE ===");
+        palya5.forEach(System.out::println);
+
+        // 3) Parancs
+        System.out.println("KETTETORES");
+
+        // 4) Előfeltétel: T1-en legyen gombatest és fonal, T2-vel összekötve
+        assertNotNull(t1.getGombatest(), "T1-en kell legyen gombatest");
+        assertFalse(t1.getGombafonalak().isEmpty(), "T1-nek kell legyen gombafonala");
+        assertTrue(t1.getSzomszedosTektonok().contains(t2), "T1 szomszédja legyen T2");
+
+        // 5) Meghívjuk a kettétörést
+        ((EgyFonalasTekton) t1).ketteTores();
+
+        // 6) Ellenőrzések
+        // – a gombatest eltűnt
+        assertNull(t1.getGombatest(), "A gombatestnek el kellett tűnnie");
+        // – a fonal megszűnt t1 és t2 között
+        assertTrue(t1.getGombafonalak().isEmpty(), "T1-nek nem szabad legyen gombafonala");
+        assertFalse(t2.getGombafonalak().contains(t1), "T2-nek sem szabad tartalmaznia fonalat T1 felé");
+        // – a spórák eltűntek t1-ről
+        assertTrue(t1.getSporak().isEmpty(), "T1-en nem maradhatott spóra");
+
+        // – t1 kapott egy új szomszédot
+        assertEquals(2, t1.getSzomszedosTektonok().size(), "T1-nek új szomszédot kellett kapnia");
+        Tekton uj = t1.getSzomszedosTektonok().stream()
+                .filter(sz -> sz != t2)
+                .findFirst()
+                .orElse(null);
+        assertNotNull(uj, "Kettétörés után új tekton kell legyen szomszédként");
+
+        // 7) Kiírás: végállapot
+        System.out.println("=== PALYA5 VEGE ===");
+        palya5.forEach(System.out::println);
+        System.out.println("Új tekton: " + uj);
+
+    }
+
+    //BE KELL FEJEZNI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    @Test
+    void tesztFonalFelszivodasIdovelPalya8() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya8 = letrehozPalya8();
+        Tekton t1 = palya8.get(0);
+        Tekton t2 = palya8.get(1);
+
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA8 KEZDETE ===");
+        palya8.forEach(System.out::println);
+
+        // 3) Parancs
+        System.out.println("FONALFELSZIVODAS");
+
+
+    }
+
+
 }
