@@ -22,7 +22,7 @@ public class Gombatest {
     private int elszortSporakSzama;
     private int noveszthetoFonalakSzama = 1;
 
-    private List<GombaFonal> gombaFonalak;
+    private List<GombaFonal> gombaFonalak = new ArrayList<>();
 
     /**
      * A gombatest konstruktora paraméterek nélkül (fejlesztésnél jön elő)
@@ -54,31 +54,18 @@ public class Gombatest {
      * @param honnan
      * @param hova
      */
-    /*public void fonalNovesztes(Tekton honnan, Tekton hova) {
-        // csak az alapfeltételek:
-        if (!honnan.szomszedossagEllenorzese(hova)
-                || noveszthetoFonalakSzama <= 0) {
-            out.println("Fonalnovesztes sikeretelen");
-            return;
-        }
-
-        // ... a sikeres ág marad így ...
-        GombaFonal gombaFonal = new GombaFonal(honnan, hova, this);
-        honnan.getGombafonalak().add(gombaFonal);
-        hova.getGombafonalak().add(gombaFonal);
-        this.gombaFonalak.add(gombaFonal);
-        noveszthetoFonalakSzama--;
-        out.println("Fonalnovesztes sikeres");
-    }*/
-
-    public void fonalNovesztes(Tekton honnan, Tekton hova) {
+   public void fonalNovesztes(Tekton honnan, Tekton hova) {
         //hivasLog("fonalNovesztes(Tekton honnan, Tekton hova)",
            //     List.of("honnan: Tekton - " + honnan.toString(),
                   //      "hova: Tekton - " + hova.toString()), 0);
+       boolean kapcsolodik = gombaFonalak.stream().anyMatch(f ->
+               f.getHonnan().equals(honnan) ||
+                       f.getHova().equals(honnan) ||
+                       f.getHonnan().equals(hova) ||
+                       f.getHova().equals(hova)
+       );
 
-        boolean kapcsolodik = gombaFonalak.stream().anyMatch(f -> f.getHonnan().equals(honnan) || f.getHova().equals(honnan) || f.getHonnan().equals(hova) || f.getHova().equals(hova));
-
-        if(!honnan.szomszedossagEllenorzese(hova) || noveszthetoFonalakSzama <= 0 || !kapcsolodik) {
+       if(!honnan.szomszedossagEllenorzese(hova) || noveszthetoFonalakSzama <= 0 || kapcsolodik) {
             //log("Nem novesztheto gombafonal");
             return;
         }

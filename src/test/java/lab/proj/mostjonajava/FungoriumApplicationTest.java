@@ -750,13 +750,10 @@ class FungoriumApplicationTest {
     void tesztFonalNovesztesPalya2() {
         // 1) Pálya előkészítése
         List<Tekton> palya2 = letrehozPalya2();
-        Tekton t1 = palya2.get(0);
-        Tekton t2 = palya2.get(1);
-        Gombatest gt = t1.getGombatest();
 
         // 1a) Kiinduló állapot: még nincs fonal
-        assertTrue(t1.getGombafonalak().isEmpty(), "Kiinduláskor ne legyen fonal");
-        assertTrue(t2.getGombafonalak().isEmpty(), "Kiinduláskor t2-n sem");
+        assertTrue(palya2.get(0).getGombafonalak().isEmpty(), "Kiinduláskor ne legyen fonal");
+        assertTrue(palya2.get(1).getGombafonalak().isEmpty(), "Kiinduláskor t2-n sem");
 
         // 2) Kiírás (opcionális)
         out.println("=== PALYA2 KEZDETE ===");
@@ -764,13 +761,13 @@ class FungoriumApplicationTest {
 
         // 3) Fonal növesztés
         out.println("FONALNOVESZTES");
-        gt.fonalNovesztes(t1, t2);
+        palya2.get(0).getGombatest().fonalNovesztes(palya2.get(0), palya2.get(1));
 
         // 4) Ellenőrzés: egy fonal került be t1-ből t2-be
-        assertEquals(1, t1.getGombafonalak().size(), "t1-nek egy fonala kell legyen");
-        assertEquals(1, t2.getGombafonalak().size(), "t2-nek egy fonala kell legyen");
-        boolean talalt = t1.getGombafonalak().stream()
-                .anyMatch(f -> f.getHonnan() == t1 && f.getHova() == t2);
+        assertEquals(1, palya2.get(0).getGombafonalak().size(), "t1-nek egy fonala kell legyen");
+        assertEquals(1, palya2.get(1).getGombafonalak().size(), "t2-nek egy fonala kell legyen");
+        boolean talalt = palya2.get(0).getGombafonalak().stream()
+                .anyMatch(f -> f.getHonnan() == palya2.get(0) && f.getHova() == palya2.get(1));
         assertTrue(talalt, "A fonalnak pontosan t1→t2-nek kell lennie");
 
         // 5) Végállapot kiírása (opcionális)
@@ -785,23 +782,29 @@ class FungoriumApplicationTest {
         Tekton t1 = palya3.get(0);
         Tekton t2 = palya3.get(1);
         Tekton t3 = palya3.get(2);
-        Gombatest gt = t1.getGombatest();
 
         // 2) Kiírás a kezdeti állapotról
-        out.println("=== PALYA3 KEZDETE ===");
-        palya3.forEach(out::println);
+        System.out.println("=== PALYA3 KEZDETE ===");
+        palya3.forEach(System.out::println);
 
         // 3) Fonal növesztés nem szomszédos tektonok között
-        out.println("FONALNOVESZTES");
-        gt.fonalNovesztes(t1, t3);
+        System.out.println("FONALNOVESZTES");
+        t1.getGombatest().fonalNovesztes(t1, t3);
 
         // 4) Kiírás a végső állapotról
-        out.println("=== PALYA3 VEGE ===");
-        palya3.forEach(out::println);
+        System.out.println("=== PALYA3 VEGE ===");
+        palya3.forEach(System.out::println);
 
-        // 5) Ellenőrzés: nem jöhetett létre fonal
+        // 5) Ellenőrzés: sem t1-en, sem t3-on nem jöhetett létre fonal
         assertTrue(t1.getGombafonalak().isEmpty(), "t1-nek NEM szabad fonalnak lennie");
         assertTrue(t3.getGombafonalak().isEmpty(), "t3-nak NEM szabad fonalnak lennie");
+
+        // 6) Kifejezetten ellenőrizzük, hogy t1–t3 között ne legyen összeköttetés
+        boolean vanFonalT1T3 = t1.getGombafonalak().stream().anyMatch(f ->
+                (f.getHonnan().equals(t1) && f.getHova().equals(t3)) ||
+                        (f.getHonnan().equals(t3) && f.getHova().equals(t1))
+        );
+        assertFalse(vanFonalT1T3, "t1 és t3 között NEM szabad fonalnak lennie");
     }
 
     @Test
