@@ -54,7 +54,7 @@ public class Gombatest {
      * @param honnan
      * @param hova
      */
-    public void fonalNovesztes(Tekton honnan, Tekton hova) {
+    /*public void fonalNovesztes(Tekton honnan, Tekton hova) {
         // csak az alapfeltételek:
         if (!honnan.szomszedossagEllenorzese(hova)
                 || noveszthetoFonalakSzama <= 0) {
@@ -69,6 +69,37 @@ public class Gombatest {
         this.gombaFonalak.add(gombaFonal);
         noveszthetoFonalakSzama--;
         out.println("Fonalnovesztes sikeres");
+    }*/
+
+    public void fonalNovesztes(Tekton honnan, Tekton hova) {
+        //hivasLog("fonalNovesztes(Tekton honnan, Tekton hova)",
+           //     List.of("honnan: Tekton - " + honnan.toString(),
+                  //      "hova: Tekton - " + hova.toString()), 0);
+
+        boolean kapcsolodik = gombaFonalak.stream().anyMatch(f -> f.getHonnan().equals(honnan) || f.getHova().equals(honnan) || f.getHonnan().equals(hova) || f.getHova().equals(hova));
+
+        if(!honnan.szomszedossagEllenorzese(hova) || noveszthetoFonalakSzama <= 0 || !kapcsolodik) {
+            //log("Nem novesztheto gombafonal");
+            return;
+        }
+
+        GombaFonal gombaFonal = new GombaFonal(honnan, hova, this);
+
+        honnan.setGombafonal(gombaFonal);
+
+        //egyfonalas miatt ellenőrzés ->ha az egyik tektonhoz nem adja hozzá akkor a másikhoz se
+        if(honnan.getGombafonalak().contains(gombaFonal)) {
+            hova.setGombafonal(gombaFonal);
+
+            if(hova.getGombafonalak().contains(gombaFonal)) {
+                this.gombaFonalak.add(gombaFonal);
+                if (honnan.getSporak().isEmpty() && hova.getSporak().isEmpty()) {
+                    noveszthetoFonalakSzama--;
+                }
+            } else {
+                honnan.getGombafonalak().remove(gombaFonal);
+            }
+        }
     }
 
     //TODO Elolvasni:

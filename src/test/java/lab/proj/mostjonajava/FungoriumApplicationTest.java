@@ -972,7 +972,7 @@ class FungoriumApplicationTest {
         // 5) Utófeltételek ellenőrzése
         // mert t4 túl távoli, nem szórunk semmit, a készlet nem változik
         assertEquals(1, fejlettGt.getKilohetoSporakSzama(), "Nem szomszédosra ne csökkenjen a készlet");
-        assertEquals(3, t4.getSporak().size(), "3 spóra volt itt alapból, ne legyen több");
+        assertEquals(3, t4.getSporak().size(), "3 spóra volt itt alapból, ne legyen többgit pull");
 
         // 6) Végállapot kiírás
         System.out.println("=== PALYA4 VEGE ===");
