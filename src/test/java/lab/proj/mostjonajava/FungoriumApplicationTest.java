@@ -316,6 +316,75 @@ class FungoriumApplicationTest {
         palya4.forEach(System.out::println);
     }
 
+    /**
+     * 2 tektonból álló pálya:
+     * - t1–t2 között fonal
+     * - t1-en sima gombatest
+     * - t2-n 1 sima spóra
+     * - t1-en egy rovar
+     */
+    private static List<Tekton> letrehozPalya5(){
+        // Tektonok
+        Tekton t1 = new TobbFonalasTekton();
+        Tekton t2 = new TobbFonalasTekton();
+
+        // Szomszédságok: t1–t2
+        t1.getSzomszedosTektonok().add(t2);
+        t2.getSzomszedosTektonok().add(t1);
+
+        // Gombatest t1-en
+        Gombasz g1 = new Gombasz("G1");
+        Gombatest Gt1 = new Gombatest(t1, g1);
+        t1.setGombatest(Gt1);
+
+        // Gombafonal t1–t2
+        GombaFonal f12 = new GombaFonal(t1, t2, Gt1);
+        t1.getGombafonalak().add(f12);
+        t2.getGombafonalak().add(f12);
+
+        // t2-re 1 sima spóra
+        t2.getSporak().add(new SimaSpora());
+
+        // t1-re egy rovar
+        Rovarasz r1 = new Rovarasz("R1");
+        Rovar R1 = new Rovar(t1, r1);
+
+        // Pálya visszaadása
+        return List.of(t1, t2);
+    }
+
+    @Test
+    void tesztPalya5Init() {
+        List<Tekton> palya5 = letrehozPalya5();
+        assertEquals(2, palya5.size(), "Pálya5-nek 2 tektonból kell állnia");
+
+        Tekton t1 = palya5.get(0), t2 = palya5.get(1);
+
+        // Szomszédságok
+        assertTrue(t1.getSzomszedosTektonok().contains(t2), "T1 szomszédja legyen T2");
+        assertTrue(t2.getSzomszedosTektonok().contains(t1), "T2 szomszédja legyen T1");
+
+        // Gombafonal
+        assertEquals(1, t1.getGombafonalak().size(), "T1-nek 1 gombafonal legyen");
+        assertEquals(1, t2.getGombafonalak().size(), "T2-nek 1 gombafonal legyen");
+
+        // Gombatest
+        assertNotNull(t1.getGombatest(), "T1-en legyen gombatest");
+        assertEquals(Gombatest.class, t1.getGombatest().getClass(), "T1-en sima gombatest legyen");
+
+        // Spórák
+        assertEquals(0, t1.getSporak().size(), "T1-en ne legyen spóra");
+        assertEquals(1, t2.getSporak().size(), "T2-nek 1 spórája legyen");
+        assertTrue(t2.getSporak().get(0) instanceof SimaSpora, "T2-n sima spóra legyen");
+
+        // Rovar
+        assertEquals(1, t1.getRovarok().size(), "T1-en 1 rovar legyen");
+        assertEquals("R1", t1.getRovarok().get(0).getRovarasz().getNev(), "T1-en a rovar neve 'R1' legyen");
+
+        // Konzolra íratás
+        System.out.println("=== PÁLYA5 ÁLLAPOTA ===");
+        palya5.forEach(System.out::println);
+    }
 
     /*
     @Test
@@ -845,5 +914,15 @@ class FungoriumApplicationTest {
         // 7) Kiírás: végállapot
         System.out.println("=== PALYA1 VEGE ===");
         palya1.forEach(System.out::println);
+    }
+
+    @Test
+    void tesztRovarMozgasa(){
+
+    }
+
+    @Test
+    void tesztRovarMozgasaSikertelen() {
+
     }
 }
