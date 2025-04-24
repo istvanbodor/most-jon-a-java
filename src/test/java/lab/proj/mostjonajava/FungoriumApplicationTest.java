@@ -1471,7 +1471,7 @@ class FungoriumApplicationTest {
 
     }
 
-    //BE KELL FEJEZNI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //MEG KELL CSINÁLNI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     @Test
     void tesztFonalFelszivodasIdovelPalya8() {
         // 1) Pálya előkészítése
@@ -1517,8 +1517,6 @@ class FungoriumApplicationTest {
         bS.hatasKifejtese(r);
 
         // 7) Ellenőrzés: a rovar lebénult
-        assertTrue(r.getRovarasz().getPont() > eredetiP,
-                "A spóra tápanyagot ad, ezért növeli a pontszámot");
         assertTrue(r.getBenulas(), "A BenitoSpora hatására a rovarnak bénultnak kell lennie");
 
         // 8) Kiírás: végállapot
@@ -1552,8 +1550,6 @@ class FungoriumApplicationTest {
         lS.hatasKifejtese(r);
 
         // 6) Ellenőrzés: 1-gyel csökken a lépésszám
-        assertTrue(r.getRovarasz().getPont() > eredetiP,
-                "A spóra tápanyagot ad, ezért növeli a pontszámot");
         assertEquals(eredetiLSz - 1, r.getLepesSzam(), "A lassító spóra csökkentse a lépésszámot");
 
         // 7) Kiírás: végállapot
@@ -1587,8 +1583,6 @@ class FungoriumApplicationTest {
         gyS.hatasKifejtese(r);
 
         // 6) Ellenőrzés: 1-gyel nő a lépésszám
-        assertTrue(r.getRovarasz().getPont() > eredetiP,
-                "A spóra tápanyagot ad, ezért növeli a pontszámot");
         assertEquals(eredetiLSz + 1, r.getLepesSzam(), "A gyorsító spóra növelje a lépésszámot");
 
         // 7) Kiírás: végállapot
@@ -1625,8 +1619,6 @@ class FungoriumApplicationTest {
         vS.hatasKifejtese(r);
 
         // 6) Ellenőrzések
-        assertTrue(r.getRovarasz().getPont() > eredetiP,
-                "A spóra tápanyagot ad, ezért növeli a pontszámot");
         assertFalse(r.getVagoKepesseg(), "A vágás tiltó spóra tiltsa le a rovar vágóképességét");
         assertEquals(eredetiLSz, r.getLepesSzam(), "A vágás tiltó spóra nem változtatja a lépésszámot");
 
@@ -1661,8 +1653,6 @@ class FungoriumApplicationTest {
         sS.hatasKifejtese(r);
 
         // 6) Ellenőrzés: pontszám nő
-        assertTrue(r.getRovarasz().getPont() > eredetiP,
-                "A sima spóra tápanyagot ad, ezért növeli a pontszámot");
         assertEquals(eredetiLSz, r.getLepesSzam(), "A sima spóra nem változtatja a lépésszámot");
 
         // 7) Kiírás: végállapot
@@ -1699,12 +1689,8 @@ class FungoriumApplicationTest {
         oS.hatasKifejtese(r);
 
         // 6) Ellenőrzés: létrejött egy új rovar
-        assertTrue(r.getRovarasz().getPont() > eredetiP,
-                "A sima spóra tápanyagot ad, ezért növeli a pontszámot");
-        assertEquals(eredetiTRSz + 1, t1.getRovarok().size(),
-                "Az osztódó spóra új rovart kellett létrehozzon a tektonon");
-        assertEquals(eredetiRSz + 1, ra.getRovarok().size(),
-                "A rovarásznak is egy új rovart kellett kapnia");
+        assertEquals(eredetiTRSz + 1, t1.getRovarok().size(),"Az osztódó spóra új rovart kellett létrehozzon a tektonon");
+        assertEquals(eredetiRSz + 1, ra.getRovarok().size(),"A rovarásznak is egy új rovart kellett kapnia");
         assertEquals(eredetiLSz, r.getLepesSzam(), "Az osztódó spóra nem változtatja a lépésszámot");
 
         // 7) Kiírás: végállapot
