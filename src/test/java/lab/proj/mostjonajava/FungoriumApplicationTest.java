@@ -424,10 +424,10 @@ class FungoriumApplicationTest {
 
     @Test
     void tesztPalya6Init() {
-        List<Tekton> palya5 = letrehozPalya5();
-        assertEquals(2, palya5.size(), "Pálya6-nek 2 tektonból kell állnia");
+        List<Tekton> palya6 = letrehozPalya6();
+        assertEquals(2, palya6.size(), "Pálya6-nek 2 tektonból kell állnia");
 
-        Tekton t1 = palya5.get(0), t2 = palya5.get(1);
+        Tekton t1 = palya6.get(0), t2 = palya6.get(1);
 
         // Szomszédságok
         assertTrue(t1.getSzomszedosTektonok().contains(t2), "T1 szomszédja legyen T2");
@@ -451,7 +451,7 @@ class FungoriumApplicationTest {
 
         // Konzolra íratás
         System.out.println("=== PÁLYA6 ÁLLAPOTA ===");
-        palya5.forEach(System.out::println);
+        palya6.forEach(System.out::println);
     }
 
     /**
@@ -578,6 +578,134 @@ class FungoriumApplicationTest {
         palya8.forEach(System.out::println);
     }
 
+    /**
+     * 1 tektonból álló pálya:
+     * - t1: EltunoFonalasTekton
+     * - 6 különböző spóra van rajta:
+     *   - SimaSpora, BenitoSpora, GyorsitoSpora, LassitoSpora, OsztodoSpora, VagasTiltoSpora
+     * - t1-en egy rovar található ("R1")
+     * - nincs gombafonal vagy szomszédos tekton
+     * - nincs gombatest
+     */
+    private static List<Tekton> letrehozPalya9() {
+        // Tektonok
+        Tekton t1 = new EltunoFonalasTekton();
+
+        // t1-re spórák
+        t1.getSporak().add(new SimaSpora());
+        t1.getSporak().add(new BenitoSpora());
+        t1.getSporak().add(new GyorsitoSpora());
+        t1.getSporak().add(new LassitoSpora());
+        t1.getSporak().add(new OsztodoSpora());
+        t1.getSporak().add(new VagasTiltoSpora());
+
+        // t1-re egy rovar
+        Rovarasz r1 = new Rovarasz("R1");
+        Rovar R1 = new Rovar(t1, r1);
+
+        // Pálya visszaadása
+        return List.of(t1);
+    }
+
+    @Test
+    void tesztPalya9Init() {
+        List<Tekton> palya9 = letrehozPalya9();
+        assertEquals(1, palya9.size(), "Pálya9-nek 1 tektonból kell állnia");
+
+        Tekton t1 = palya9.get(0);
+
+        // Szomszédok
+        assertTrue(t1.getSzomszedosTektonok().isEmpty(), "T1-nek ne legyen szomszédja");
+
+        // Gombafonalak
+        assertTrue(t1.getGombafonalak().isEmpty(), "T1-nek ne legyen gombafonala");
+
+        // Gombatest
+        assertNull(t1.getGombatest(), "T1-en ne legyen gombatest");
+
+        // Spórák
+        List<Spora> sporak = t1.getSporak();
+        assertEquals(6, sporak.size(), "T1-en 6 spórának kell lennie");
+        assertTrue(sporak.stream().anyMatch(s -> s instanceof SimaSpora), "T1-en legyen SimaSpora");
+        assertTrue(sporak.stream().anyMatch(s -> s instanceof BenitoSpora), "T1-en legyen BenitoSpora");
+        assertTrue(sporak.stream().anyMatch(s -> s instanceof GyorsitoSpora), "T1-en legyen GyorsitoSpora");
+        assertTrue(sporak.stream().anyMatch(s -> s instanceof LassitoSpora), "T1-en legyen LassitoSpora");
+        assertTrue(sporak.stream().anyMatch(s -> s instanceof OsztodoSpora), "T1-en legyen OsztodoSpora");
+        assertTrue(sporak.stream().anyMatch(s -> s instanceof VagasTiltoSpora), "T1-en legyen VagasTiltoSpora");
+
+        // Rovar
+        assertEquals(1, t1.getRovarok().size(), "T1-en 1 rovarnak kell lennie");
+        assertEquals("R1", t1.getRovarok().get(0).getRovarasz().getNev(), "A rovar neve 'R1' legyen");
+
+        // Konzolra íratás
+        System.out.println("=== PÁLYA9 ÁLLAPOTA ===");
+        palya9.forEach(System.out::println);
+    }
+
+    /**
+     * 2 tektonból álló pálya:
+     * - t1–t2 között fonal
+     * - t1-en sima gombatest
+     * - t2-en egy rovar
+     */
+    private static List<Tekton> letrehozPalya10(){
+        // Tektonok
+        Tekton t1 = new TobbFonalasTekton();
+        Tekton t2 = new TobbFonalasTekton();
+
+        // Szomszédságok: t1–t2
+        t1.getSzomszedosTektonok().add(t2);
+        t2.getSzomszedosTektonok().add(t1);
+
+        // Gombatest t1-en
+        Gombasz g1 = new Gombasz("G1");
+        Gombatest Gt1 = new Gombatest(t1, g1);
+        t1.setGombatest(Gt1);
+
+        // Gombafonal t1–t2
+        GombaFonal f12 = new GombaFonal(t1, t2, Gt1);
+        t1.getGombafonalak().add(f12);
+        t2.getGombafonalak().add(f12);
+
+        // t1-re egy rovar
+        Rovarasz r1 = new Rovarasz("R1");
+        Rovar R1 = new Rovar(t2, r1);
+
+        // Pálya visszaadása
+        return List.of(t1, t2);
+    }
+
+    @Test
+    void tesztPalya10Init() {
+        List<Tekton> palya10 = letrehozPalya6();
+        assertEquals(2, palya10.size(), "Pálya6-nek 2 tektonból kell állnia");
+
+        Tekton t1 = palya10.get(0), t2 = palya10.get(1);
+
+        // Szomszédságok
+        assertTrue(t1.getSzomszedosTektonok().contains(t2), "T1 szomszédja legyen T2");
+        assertTrue(t2.getSzomszedosTektonok().contains(t1), "T2 szomszédja legyen T1");
+
+        // Gombafonal
+        assertEquals(1, t1.getGombafonalak().size(), "T1-nek 1 gombafonal legyen");
+        assertEquals(1, t2.getGombafonalak().size(), "T2-nek 1 gombafonal legyen");
+
+        // Gombatest
+        assertNotNull(t1.getGombatest(), "T1-en legyen gombatest");
+        assertEquals(Gombatest.class, t1.getGombatest().getClass(), "T1-en sima gombatest legyen");
+
+        // Spórák
+        assertEquals(0, t1.getSporak().size(), "T1-en ne legyen spóra");
+        assertEquals(0, t2.getSporak().size(), "T2-nek ne legyen spóra");
+
+        // Rovar
+        assertEquals(1, t2.getRovarok().size(), "T2-en 1 rovar legyen");
+        assertEquals("R1", t2.getRovarok().get(0).getRovarasz().getNev(), "T2-en a rovar neve 'R1' legyen");
+
+        // Konzolra íratás
+        System.out.println("=== PÁLYA10 ÁLLAPOTA ===");
+        palya10.forEach(System.out::println);
+    }
 
     /*
     @Test
@@ -1358,5 +1486,260 @@ class FungoriumApplicationTest {
 
     }
 
+    @Test
+    void tesztBenitoSporaHatasaPalya9() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya9 = letrehozPalya9();
+        Tekton t1 = palya9.get(0);
 
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA9 KEZDETE ===");
+        palya9.forEach(System.out::println);
+
+        // 3) Parancs
+        System.out.println("BENITOSPORAHATASKIFEJTESE");
+
+        // 4) Előkészítés: BenitoSpora és rovar kiválasztása
+        Rovar r = t1.getRovarok().get(0);
+        int eredetiP = r.getRovarasz().getPont();
+        Spora bS = t1.getSporak().stream()
+                .filter(s -> s instanceof BenitoSpora)
+                .findFirst()
+                .orElseThrow(() -> new AssertionError("T1-en nem található BenitoSpora"));
+
+        // 5) Állapot ellenőrzés a hatás előtt
+        assertFalse(r.getBenulas(), "A rovar kezdetben ne legyen bénult");
+
+        // 6) Hatás meghívása
+        bS.hatasKifejtese(r);
+
+        // 7) Ellenőrzés: a rovar lebénult
+        assertTrue(r.getRovarasz().getPont() > eredetiP,
+                "A spóra tápanyagot ad, ezért növeli a pontszámot");
+        assertTrue(r.getBenulas(), "A BenitoSpora hatására a rovarnak bénultnak kell lennie");
+
+        // 8) Kiírás: végállapot
+        System.out.println("=== PALYA9 VÉGE ===");
+        palya9.forEach(System.out::println);
+    }
+
+    @Test
+    void tesztLassitoSporaHatasaPalya9() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya9 = letrehozPalya9();
+        Tekton t1 = palya9.get(0);
+
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA9 KEZDETE ===");
+        palya9.forEach(System.out::println);
+
+        // 3) Parancs
+        System.out.println("LASSITOSPORAHATASKIFEJTESE");
+
+        // 4) Előkészítés: rovar és lassító spóra
+        Rovar r = t1.getRovarok().get(0);
+        int eredetiP = r.getRovarasz().getPont();
+        int eredetiLSz = r.getLepesSzam();
+        Spora lS = t1.getSporak().stream()
+                .filter(s -> s instanceof LassitoSpora)
+                .findFirst()
+                .orElseThrow();
+
+        // 5) Hatás meghívása
+        lS.hatasKifejtese(r);
+
+        // 6) Ellenőrzés: 1-gyel csökken a lépésszám
+        assertTrue(r.getRovarasz().getPont() > eredetiP,
+                "A spóra tápanyagot ad, ezért növeli a pontszámot");
+        assertEquals(eredetiLSz - 1, r.getLepesSzam(), "A lassító spóra csökkentse a lépésszámot");
+
+        // 7) Kiírás: végállapot
+        System.out.println("=== PALYA9 VÉGE ===");
+        palya9.forEach(System.out::println);
+    }
+
+    @Test
+    void tesztGyorsitoSporaHatasaPalya9() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya9 = letrehozPalya9();
+        Tekton t1 = palya9.get(0);
+
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA9 KEZDETE ===");
+        palya9.forEach(System.out::println);
+
+        // 3) Parancs
+        System.out.println("GYORSITOSPORAHATASKIFEJTESE");
+
+        // 4) Előkészítés: rovar és gyorsító spóra
+        Rovar r = t1.getRovarok().get(0);
+        int eredetiLSz = r.getLepesSzam();
+        int eredetiP = r.getRovarasz().getPont();
+        Spora gyS = t1.getSporak().stream()
+                .filter(s -> s instanceof GyorsitoSpora)
+                .findFirst()
+                .orElseThrow();
+
+        // 5) Hatás meghívása
+        gyS.hatasKifejtese(r);
+
+        // 6) Ellenőrzés: 1-gyel nő a lépésszám
+        assertTrue(r.getRovarasz().getPont() > eredetiP,
+                "A spóra tápanyagot ad, ezért növeli a pontszámot");
+        assertEquals(eredetiLSz + 1, r.getLepesSzam(), "A gyorsító spóra növelje a lépésszámot");
+
+        // 7) Kiírás: végállapot
+        System.out.println("=== PALYA9 VÉGE ===");
+        palya9.forEach(System.out::println);
+    }
+
+    @Test
+    void tesztVagasBenitoSporaHatasaPalya9() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya9 = letrehozPalya9();
+        Tekton t1 = palya9.get(0);
+
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA9 KEZDETE ===");
+        palya9.forEach(System.out::println);
+
+        // 3) Parancs
+        System.out.println("VAGASBENITOSPORAHATASKIFEJTESE");
+
+        // 4) Előkészítés: rovar, vágás-tiltó spóra
+        Rovar r = t1.getRovarok().get(0);
+        int eredetiP = r.getRovarasz().getPont();
+        int eredetiLSz = r.getLepesSzam();
+        Spora vS = t1.getSporak().stream()
+                .filter(s -> s instanceof VagasTiltoSpora)
+                .findFirst()
+                .orElseThrow();
+
+        // 5) Állapot ellenőrzés a hatás előtt
+        assertTrue(r.getVagoKepesseg(), "A rovar kezdetben legyen képes fonalat vágni");
+
+        // 6) Hatások meghívása
+        vS.hatasKifejtese(r);
+
+        // 6) Ellenőrzések
+        assertTrue(r.getRovarasz().getPont() > eredetiP,
+                "A spóra tápanyagot ad, ezért növeli a pontszámot");
+        assertFalse(r.getVagoKepesseg(), "A vágás tiltó spóra tiltsa le a rovar vágóképességét");
+        assertEquals(eredetiLSz, r.getLepesSzam(), "A vágás tiltó spóra nem változtatja a lépésszámot");
+
+        // 7) Kiírás: végállapot
+        System.out.println("=== PALYA9 VÉGE ===");
+        palya9.forEach(System.out::println);
+    }
+
+    @Test
+    void tesztSimaSporaHatasaPalya9() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya9 = letrehozPalya9();
+        Tekton t1 = palya9.get(0);
+
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA9 KEZDETE ===");
+        palya9.forEach(System.out::println);
+
+        // 3) Parancs
+        System.out.println("SIMASPORAHATASKIFEJTESE");
+
+        // 4) Előkészítés: rovar és sima spóra
+        Rovar r = t1.getRovarok().get(0);
+        int eredetiP = r.getRovarasz().getPont();
+        Spora sS = t1.getSporak().stream()
+                .filter(s -> s instanceof SimaSpora)
+                .findFirst()
+                .orElseThrow();
+        int eredetiLSz = r.getLepesSzam();
+
+        // 5) Hatás meghívása
+        sS.hatasKifejtese(r);
+
+        // 6) Ellenőrzés: pontszám nő
+        assertTrue(r.getRovarasz().getPont() > eredetiP,
+                "A sima spóra tápanyagot ad, ezért növeli a pontszámot");
+        assertEquals(eredetiLSz, r.getLepesSzam(), "A sima spóra nem változtatja a lépésszámot");
+
+        // 7) Kiírás: végállapot
+        System.out.println("=== PALYA9 VÉGE ===");
+        palya9.forEach(System.out::println);
+    }
+
+    @Test
+    void tesztOsztodoSporaHatasaPalya9() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya9 = letrehozPalya9();
+        Tekton t1 = palya9.get(0);
+
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA9 KEZDETE ===");
+        palya9.forEach(System.out::println);
+
+        // 3) Parancs
+        System.out.println("OSZTODOSPORAHATASKIFEJTESE");
+
+        // 4) Előkészítés: rovar és osztódó spóra
+        Rovar r = t1.getRovarok().get(0);
+        Rovarasz ra = r.getRovarasz();
+        int eredetiP = ra.getPont();
+        int eredetiLSz = r.getLepesSzam();
+        int eredetiTRSz = t1.getRovarok().size();
+        int eredetiRSz = ra.getRovarok().size();
+        Spora oS = t1.getSporak().stream()
+                .filter(s -> s instanceof OsztodoSpora)
+                .findFirst()
+                .orElseThrow();
+
+        // 5) Hatás meghívása
+        oS.hatasKifejtese(r);
+
+        // 6) Ellenőrzés: létrejött egy új rovar
+        assertTrue(r.getRovarasz().getPont() > eredetiP,
+                "A sima spóra tápanyagot ad, ezért növeli a pontszámot");
+        assertEquals(eredetiTRSz + 1, t1.getRovarok().size(),
+                "Az osztódó spóra új rovart kellett létrehozzon a tektonon");
+        assertEquals(eredetiRSz + 1, ra.getRovarok().size(),
+                "A rovarásznak is egy új rovart kellett kapnia");
+        assertEquals(eredetiLSz, r.getLepesSzam(), "Az osztódó spóra nem változtatja a lépésszámot");
+
+        // 7) Kiírás: végállapot
+        System.out.println("=== PALYA9 VÉGE ===");
+        palya9.forEach(System.out::println);
+    }
+
+    @Test
+    void tesztRovarElfogyasztasaPalya10() {
+        // 1) Pálya előkészítése
+        List<Tekton> palya10 = letrehozPalya10();
+        Tekton t1 = palya10.get(0);
+        Tekton t2 = palya10.get(1);
+        Rovar rovar = t2.getRovarok().get(0);
+        GombaFonal fonal = t1.getGombafonalak().get(0);
+
+        // 2) Kiírás: kezdeti állapot
+        System.out.println("=== PALYA10 KEZDETE ===");
+        palya10.forEach(System.out::println);
+
+        // 3) Parancs
+        System.out.println("ROVARELFOGYASZTASA");
+
+        // 4) Előkészítés: rovar bénítása
+        rovar.setBenulas(true);
+        assertTrue(rovar.getBenulas(), "A rovar legyen bénult állapotban");
+
+        // 5) Hatás meghívása – gombafonal megeszi a rovart
+        fonal.rovarElfogyasztas(rovar);
+
+        // 6) Ellenőrzés: rovar eltűnt, gombatest létrejött T2-n
+        assertFalse(t2.getRovarok().contains(rovar), "A rovarnak el kellett tűnnie T2-ről");
+        assertFalse(rovar.getRovarasz().getRovarok().contains(rovar), "A rovarnak el kellett tűnnie a rovarász alól");
+        assertNotNull(t2.getGombatest(), "T2-n új gombatestnek kellett létrejönnie");
+        assertEquals(Gombatest.class, t2.getGombatest().getClass(), "Az új gombatest sima Gombatest típusú legyen");
+
+        // 7) Kiírás: végállapot
+        System.out.println("=== PALYA10 VÉGE ===");
+        palya10.forEach(System.out::println);
+    }
 }
