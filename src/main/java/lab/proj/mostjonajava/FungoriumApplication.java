@@ -16,7 +16,7 @@ import static lab.proj.mostjonajava.utils.Logger.hibaLog;
 import static lab.proj.mostjonajava.utils.Logger.log;
 import static lab.proj.mostjonajava.utils.Parancsok.*;
 
-import lab.proj.mostjonajava.model.Jatek;
+import lab.proj.mostjonajava.game.Jatek;
 
 public class FungoriumApplication extends Application {
     public static Jatek jatek;

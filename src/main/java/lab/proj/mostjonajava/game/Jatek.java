@@ -3,9 +3,8 @@ package lab.proj.mostjonajava.game;
 import java.util.ArrayList;
 import java.util.List;
 
-import lab.proj.mostjonajava.model.Gombasz;
-import lab.proj.mostjonajava.model.Rovarasz;
-import lab.proj.mostjonajava.model.Tekton;
+import lab.proj.mostjonajava.model.*;
+
 import static lab.proj.mostjonajava.utils.Logger.hivasLog;
 import lombok.Data;
 
@@ -40,6 +39,16 @@ public class Jatek {
                Gombasz gombasz = new Gombasz(nev);
             }
         }
+    }
+
+    public Gombatest keresGombatestById(int id){
+        Gombatest test = new Gombatest();
+        return test;
+    }
+
+    public Tekton keresTektonById(int id){
+        Tekton t = new FonalEltetoTekton();
+        return t;
     }
 
 }
