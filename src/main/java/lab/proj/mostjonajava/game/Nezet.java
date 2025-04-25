@@ -1,8 +1,6 @@
-package lab.proj.mostjonajava.model;
+package lab.proj.mostjonajava.game;
 
 // package lab.proj.mostjonajava.ui;
-
-import lab.proj.mostjonajava.game.Jatek;
 
 
 public interface Nezet {
