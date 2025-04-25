@@ -682,7 +682,7 @@ class FungoriumApplicationTest {
 
     @Test
     void tesztPalya10Init() {
-        List<Tekton> palya10 = letrehozPalya6();
+        List<Tekton> palya10 = letrehozPalya10();
         assertEquals(2, palya10.size(), "Pálya6-nek 2 tektonból kell állnia");
 
         Tekton t1 = palya10.get(0), t2 = palya10.get(1);
@@ -704,8 +704,9 @@ class FungoriumApplicationTest {
         assertEquals(0, t2.getSporak().size(), "T2-nek ne legyen spóra");
 
         // Rovar
-        assertEquals(1, t2.getRovarok().size(), "T2-en 1 rovar legyen");
-        assertEquals("R1", t2.getRovarok().get(0).getRovarasz().getNev(), "T2-en a rovar neve 'R1' legyen");
+        assertEquals(1, t2.getRovarok().size(), "T2-on 1 rovar legyen");
+        assertEquals("R1", t2.getRovarok().get(0).getRovarasz().getNev(), "T2-on a rovar neve 'R1' legyen");
+        assertEquals(0, t1.getRovarok().size(), "T1-en ne legyen rovar");
 
         // Konzolra íratás
         System.out.println("=== PÁLYA10 ÁLLAPOTA ===");
