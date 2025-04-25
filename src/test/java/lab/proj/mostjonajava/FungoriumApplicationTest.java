@@ -348,6 +348,7 @@ class FungoriumApplicationTest {
         // t1-re egy rovar
         Rovarasz r1 = new Rovarasz("R1");
         Rovar R1 = new Rovar(t1, r1);
+        t1.getRovarok().add(R1);
 
         //Rovar vágóképessége nem aktív
         R1.setVagoKepesseg(false);
@@ -417,6 +418,7 @@ class FungoriumApplicationTest {
         // t1-re egy rovar
         Rovarasz r1 = new Rovarasz("R1");
         Rovar R1 = new Rovar(t1, r1);
+        t1.getRovarok().add(R1);
 
         // Pálya visszaadása
         return List.of(t1, t2);
@@ -480,6 +482,7 @@ class FungoriumApplicationTest {
         // t1-re egy rovar
         Rovarasz r1 = new Rovarasz("R1");
         Rovar R1 = new Rovar(t1, r1);
+        t1.getRovarok().add(R1);
 
         // Pálya visszaadása
         return List.of(t1, t2);
@@ -602,6 +605,7 @@ class FungoriumApplicationTest {
         // t1-re egy rovar
         Rovarasz r1 = new Rovarasz("R1");
         Rovar R1 = new Rovar(t1, r1);
+        t1.getRovarok().add(R1);
 
         // Pálya visszaadása
         return List.of(t1);
@@ -667,9 +671,10 @@ class FungoriumApplicationTest {
         t1.getGombafonalak().add(f12);
         t2.getGombafonalak().add(f12);
 
-        // t1-re egy rovar
+        // t2-re egy rovar
         Rovarasz r1 = new Rovarasz("R1");
         Rovar R1 = new Rovar(t2, r1);
+        t2.getRovarok().add(R1);
 
         // Pálya visszaadása
         return List.of(t1, t2);
