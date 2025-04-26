@@ -15,16 +15,29 @@ public class Jatek {
     private List<Gombasz> gombaszok = new ArrayList<>();
     private List<Rovarasz> rovaraszok = new ArrayList<>();
 
-    public Jatek(int jatekosokSzama, List<String> nevek) {
-        // inicializáld a tabla-t egy tetszőleges topológiával,
-        // hozd létre a gombászokat és rovarászokat nevek alapján,
-        // és add hozzá őket a listákhoz:
-        for (String nev : nevek) {
-            gombaszok.add(new Gombasz(nev));
-            rovaraszok.add(new Rovarasz(nev));
+    /**
+     * A jatek konstruktora
+     * @param jatekosokSzama A jatekosok szama
+     * @param jatekosNevek A jatekosok neveinek a listaja
+     */
+    public Jatek(int jatekosokSzama, List<String> jatekosNevek) {
+
+        List<String> parameterek = new ArrayList<>();
+        parameterek.add("jatekosokSzama: int - " + jatekosokSzama);
+        parameterek.add("jatekosNevek: List<String> - " + jatekosNevek);
+        hivasLog("Jatek(int jatekosokSzama, List<String> jatekosNevek)", parameterek, 0);
+//        tektonok = new ArrayList<>();
+//        rovaraszok = new ArrayList<>();
+//        gombaszok = new ArrayList<>();
+
+        for (int i = 0; i < jatekosokSzama; i++) {
+            String nev = jatekosNevek.get(i);
+            if (i % 2 == 1) {
+                Rovarasz rovarasz = new Rovarasz(nev);
+            } else {
+                Gombasz gombasz = new Gombasz(nev);
+            }
         }
-        // Példa: indítsd el a tabla-t egy fix kezdőgrafban
-        // tabla = createChain3();  // vagy bármilyen factory
     }
 
     public List<Tekton> getTabla() { return tabla; }
