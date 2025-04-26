@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 public class Jatek {
-
+    public static int KOROK_SZAMA = 10;
     private List<Tekton> tabla = new ArrayList<>();
     private List<Gombasz> gombaszok = new ArrayList<>();
     private List<Rovarasz> rovaraszok = new ArrayList<>();
