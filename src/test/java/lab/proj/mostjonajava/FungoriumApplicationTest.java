@@ -229,7 +229,7 @@ class FungoriumApplicationTest {
      * - t1-en FEJLETT gombatest (1 kilőhető spóra)
      * - t2-on1 spóra
      * - t3-on 3 spóra
-     * - t4-en sima gombatest (3 elszórt spóra)
+     * - t4-en sima gombatest (3 elszórt spóra, 1 kilőhető spóra)
      */
     private static List<Tekton> letrehozPalya4() {
         Tekton t1 = new TobbFonalasTekton();
@@ -271,6 +271,7 @@ class FungoriumApplicationTest {
         Gombatest gt4 = new Gombatest(t4, g4);
         t4.setGombatest(gt4);
         gt4.setElszortSporakSzama(3);
+        gt4.setKilohetoSporakSzama(1);
 
         return List.of(t1, t2, t3, t4);
     }
@@ -863,6 +864,8 @@ class FungoriumApplicationTest {
         palya1.forEach(System.out::println);
     }
 
+    //Teszteset6 — Sima spóra szórás nem szomszédostektonra
+
     @Test
     void tesztFejlettSporaSzorasPalya3() {
         // 1) Pálya előkészítése
@@ -1021,6 +1024,7 @@ class FungoriumApplicationTest {
         palya2.forEach(System.out::println);
     }
 
+    //ez a teszt nem jó
     @Test
     void tesztGombatestLetrehozasHianyosFeltetellelPalya2() {
         // 1) Pálya előkészítése
