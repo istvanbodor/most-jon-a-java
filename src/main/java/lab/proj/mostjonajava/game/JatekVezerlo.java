@@ -377,11 +377,24 @@ public class JatekVezerlo {
 
         if(!jatek.keresTektonById(honnanId).vanFonalKozottuk(jatek.keresTektonById(hovaId))) return false;
 
-        GombaFonal fonal = new GombaFonal(new EgyFonalasTekton(), new EgyFonalasTekton(), new Gombatest());
-        fonal.rovarElfogyasztas(jatek.keresRovarById(rovarId));
-
+        for(int i = 0; i< jatek.getGombaszok().size(); i++)
+        {
+            for(int j = 0; j < jatek.getGombaszok().get(i).getGombatestek().size(); j++)
+            {
+                for(int k = 0; k < jatek.getGombaszok().get(i).getGombatestek().get(j).getGombaFonalak().size(); k++)
+                {
+                    if(jatek.getGombaszok().get(i).getGombatestek().get(j).getGombaFonalak().get(k).getHonnan().equals(
+                            jatek.keresTektonById(honnanId)) &&
+                        jatek.getGombaszok().get(i).getGombatestek().get(j).getGombaFonalak().get(k).getHova().equals(
+                                jatek.keresTektonById(hovaId)));
+                    {
+                        jatek.getGombaszok().get(i).getGombatestek().get(j).getGombaFonalak().get(k).rovarElfogyasztas(
+                                jatek.keresRovarById(rovarId));
+                    }
+                }
+            }
+        }
         return true;
-
     }
 
 }
