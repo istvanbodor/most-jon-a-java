@@ -223,18 +223,20 @@ public class PalyaEpito {
         Tekton t1 = new TobbFonalasTekton();
         Tekton t2 = new TobbFonalasTekton();
         jatek.getTabla().addAll(List.of(t1,t2));
-        Gombatest gt = new Gombatest(t1, jatek.getGombaszok().get(0));
+
+        Gombatest gt = new Gombatest(jatek.getTabla().get(0), jatek.getGombaszok().get(0));
         jatek.getGombaszok().get(0).getGombatestek().add(gt);
-        GombaFonal f12 = new GombaFonal(t1, t2, jatek.getGombaszok().get(0).getGombatestek().get(0));
+
+        GombaFonal f12 = new GombaFonal(jatek.getTabla().get(0), jatek.getTabla().get(1), jatek.getGombaszok().get(0).getGombatestek().get(0));
         jatek.getTabla().get(0).setGombafonal(f12);
         jatek.getTabla().get(1).setGombafonal(f12);
 
         jatek.getTabla().get(0).setGombatest(jatek.getGombaszok().get(0).getGombatestek().get(0));
 
-        jatek.getTabla().get(0).getSzomszedosTektonok().add(t2);
-        jatek.getTabla().get(1).getSzomszedosTektonok().add(t1);
+        jatek.getTabla().get(0).getSzomszedosTektonok().add(jatek.getTabla().get(1));
+        jatek.getTabla().get(1).getSzomszedosTektonok().add(jatek.getTabla().get(0));
 
-        Rovar rovar = new Rovar(t1, jatek.getRovaraszok().get(0));
+        Rovar rovar = new Rovar(jatek.getTabla().get(0), jatek.getRovaraszok().get(0));
         jatek.getTabla().get(0).getRovarok().add(rovar);
         jatek.getRovaraszok().get(0).getRovarok().add(rovar);
 
@@ -357,18 +359,19 @@ public class PalyaEpito {
         Tekton t1 = new TobbFonalasTekton();
         Tekton t2 = new TobbFonalasTekton();
         jatek.getTabla().addAll(List.of(t1,t2));
-        Gombatest gt = new Gombatest(t1, jatek.getGombaszok().get(0));
+
+        Gombatest gt = new Gombatest(jatek.getTabla().get(0), jatek.getGombaszok().get(0));
         jatek.getGombaszok().get(0).getGombatestek().add(gt);
-        GombaFonal f12 = new GombaFonal(t1, t2, jatek.getGombaszok().get(0).getGombatestek().get(0));
+        GombaFonal f12 = new GombaFonal(jatek.getTabla().get(0), jatek.getTabla().get(1), jatek.getGombaszok().get(0).getGombatestek().get(0));
         jatek.getTabla().get(0).setGombafonal(f12);
         jatek.getTabla().get(1).setGombafonal(f12);
 
         jatek.getTabla().get(0).setGombatest(jatek.getGombaszok().get(0).getGombatestek().get(0));
 
-        jatek.getTabla().get(0).getSzomszedosTektonok().add(t2);
-        jatek.getTabla().get(1).getSzomszedosTektonok().add(t1);
+        jatek.getTabla().get(0).getSzomszedosTektonok().add(jatek.getTabla().get(1));
+        jatek.getTabla().get(1).getSzomszedosTektonok().add(jatek.getTabla().get(0));
 
-        Rovar rovar = new Rovar(t1, jatek.getRovaraszok().get(0));
+        Rovar rovar = new Rovar(jatek.getTabla().get(0), jatek.getRovaraszok().get(0));
         jatek.getTabla().get(1).getRovarok().add(rovar);
         jatek.getRovaraszok().get(0).getRovarok().add(rovar);
 
