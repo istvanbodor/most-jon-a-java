@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import lab.proj.mostjonajava.game.JatekVezerlo;
 
 import java.io.IOException;
+import java.util.List;
 
 public class FungoriumApplication extends Application {
 

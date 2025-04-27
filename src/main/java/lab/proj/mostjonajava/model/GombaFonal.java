@@ -4,11 +4,14 @@ package lab.proj.mostjonajava.model;
 //import static lab.proj.mostjonajava.utils.Logger.hivasLog;
 //import static lab.proj.mostjonajava.utils.Logger.log;
 import lombok.Data;
+import lombok.ToString;
+
 @Data
 public class GombaFonal {
 
     private Tekton honnan;
     private Tekton hova;
+    @ToString.Exclude
     private Gombatest gombatest;
 
     /**

@@ -45,7 +45,6 @@ public class PalyaEpito {
         jatek.getTabla().get(1).getSporak().add(new SimaSpora());
         jatek.getTabla().get(1).getSporak().add(new SimaSpora());
         jatek.getTabla().get(1).getSporak().add(new SimaSpora());
-        log(String.valueOf(jatek));
         return jatek;
     }
 
@@ -72,8 +71,6 @@ public class PalyaEpito {
         jatek.getTabla().get(1).getSzomszedosTektonok().add(jatek.getTabla().get(0));
         jatek.getTabla().get(1).getSzomszedosTektonok().add(jatek.getTabla().get(2));
         jatek.getTabla().get(2).getSzomszedosTektonok().add(jatek.getTabla().get(1));
-
-        log(String.valueOf(jatek));
         return jatek;
     }
 
@@ -109,8 +106,6 @@ public class PalyaEpito {
         // Fejlett példány és beállítás
         FejlettGombatest fejlett = new FejlettGombatest(jatek.getGombaszok().get(0).getGombatestek().get(0));
         jatek.getTabla().get(0).setGombatest(fejlett);
-
-        log(String.valueOf(jatek));
         return jatek;
     }
 
@@ -158,8 +153,6 @@ public class PalyaEpito {
         jatek.getGombaszok().get(0).getGombatestek().add(gombatest);
         jatek.getGombaszok().get(0).getGombatestek().get(3).setElszortSporakSzama(3);
         jatek.getGombaszok().get(0).getGombatestek().get(3).setKilohetoSporakSzama(1);
-
-        log(String.valueOf(jatek));
         return jatek;
     }
 
@@ -205,8 +198,6 @@ public class PalyaEpito {
         //Rovar vágóképessége nem aktív
         jatek.getRovaraszok().get(0).getRovarok().get(0).setVagoKepesseg(false);
 
-        // Pálya visszaadása
-        log(String.valueOf(jatek));
         return jatek;
     }
 
@@ -237,8 +228,6 @@ public class PalyaEpito {
         Rovar rovar = new Rovar(jatek.getTabla().get(0), jatek.getRovaraszok().get(0));
         jatek.getTabla().get(0).getRovarok().add(rovar);
         jatek.getRovaraszok().get(0).getRovarok().add(rovar);
-
-        log(String.valueOf(jatek));
         return jatek;
     }
 
@@ -273,8 +262,6 @@ public class PalyaEpito {
         Rovar R1 = new Rovar(jatek.getTabla().get(0), jatek.getRovaraszok().get(0));
         jatek.getTabla().get(0).getRovarok().add(R1);
 
-        // Pálya visszaadása
-        log(String.valueOf(jatek));
         return jatek;
     }
 
@@ -307,8 +294,6 @@ public class PalyaEpito {
         jatek.getTabla().get(0).getGombafonalak().add(f12);
         jatek.getTabla().get(0).getGombafonalak().add(f12);
 
-        // Pálya visszaadása
-        log(String.valueOf(jatek));
         return jatek;
     }
 
@@ -341,8 +326,6 @@ public class PalyaEpito {
         Rovar R1 = new Rovar(jatek.getTabla().get(0), jatek.getRovaraszok().get(0));
         jatek.getTabla().get(0).getRovarok().add(R1);
 
-        // Pálya visszaadása
-        log(String.valueOf(jatek));
         return jatek;
     }
 
@@ -373,7 +356,6 @@ public class PalyaEpito {
         jatek.getTabla().get(1).getRovarok().add(rovar);
         jatek.getRovaraszok().get(0).getRovarok().add(rovar);
 
-        log(String.valueOf(jatek));
         return jatek;
     }
 

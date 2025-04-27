@@ -122,7 +122,9 @@ public class JatekVezerlo {
         switch (parancs) {
             case JATEKINDITAS -> jatekInditasa(parameterek);
             case JATEKEPITES -> jatekEpites(parameterek);
+            //kesz
             case ALLAPOT -> allapot();
+            //kesz
             case FONALNOVESZTES -> fonalNovesztes(parameterek);
             case SIMASPORASZORAS -> simaSporaSzoras(parameterek);
             case FEJLETTSPORASZORAS -> fejlettSporaSzoras(parameterek);
@@ -224,6 +226,11 @@ public class JatekVezerlo {
 
     private static boolean fonalNovesztes(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 4)) return false;
+        jatek = PalyaEpito.palya2();
+        int gombatestId = Integer.parseInt(parameterek[1]);
+        int honnanTektonId = Integer.parseInt(parameterek[2]);
+        int hovaTektonId = Integer.parseInt(parameterek[3]);
+        jatek.keresGombatestById(gombatestId).fonalNovesztes(jatek.keresTektonById(honnanTektonId), jatek.keresTektonById(hovaTektonId));
         return true;
     }
     private static boolean simaSporaSzoras(String[] parameterek) {
