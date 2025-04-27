@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lab.proj.mostjonajava.game.JatekVezerlo;
+import lab.proj.mostjonajava.game.PalyaEpito;
 import lab.proj.mostjonajava.model.*;
 
 import java.io.BufferedReader;

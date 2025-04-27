@@ -7,6 +7,8 @@ import java.util.List;
 //import static lab.proj.mostjonajava.utils.Logger.log;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 //@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
@@ -15,6 +17,7 @@ public class Rovar {
     private static int nextId = 1;
     private int id;
 
+    @ToString.Exclude
     private Rovarasz rovarasz;
     private Tekton honnan;
     private int lepesSzam = 2;

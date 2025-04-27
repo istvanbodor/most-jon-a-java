@@ -70,6 +70,7 @@ public class JatekVezerlo {
                         lepesMegtortent = gombaszParancsErtelmezo(bemenet);
                     }
                     gombaszIndex++;
+                    allapot();
                     elvalasztas();
                 } else {
                     boolean lepesMegtortent = false;
@@ -80,6 +81,7 @@ public class JatekVezerlo {
                         lepesMegtortent = rovaraszParancsErtelmezo(bemenet);
                     }
                     rovaraszIndex++;
+                    allapot();
                     elvalasztas();
                 }
             }
@@ -350,7 +352,7 @@ public class JatekVezerlo {
 
         // 3) Mozgatjuk
         rovar.lepes( /* ide a cél-Tekton példány */ t);
-        return false;
+        return true;
     }
 
     private static void testSporaFogyasztas(String[] parameterek) {

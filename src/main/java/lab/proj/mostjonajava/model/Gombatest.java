@@ -7,6 +7,7 @@ import java.util.Random;
 //import static lab.proj.mostjonajava.utils.Logger.hivasLog;
 //import static lab.proj.mostjonajava.utils.Logger.log;
 import lombok.Data;
+import lombok.ToString;
 
 import static java.lang.System.out;
 
@@ -17,6 +18,7 @@ public class Gombatest {
     private int id;
 
     private Tekton tekton;
+    @ToString.Exclude
     private Gombasz gombasz;
     private int kilohetoSporakSzama;
     private int elszortSporakSzama;
