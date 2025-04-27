@@ -93,7 +93,7 @@ class FungoriumApplicationTest {
     }
 
     /**
-     * Létrehoz egy 2 tektonból álló pályát:
+     * Létrehoz egy 3 tektonból álló pályát:
      * - t1 és t2 között fonal nélkül
      * - t1-en van egy Gombatest
      * - t2-n nincs Gombatest
