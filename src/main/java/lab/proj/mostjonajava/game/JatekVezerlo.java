@@ -152,10 +152,6 @@ public class JatekVezerlo {
         }
     }
 
-    private static void rovarElfogyasztasa(String[] parameterek) {
-
-    }
-
     private static boolean osztodoSporaHatasKifejtese(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 2)) return false;
         int rovarId = Integer.parseInt(parameterek[0]);
@@ -372,5 +368,20 @@ public class JatekVezerlo {
         return true;
     }
 
+    private static boolean rovarElfogyasztasa(String[] parameterek) {
+        if (parameterVizsgalat(parameterek, 4)) return false;
+
+        int rovarId = Integer.parseInt(parameterek[1]);
+        int honnanId = Integer.parseInt(parameterek[2]);
+        int hovaId = Integer.parseInt(parameterek[3]);
+
+        if(!jatek.keresTektonById(honnanId).vanFonalKozottuk(jatek.keresTektonById(hovaId))) return false;
+
+        GombaFonal fonal = new GombaFonal(new EgyFonalasTekton(), new EgyFonalasTekton(), new Gombatest());
+        fonal.rovarElfogyasztas(jatek.keresRovarById(rovarId));
+
+        return true;
+
+    }
 
 }
