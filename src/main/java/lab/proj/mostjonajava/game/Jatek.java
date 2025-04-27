@@ -33,9 +33,9 @@ public class Jatek {
         for (int i = 0; i < jatekosokSzama; i++) {
             String nev = jatekosNevek.get(i);
             if (i % 2 == 1) {
-                Rovarasz rovarasz = new Rovarasz(nev);
+               rovaraszok.add(new Rovarasz(nev));
             } else {
-                Gombasz gombasz = new Gombasz(nev);
+                gombaszok.add(new Gombasz(nev));
             }
         }
     }
