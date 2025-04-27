@@ -148,9 +148,14 @@ public class JatekVezerlo {
     }
 
     private static void rovarElfogyasztasa(String[] parameterek) {
+
     }
 
-    private static void osztodoSporaHatasKifejtese(String[] parameterek) {
+    private static boolean osztodoSporaHatasKifejtese(String[] parameterek) {
+        if (parameterVizsgalat(parameterek, 2)) return false;
+        int rovarId = Integer.parseInt(parameterek[0]);
+        jatek.keresTektonById(rovarId).getSporak().get(4).hatasKifejtese(jatek.keresRovarById(rovarId));
+        return true;
     }
 
     private static void jatekEpites(String[] parameterek) {
@@ -364,57 +369,46 @@ public class JatekVezerlo {
         tekton.ketteTores();
     }
 
-    private static void benitoSporaHatasKifejtese(String[] parameterek) {
-        parameterVizsgalat(parameterek, 2);
-        Rovar rovar = new Rovar();
-        BenitoSpora benitoSpora = new BenitoSpora();
-        benitoSpora.hatasKifejtese(rovar);
+    private static boolean benitoSporaHatasKifejtese(String[] parameterek) {
+        if (parameterVizsgalat(parameterek, 2)) return false;
+        int rovarId = Integer.parseInt(parameterek[0]);
+        jatek.keresTektonById(rovarId).getSporak().get(1).hatasKifejtese(jatek.keresRovarById(rovarId));
+        return true;
     }
 
-    private static void lassitoSporaHatasKifejtese(String[] parameterek) {
-        parameterVizsgalat(parameterek, 2);
-        Rovar rovar = new Rovar();
-        LassitoSpora lassitoSpora = new LassitoSpora();
-        lassitoSpora.hatasKifejtese(rovar);
+    private static boolean lassitoSporaHatasKifejtese(String[] parameterek) {
+        if (parameterVizsgalat(parameterek, 2)) return false;
+        int rovarId = Integer.parseInt(parameterek[0]);
+        jatek.keresTektonById(rovarId).getSporak().get(3).hatasKifejtese(jatek.keresRovarById(rovarId));
+        return true;
     }
 
-    private static void gyorsitoSporaHatasKifejtese(String[] parameterek) {
-        parameterVizsgalat(parameterek, 2);
-        Rovar rovar = new Rovar();
-        GyorsitoSpora gyorsitoSpora = new GyorsitoSpora();
-        gyorsitoSpora.hatasKifejtese(rovar);
+    private static boolean gyorsitoSporaHatasKifejtese(String[] parameterek) {
+        if (parameterVizsgalat(parameterek, 2)) return false;
+        int rovarId = Integer.parseInt(parameterek[0]);
+        jatek.keresTektonById(rovarId).getSporak().get(2).hatasKifejtese(jatek.keresRovarById(rovarId));
+        return true;
     }
 
-    private static void vagasBenitoSporaHatasKifejtese(String[] parameterek) {
-        parameterVizsgalat(parameterek, 2);
-        Rovar rovar = new Rovar();
-        VagasTiltoSpora vagasTiltoSpora = new VagasTiltoSpora();
-        vagasTiltoSpora.hatasKifejtese(rovar);
-
+    private static boolean vagasBenitoSporaHatasKifejtese(String[] parameterek) {
+        if (parameterVizsgalat(parameterek, 2)) return false;
+        int rovarId = Integer.parseInt(parameterek[0]);
+        jatek.keresTektonById(rovarId).getSporak().get(5).hatasKifejtese(jatek.keresRovarById(rovarId));
+        return true;
     }
 
-    private static void simaSporaHatasKifejtese(String[] parameterek) {
-        parameterVizsgalat(parameterek, 2);
-        Rovar rovar = new Rovar();
-        SimaSpora simaSpora = new SimaSpora();
-        simaSpora.hatasKifejtese(rovar);
+    private static boolean simaSporaHatasKifejtese(String[] parameterek) {
+        if (parameterVizsgalat(parameterek, 2)) return false;
+        int rovarId = Integer.parseInt(parameterek[0]);
+        jatek.keresTektonById(rovarId).getSporak().get(0).hatasKifejtese(jatek.keresRovarById(rovarId));
+        return true;
     }
 
-    private static void fonalFelszivodas(String[] parameterek) {
-        if (parameterVizsgalat(parameterek, 1)) return;
-
-        EltunoFonalasTekton tekton = new EltunoFonalasTekton();
-        // kérheted, hogy legyen rajta egy fonal is, ha az a cél
-        Tekton masik = new EltunoFonalasTekton();
-        Gombatest gt = new Gombatest(tekton, new Gombasz("dummy"));
-        GombaFonal gf = new GombaFonal(tekton, masik, gt);
-        tekton.setGombafonal(gf);
-
-        // élettartam csökkentése, így eltűnnek a fonalak
-        tekton.korFrissites();
-        // esetleg többször, ha a fonalakElettartama >1
-
-        log("Fonal felszívódás teszt lefutott");
+    private static boolean fonalFelszivodas(String[] parameterek) {
+        if (parameterVizsgalat(parameterek, 3)) return false;
+        int honnanTektonId = Integer.parseInt(parameterek[0]);
+        jatek.keresTektonById(honnanTektonId).korFrissites();
+        return true;
     }
 
 
