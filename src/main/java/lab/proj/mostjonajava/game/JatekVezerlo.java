@@ -131,10 +131,15 @@ public class JatekVezerlo {
             case GOMBATESTNOVESZTES -> gombaTestNovesztes(parameterek);
             case GOMBATESTFEJLESZTES -> gombaTestFejlesztes(parameterek);
             case GOMBATESTELPUSZTUL -> gombaTestElpusztul(parameterek);
+            //kesz
             case ROVARMOZGATAS -> rovarMozgatas(parameterek);
+            //kesz
             case SPORAFOGYASZTAS -> sporaFogyasztas(parameterek);
+            //kesz
             case FONALVAGAS -> fonalVagas(parameterek);
+            //kesz
             case TEKTONTORES -> tektonTores(parameterek);
+            //kesz
             case BENITOSPORAHATASKIFEJTESE -> benitoSporaHatasKifejtese(parameterek);
             case LASSITOSPORAHATASKIFEJTESE -> lassitoSporaHatasKifejtese(parameterek);
             case GYORSITOSPORAHATASKIFEJTESE -> gyorsitoSporaHatasKifejtese(parameterek);
@@ -268,55 +273,56 @@ public class JatekVezerlo {
         return true;
     }
 
-    private static void gombaTestElpusztul(String[] parameterek) {
-        parameterVizsgalat(parameterek, 2);
+    private static boolean gombaTestElpusztul(String[] parameterek) {
+        if(parameterVizsgalat(parameterek, 2)) return false;
 
-        Gombatest gombatest = new Gombatest();
-        gombatest.setKilohetoSporakSzama(0);
+        int gombatestId = Integer.parseInt(parameterek[1]);
 
-        if (gombatest.getKilohetoSporakSzama() == 0) {
-            gombatest.elpusztulas();
-        } else {
-            log("A gombatest meg nem all keszen a halalra");
-        }
+        jatek.keresGombatestById(gombatestId).setKilohetoSporakSzama(0);
 
+        jatek.keresGombatestById(gombatestId).elpusztulas();
+
+        return true;
     }
 
     private static boolean rovarMozgatas(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 3)) return false;
 
-        // 1) Létrehozunk egy tekton-t és rovaraszt
-        Tekton t = new EgyFonalasTekton();
-        Rovarasz rz = new Rovarasz("teszt");
+        int rovarId = Integer.parseInt(parameterek[1]);
+        int tektonId = Integer.parseInt(parameterek[2]);
 
-        // 2) Így kell példányosítani a rovart
-        Rovar rovar = new Rovar(t, rz);
-        // és regisztrálni a modelben:
-        t.getRovarok().add(rovar);
-        rz.getRovarok().add(rovar);
-
-        // 3) Mozgatjuk
-        rovar.lepes( /* ide a cél-Tekton példány */ t);
+        jatek.keresRovarById(rovarId).lepes(jatek.keresTektonById(tektonId));
         return true;
     }
 
-    private static void sporaFogyasztas(String[] parameterek) {
-        parameterVizsgalat(parameterek, 3);
-        Rovar rovar = new Rovar();
-        rovar.sporaElfogyasztas(new EgyFonalasTekton());
+    private static boolean sporaFogyasztas(String[] parameterek) {
+        if(parameterVizsgalat(parameterek, 3)) return false;
+
+        int rovarId = Integer.parseInt(parameterek[1]);
+        int tektonId = Integer.parseInt(parameterek[2]);
+
+        jatek.keresRovarById(rovarId).sporaElfogyasztas(jatek.keresTektonById(tektonId));
+
+        return true;
     }
 
     private static boolean fonalVagas(String[] parameterek) {
-        parameterVizsgalat(parameterek, 3);
-        Rovar rovar = new Rovar();
-        rovar.fonalVagas(new EgyFonalasTekton());
-        return false;
+        if(parameterVizsgalat(parameterek, 3)) return false;
+
+        int rovarId = Integer.parseInt(parameterek[1]);
+        int tektonId = Integer.parseInt(parameterek[2]);
+
+        jatek.keresRovarById(rovarId).fonalVagas(jatek.keresTektonById(tektonId));
+        return true;
     }
 
-    private static void tektonTores(String[] parameterek) {
-        parameterVizsgalat(parameterek, 2);
-        EgyFonalasTekton tekton = new EgyFonalasTekton();
-        tekton.ketteTores();
+    private static boolean tektonTores(String[] parameterek) {
+        if(parameterVizsgalat(parameterek, 2)) return false;
+
+        int tektonId = Integer.parseInt(parameterek[1]);
+
+        jatek.keresTektonById(tektonId).ketteTores();
+        return true;
     }
 
     private static void benitoSporaHatasKifejtese(String[] parameterek) {
