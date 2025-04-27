@@ -1,6 +1,5 @@
 package lab.proj.mostjonajava.model;
 
-import java.util.List;
 
 //import static lab.proj.mostjonajava.utils.Logger.hivasLog;
 import lombok.Data;

@@ -9,7 +9,6 @@ import java.util.Random;
 import lombok.Data;
 import lombok.ToString;
 
-import static java.lang.System.out;
 
 @Data
 public class Gombatest {

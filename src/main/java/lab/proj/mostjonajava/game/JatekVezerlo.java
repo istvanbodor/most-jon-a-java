@@ -139,8 +139,16 @@ public class JatekVezerlo {
             case VAGASBENITOSPORAHATASKIFEJTESE -> vagasBenitoSporaHatasKifejtese(parameterek);
             case SIMASPORAHATASKIFEJTESE -> simaSporaHatasKifejtese(parameterek);
             case FONALFELSZIVODAS -> fonalFelszivodas(parameterek);
+            case OSZTODOSPORAHATASKIFEJTESE -> osztodoSporaHatasKifejtese(parameterek);
+            case ROVARELFOGYASZTASA -> rovarElfogyasztasa(parameterek);
             default -> hibaLog("hiba tortent a " + parancs + " parancs feldolgozasakor");
         }
+    }
+
+    private static void rovarElfogyasztasa(String[] parameterek) {
+    }
+
+    private static void osztodoSporaHatasKifejtese(String[] parameterek) {
     }
 
     private static void jatekEpites(String[] parameterek) {

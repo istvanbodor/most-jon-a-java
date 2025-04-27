@@ -1,13 +1,9 @@
 package lab.proj.mostjonajava.utils;
 
 public class Parancsok {
-    public static final String MENTES = "MENTES";
-    public static final String BETOLTES = "BETOLTES";
-    public static final String MAKE = "MAKE";
     public static final String ALLAPOT = "ALLAPOT";
     public static final String FONALNOVESZTES = "FONALNOVESZTES";
     public static final String JATEKINDITAS = "JATEKINDITAS";
-    public static final String SPORATERMELES = "SPORATERMELES";
     public static final String SIMASPORASZORAS = "SIMASPORASZORAS";
     public static final String FEJLETTSPORASZORAS = "FEJLETTSPORASZORAS";
     public static final String GOMBATESTNOVESZTES = "GOMBATESTNOVESZTES";
@@ -24,7 +20,6 @@ public class Parancsok {
     public static final String FONALFELSZIVODAS = "FONALFELSZIVODAS";
     public static final String KILEPES = "KILEPES";
     public static final String SIMASPORAHATASKIFEJTESE = "SIMASPORAHATASKIFEJTESE";
-
     public static final String UGRAS = "UGRAS";
     public static final String VISSZA = "VISSZA";
 
