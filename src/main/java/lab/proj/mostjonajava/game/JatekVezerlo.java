@@ -1,11 +1,10 @@
 package lab.proj.mostjonajava.game;
 
+import lab.proj.mostjonajava.FungoriumApplication;
 import lab.proj.mostjonajava.model.*;
 import lombok.Data;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,7 +45,12 @@ public class JatekVezerlo {
             String parancs = parameterek[0];
             if (parancs.equals(JATEKINDITAS)) {
                 jatekInditasa(parameterek);
-            } else {
+            }
+            else if (parancs.equals(VISSZA))
+            {
+                return;
+            }
+            else {
                 hibaLog("Rossz parancsot adtal meg - add meg: (JATEKINDITAS <jatekosokSzama> <jatekosnevekVesszovelElvalasztva>)");
             }
         }
@@ -93,8 +97,53 @@ public class JatekVezerlo {
         log("--------------------------------------------");
     }
 
-    private static void tesztVezerlo() {
+    private static void tesztVezerlo() throws IOException {
+        while (true) {
+            log("Melyik tesztesetet szeretned futtatni? (1-31) : ");
+            String bemenet = streamReader.readLine();
+            if (Objects.equals(bemenet, VISSZA)) {
+                return;
+            }
+            try (InputStream is = FungoriumApplication.class.getClassLoader().getResourceAsStream("tests/test-" + bemenet + ".txt");
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                   tesztParancsErtelmezo(line);
+                }
+            } catch (Exception e) {
+                hibaLog("Nincs ilyet teszteset (lehetosegek: (1-31))");
+            }
+        }
+    }
 
+    private static void tesztParancsErtelmezo(String bemenet) {
+        String[] parameterek = bemenet.split(" ");
+        String parancs = parameterek[0];
+        switch (parancs) {
+            case JATEKINDITAS -> jatekInditasa(parameterek);
+            case JATEKEPITES -> jatekEpites(parameterek);
+            case ALLAPOT -> allapot();
+            case FONALNOVESZTES -> fonalNovesztes(parameterek);
+            case SIMASPORASZORAS -> simaSporaSzoras(parameterek);
+            case FEJLETTSPORASZORAS -> fejlettSporaSzoras(parameterek);
+            case GOMBATESTNOVESZTES -> gombaTestNovesztes(parameterek);
+            case GOMBATESTFEJLESZTES -> gombaTestFejlesztes(parameterek);
+            case GOMBATESTELPUSZTUL -> gombaTestElpusztul(parameterek);
+            case ROVARMOZGATAS -> rovarMozgatas(parameterek);
+            case SPORAFOGYASZTAS -> sporaFogyasztas(parameterek);
+            case FONALVAGAS -> fonalVagas(parameterek);
+            case TEKTONTORES -> tektonTores(parameterek);
+            case BENITOSPORAHATASKIFEJTESE -> benitoSporaHatasKifejtese(parameterek);
+            case LASSITOSPORAHATASKIFEJTESE -> lassitoSporaHatasKifejtese(parameterek);
+            case GYORSITOSPORAHATASKIFEJTESE -> gyorsitoSporaHatasKifejtese(parameterek);
+            case VAGASBENITOSPORAHATASKIFEJTESE -> vagasBenitoSporaHatasKifejtese(parameterek);
+            case SIMASPORAHATASKIFEJTESE -> simaSporaHatasKifejtese(parameterek);
+            case FONALFELSZIVODAS -> fonalFelszivodas(parameterek);
+            default -> hibaLog("hiba tortent a " + parancs + " parancs feldolgozasakor");
+        }
+    }
+
+    private static void jatekEpites(String[] parameterek) {
     }
 
     private static boolean gombaszParancsErtelmezo(String bemenet) {
@@ -102,11 +151,11 @@ public class JatekVezerlo {
         String[] parameterek = bemenet.split(" ");
         String parancs = parameterek[0];
         switch (parancs) {
-            case FONALNOVESZTES -> lepesMegtortent = testFonalNovesztes(parameterek);
-            case SIMASPORASZORAS -> lepesMegtortent = testSimaSporaSzoras(parameterek);
-            case FEJLETTSPORASZORAS -> lepesMegtortent = testFejlettSporaSzoras(parameterek);
-            case GOMBATESTNOVESZTES -> lepesMegtortent = testGombaTestNovesztes(parameterek);
-            case GOMBATESTFEJLESZTES -> lepesMegtortent = testGombaTestFejlesztes(parameterek);
+            case FONALNOVESZTES -> lepesMegtortent = fonalNovesztes(parameterek);
+            case SIMASPORASZORAS -> lepesMegtortent = simaSporaSzoras(parameterek);
+            case FEJLETTSPORASZORAS -> lepesMegtortent = fejlettSporaSzoras(parameterek);
+            case GOMBATESTNOVESZTES -> lepesMegtortent = gombaTestNovesztes(parameterek);
+            case GOMBATESTFEJLESZTES -> lepesMegtortent = gombaTestFejlesztes(parameterek);
             case UGRAS -> lepesMegtortent = true;
             default -> hibaLog("Csak gombasz parancsok engedelyezettek, probald ujra");
         }
@@ -118,66 +167,22 @@ public class JatekVezerlo {
         String[] parameterek = bemenet.split(" ");
         String parancs = parameterek[0];
         switch (parancs) {
-            case ROVARMOZGATAS -> lepesMegtortent = testRovarMozgatas(parameterek);
-            case FONALVAGAS -> lepesMegtortent = testFonalVagas(parameterek);
+            case ROVARMOZGATAS -> lepesMegtortent = rovarMozgatas(parameterek);
+            case FONALVAGAS -> lepesMegtortent = fonalVagas(parameterek);
             case UGRAS -> lepesMegtortent = true;
             default -> hibaLog("Csak rovarasz parancsok engedelyezettek, probald ujra");
         }
         return lepesMegtortent;
     }
 
-    public static void parancsErtelmezo(String bemenet) {
-        String[] parameterek = bemenet.split(" ");
-        String parancs = parameterek[0];
-        boolean jatekVezerloParancsAktivJatekmenetHianyaban = !JATEKMENET_AKTIV && !Objects.equals(parancs, JATEKINDITAS) && !Objects.equals(parancs, BETOLTES);
-
-        if (jatekVezerloParancsAktivJatekmenetHianyaban) {
-            hibaLog("Nincs aktiv jatekmenet - Inditsd el eloszor a jatekot vagy tolts be egy tesztesetet");
-        }
-
-        if (Objects.equals(parancs, JATEKINDITAS)) {
-            jatekInditasa(parameterek);
-        }
-
-        switch (parancs) {
-            case MENTES -> mentes(parameterek);
-            case BETOLTES -> betoltes(parameterek);
-            case MAKE -> make(parameterek);
-            case ALLAPOT -> allapot();
-            case FONALNOVESZTES -> testFonalNovesztes(parameterek);
-            case SIMASPORASZORAS -> testSimaSporaSzoras(parameterek);
-            case FEJLETTSPORASZORAS -> testFejlettSporaSzoras(parameterek);
-            case GOMBATESTNOVESZTES -> testGombaTestNovesztes(parameterek);
-            case GOMBATESTFEJLESZTES -> testGombaTestFejlesztes(parameterek);
-            case GOMBATESTELPUSZTUL -> testGombaTestElpusztul(parameterek);
-            case ROVARMOZGATAS -> testRovarMozgatas(parameterek);
-            case SPORAFOGYASZTAS -> testSporaFogyasztas(parameterek);
-            case FONALVAGAS -> testFonalVagas(parameterek);
-            case TEKTONTORES -> testTektonTores(parameterek);
-            case BENITOSPORAHATASKIFEJTESE -> testBenitoSporaHatasKifejtese(parameterek);
-            case LASSITOSPORAHATASKIFEJTESE -> testLassitoSporaHatasKifejtese(parameterek);
-            case GYORSITOSPORAHATASKIFEJTESE -> testGyorsitoSporaHatasKifejtese(parameterek);
-            case VAGASBENITOSPORAHATASKIFEJTESE -> testVagasBenitoSporaHatasKifejtese(parameterek);
-            //case OSZTODOSPORAHATASKIFEJTESE -> testOsztodoSporaHatasKiejtese(parameterek);
-            case SIMASPORAHATASKIFEJTESE -> testSimaSporaHatasKifejtese(parameterek);
-            //case ROVARELFOGYASZTASA -> rovarelfogyasztasa(parameterek);
-            case FONALFELSZIVODAS -> testFonalFelszivodas(parameterek);
-            case KILEPES -> System.exit(0);
-            default -> hibaLog("Nem letezo parancsot adtal meg!");
-        }
-
-    }
-
-    private static void mentes(String[] parameterek) {
-    }
-
-    private static void betoltes(String[] parameterek) {
-    }
-
-    private static void make(String[] parameterek) {
-    }
 
     private static void allapot() {
+        if (JATEKMENET_AKTIV) {
+            log(jatek.toString());
+        }
+        else {
+            log("Nincs aktiv jatekmenet");
+        }
     }
 
     private static void jatekInditasa(String[] parameterek) {
@@ -209,41 +214,11 @@ public class JatekVezerlo {
         return false;
     }
 
-    private static boolean testFonalNovesztes(String[] parameterek) {
+    private static boolean fonalNovesztes(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 4)) return false;
         return true;
     }
-
-    private static void testSporaTermeles(String[] parameterek) {
-        // legalább 2 paraméter: a parancs és a gombatest ID
-        if (parameterVizsgalat(parameterek, 2)) return;
-
-        // 1) ID parse
-        int gtId;
-        try {
-            gtId = Integer.parseInt(parameterek[1]);
-        } catch (NumberFormatException e) {
-            hibaLog("Érvénytelen Gombatest ID: " + parameterek[1]);
-            return;
-        }
-
-        // 2) Gombatest keresése a Játékból
-        Gombatest gt = jatek.keresGombatestById(gtId);
-        if (gt == null) {
-            hibaLog("Nincs gombatest ilyen ID-val: " + gtId);
-            return;
-        }
-
-        // 3) Előtte–utána számlálás
-        int elotteKilotheto = gt.getKilohetoSporakSzama();
-        gt.korFrissites();  // ez termel +1 spórát (kilőhetőként) ha <10
-        int utanaKilotheto = gt.getKilohetoSporakSzama();
-
-        // 4) Eredmény kiírása
-        log("Spora termeles teszt: elotte=" + elotteKilotheto + ", utan=" + utanaKilotheto);
-    }
-
-    private static boolean testSimaSporaSzoras(String[] parameterek) {
+    private static boolean simaSporaSzoras(String[] parameterek) {
         // várunk három elemet: 0=parancs, 1=gombatestId, 2=celTektonId
         if (parameterVizsgalat(parameterek, 3)) return false;
 
@@ -270,7 +245,7 @@ public class JatekVezerlo {
         return false;
     }
 
-    private static boolean testFejlettSporaSzoras(String[] parameterek) {
+    private static boolean fejlettSporaSzoras(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 3)) return false;
 
         // pl. parse-olod a gombatest-id-t
@@ -291,7 +266,7 @@ public class JatekVezerlo {
         return false;
     }
 
-    private static boolean testGombaTestNovesztes(String[] parameterek) {
+    private static boolean gombaTestNovesztes(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 2)) return false;
         EgyFonalasTekton tekton = new EgyFonalasTekton();
         if (tekton.gombatestNoveszthetoE()) {
@@ -302,7 +277,7 @@ public class JatekVezerlo {
         return false;
     }
 
-    private static boolean testGombaTestFejlesztes(String[] parameterek) {
+    private static boolean gombaTestFejlesztes(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 2)) return false;
 
         // 1) Létrehozunk egy tekton-t és ráteszünk egy sima Gombatestet
@@ -323,7 +298,7 @@ public class JatekVezerlo {
         return false;
     }
 
-    private static void testGombaTestElpusztul(String[] parameterek) {
+    private static void gombaTestElpusztul(String[] parameterek) {
         parameterVizsgalat(parameterek, 2);
 
         Gombatest gombatest = new Gombatest();
@@ -337,7 +312,7 @@ public class JatekVezerlo {
 
     }
 
-    private static boolean testRovarMozgatas(String[] parameterek) {
+    private static boolean rovarMozgatas(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 3)) return false;
 
         // 1) Létrehozunk egy tekton-t és rovaraszt
@@ -355,47 +330,47 @@ public class JatekVezerlo {
         return true;
     }
 
-    private static void testSporaFogyasztas(String[] parameterek) {
+    private static void sporaFogyasztas(String[] parameterek) {
         parameterVizsgalat(parameterek, 3);
         Rovar rovar = new Rovar();
         rovar.sporaElfogyasztas(new EgyFonalasTekton());
     }
 
-    private static boolean testFonalVagas(String[] parameterek) {
+    private static boolean fonalVagas(String[] parameterek) {
         parameterVizsgalat(parameterek, 3);
         Rovar rovar = new Rovar();
         rovar.fonalVagas(new EgyFonalasTekton());
         return false;
     }
 
-    private static void testTektonTores(String[] parameterek) {
+    private static void tektonTores(String[] parameterek) {
         parameterVizsgalat(parameterek, 2);
         EgyFonalasTekton tekton = new EgyFonalasTekton();
         tekton.ketteTores();
     }
 
-    private static void testBenitoSporaHatasKifejtese(String[] parameterek) {
+    private static void benitoSporaHatasKifejtese(String[] parameterek) {
         parameterVizsgalat(parameterek, 2);
         Rovar rovar = new Rovar();
         BenitoSpora benitoSpora = new BenitoSpora();
         benitoSpora.hatasKifejtese(rovar);
     }
 
-    private static void testLassitoSporaHatasKifejtese(String[] parameterek) {
+    private static void lassitoSporaHatasKifejtese(String[] parameterek) {
         parameterVizsgalat(parameterek, 2);
         Rovar rovar = new Rovar();
         LassitoSpora lassitoSpora = new LassitoSpora();
         lassitoSpora.hatasKifejtese(rovar);
     }
 
-    private static void testGyorsitoSporaHatasKifejtese(String[] parameterek) {
+    private static void gyorsitoSporaHatasKifejtese(String[] parameterek) {
         parameterVizsgalat(parameterek, 2);
         Rovar rovar = new Rovar();
         GyorsitoSpora gyorsitoSpora = new GyorsitoSpora();
         gyorsitoSpora.hatasKifejtese(rovar);
     }
 
-    private static void testVagasBenitoSporaHatasKifejtese(String[] parameterek) {
+    private static void vagasBenitoSporaHatasKifejtese(String[] parameterek) {
         parameterVizsgalat(parameterek, 2);
         Rovar rovar = new Rovar();
         VagasTiltoSpora vagasTiltoSpora = new VagasTiltoSpora();
@@ -403,14 +378,14 @@ public class JatekVezerlo {
 
     }
 
-    private static void testSimaSporaHatasKifejtese(String[] parameterek) {
+    private static void simaSporaHatasKifejtese(String[] parameterek) {
         parameterVizsgalat(parameterek, 2);
         Rovar rovar = new Rovar();
         SimaSpora simaSpora = new SimaSpora();
         simaSpora.hatasKifejtese(rovar);
     }
 
-    private static void testFonalFelszivodas(String[] parameterek) {
+    private static void fonalFelszivodas(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 1)) return;
 
         EltunoFonalasTekton tekton = new EltunoFonalasTekton();

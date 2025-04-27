@@ -8,9 +8,7 @@ import lab.proj.mostjonajava.game.JatekVezerlo;
 import lab.proj.mostjonajava.game.PalyaEpito;
 import lab.proj.mostjonajava.model.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 

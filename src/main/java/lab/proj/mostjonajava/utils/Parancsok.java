@@ -26,6 +26,9 @@ public class Parancsok {
     public static final String SIMASPORAHATASKIFEJTESE = "SIMASPORAHATASKIFEJTESE";
 
     public static final String UGRAS = "UGRAS";
+    public static final String VISSZA = "VISSZA";
+
+    public static final String JATEKEPITES = "JATEKEPITES";
     public static final String OSZTODOSPORAHATASKIFEJTESE = "OSZTODOSPORAHATASKIFEJTESE";
     public static final String ROVARELFOGYASZTASA = "ROVARELFOGYASZTASA";
 
