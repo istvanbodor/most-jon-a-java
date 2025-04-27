@@ -226,7 +226,6 @@ public class JatekVezerlo {
 
     private static boolean fonalNovesztes(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 4)) return false;
-        jatek = PalyaEpito.palya2();
         int gombatestId = Integer.parseInt(parameterek[1]);
         int honnanTektonId = Integer.parseInt(parameterek[2]);
         int hovaTektonId = Integer.parseInt(parameterek[3]);
@@ -234,83 +233,39 @@ public class JatekVezerlo {
         return true;
     }
     private static boolean simaSporaSzoras(String[] parameterek) {
-        // várunk három elemet: 0=parancs, 1=gombatestId, 2=celTektonId
-        if (parameterVizsgalat(parameterek, 3)) return false;
-
-        int gtId;
-        int celId;
-        try {
-            gtId = Integer.parseInt(parameterek[1]);
-            celId = Integer.parseInt(parameterek[2]);
-        } catch (NumberFormatException e) {
-            hibaLog("Érvénytelen ID: " + parameterek[1] + " vagy " + parameterek[2]);
-            return false;
-        }
-
-        // 2) Gombatest és cél‐tekton lekérdezése a Játékból
-        Gombatest gt = jatek.keresGombatestById(gtId);
-        Tekton cel = jatek.keresTektonById(celId);
-        if (gt == null || cel == null) {
-            hibaLog("Nincs ilyen gombatest vagy tekton ID-val: " + gtId + ", " + celId);
-            return false;
-        }
-
-        // 3) Hívjuk meg a sporaKiloves metódust
-        gt.sporaKiloves(cel, 1);  // az 1 itt a kilövendő spórák száma
-        return false;
+        if (parameterVizsgalat(parameterek, 4)) return false;
+        int gombatestId = Integer.parseInt(parameterek[1]);
+        int tektonId = Integer.parseInt(parameterek[2]);
+        int mennyieg = Integer.parseInt(parameterek[3]);
+        jatek.keresGombatestById(gombatestId).sporaKiloves(jatek.keresTektonById(tektonId), mennyieg);
+        return true;
     }
 
     private static boolean fejlettSporaSzoras(String[] parameterek) {
-        if (parameterVizsgalat(parameterek, 3)) return false;
-
-        // pl. parse-olod a gombatest-id-t
-        int gtId = Integer.parseInt(parameterek[1]);
-        Gombatest eredeti = jatek.keresGombatestById(gtId);
-        if (eredeti == null) {
-            hibaLog("Nincs ilyen Gombatest ID-val: " + gtId);
-            return false;
-        }
-
-        // csak így hívható meg a konstruktor
-        FejlettGombatest fejlett = new FejlettGombatest(eredeti);
-
-        // meg a sporaKiloves metódus is így
-        int mennyiseg = Integer.parseInt(parameterek[2]);
-        Tekton cel = jatek.keresTektonById(Integer.parseInt(parameterek[2]));
-        fejlett.sporaKiloves(cel, mennyiseg);
-        return false;
+        if (parameterVizsgalat(parameterek, 4)) return false;
+        int gombatestId = Integer.parseInt(parameterek[1]);
+        int tektonId = Integer.parseInt(parameterek[2]);
+        int mennyieg = Integer.parseInt(parameterek[3]);
+        jatek.keresGombatestById(gombatestId).sporaKiloves(jatek.keresTektonById(tektonId), mennyieg);
+        return true;
     }
 
+    //!!!valtozas:GOMBATESTNOVESZTES <gombaszId><tektonId>
     private static boolean gombaTestNovesztes(String[] parameterek) {
-        if (parameterVizsgalat(parameterek, 2)) return false;
-        EgyFonalasTekton tekton = new EgyFonalasTekton();
-        if (tekton.gombatestNoveszthetoE()) {
-            tekton.setGombatest(new Gombatest());
-        } else {
-            hibaLog("Ezen a tektonon nem novesztheto gombatest!");
-        }
-        return false;
+        if (parameterVizsgalat(parameterek,3)) return false;
+        int gombaszId = Integer.parseInt(parameterek[1]);
+        int tektonId = Integer.parseInt(parameterek[1]);
+        jatek.getGombaszok().get(gombaszId-1).gombaTestNovesztes(jatek.keresTektonById(tektonId));
+        return true;
     }
 
+    //!!!valtozas: GOMBATESTFEJLESZTES <gombaszId><tektonId>
     private static boolean gombaTestFejlesztes(String[] parameterek) {
-        if (parameterVizsgalat(parameterek, 2)) return false;
-
-        // 1) Létrehozunk egy tekton-t és ráteszünk egy sima Gombatestet
-        EgyFonalasTekton tekton = new EgyFonalasTekton();
-        Gombasz gombasz = new Gombasz("teszt");
-        Gombatest alapGt = new Gombatest(tekton, gombasz);
-        tekton.setGombatest(alapGt);
-
-        // 2) Ellenőrizzük, fejleszthető-e
-        if (tekton.gombatestFejleszthetoE()) {
-            // 3) Ha igen, ebből a gombatestből építjük a FejlettGombatestet
-            FejlettGombatest fejlettGt = new FejlettGombatest(alapGt);
-            tekton.setGombatest(fejlettGt);
-            log("Gombatest fejlesztese sikeres.");
-        } else {
-            hibaLog("A tekton gombateste nem fejleszthető!");
-        }
-        return false;
+        if (parameterVizsgalat(parameterek,3)) return false;
+        int gombaszId = Integer.parseInt(parameterek[1]);
+        int tektonId = Integer.parseInt(parameterek[2]);
+        jatek.getGombaszok().get(gombaszId-1).gombaTestFejlesztes(jatek.keresTektonById(tektonId).getGombatest());
+        return true;
     }
 
     private static void gombaTestElpusztul(String[] parameterek) {
