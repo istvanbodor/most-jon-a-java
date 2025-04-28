@@ -1,0 +1,8 @@
+2
+Tekton letrejott.
+Gombasz letrejott
+Gombatest letrejott.
+3
+Tekton letrejott.
+Rovarasz letrejott
+Rovar letrejott

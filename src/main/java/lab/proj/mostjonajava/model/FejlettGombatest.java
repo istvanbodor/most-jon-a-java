@@ -36,10 +36,15 @@ public class FejlettGombatest extends Gombatest {
     @Override
     public void sporaKiloves(Tekton celTekton, int mennyiseg) {
         boolean direktSzomszed = getTekton().szomszedossagEllenorzese(celTekton);
-        boolean masodikFoku = getTekton().szomszedSzomszedEllenorzese(celTekton);
-
+        boolean masodikFoku = false;
+        for (Tekton tekton : getTekton().getSzomszedosTektonok()) {
+            if (tekton.szomszedossagEllenorzese(celTekton))  {
+                masodikFoku = true;
+            }
+        }
         // most már engedi a közvetlen és a másodikfokú szomszédot is
         if (!(direktSzomszed || masodikFoku) || getKilohetoSporakSzama() < mennyiseg) {
+            log("Spora kiloves sikertelen.");
             return;
         }
 
@@ -57,6 +62,7 @@ public class FejlettGombatest extends Gombatest {
                 default -> new SimaSpora();
             };
             celTekton.getSporak().add(spora);
+            log("Spora kiloves sikeres.");
         }
     }
 }

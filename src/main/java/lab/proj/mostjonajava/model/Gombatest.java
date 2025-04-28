@@ -198,6 +198,7 @@ public class Gombatest {
      */
     public void sporaKiloves(Tekton celTekton, int mennyiseg) {
         if (!tekton.szomszedossagEllenorzese(celTekton) || kilohetoSporakSzama < mennyiseg) {
+            log("Spora kiloves sikertelen.");
             return;
         }
 
@@ -215,6 +216,7 @@ public class Gombatest {
                 default -> new SimaSpora();
             };
             celTekton.getSporak().add(spora);
+            log("Spora kiloves sikeres.");
         }
     }
 
