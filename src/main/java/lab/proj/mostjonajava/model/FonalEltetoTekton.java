@@ -3,8 +3,7 @@ package lab.proj.mostjonajava.model;
 import java.util.ArrayList;
 import java.util.List;
 
-//import static lab.proj.mostjonajava.utils.Logger.hivasLog;
-//import static lab.proj.mostjonajava.utils.Logger.log;
+import static lab.proj.mostjonajava.utils.Logger.log;
 
 public class FonalEltetoTekton extends Tekton {
     
@@ -13,7 +12,6 @@ public class FonalEltetoTekton extends Tekton {
      */
     public FonalEltetoTekton() {
         super(-1);
-        //hivasLog("FonalEltetoTekton()", List.of(), 1);
     }
 
     /**
@@ -21,7 +19,6 @@ public class FonalEltetoTekton extends Tekton {
      */
     @Override
     public List<Tekton> ketteTores() {
-        //hivasLog("ketteTores()", List.of(), 0);
     
         // uj tekton letrehozasa
         FonalEltetoTekton ujTekton = new FonalEltetoTekton();
@@ -41,7 +38,7 @@ public class FonalEltetoTekton extends Tekton {
     
         // minden spora torlese a tektonbol
         this.getSporak().clear();
-        //log("A tekton kettetort.");
+        log("A tekton kettetort.");
         return List.of(this, ujTekton);
     }
 
@@ -51,7 +48,6 @@ public class FonalEltetoTekton extends Tekton {
      */
     @Override
     public void fonalTorlese(GombaFonal fonal) {
-        //hivasLog("fonalTorlese(GombaFonal fonal)", List.of("fonal: Gombafonal"), 1);
-        //log("Fonal torles sikertelen.");
+        log("Fonal torles sikertelen.");
     }
 }

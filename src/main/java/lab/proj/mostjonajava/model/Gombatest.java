@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-//import static lab.proj.mostjonajava.utils.Logger.hivasLog;
-//import static lab.proj.mostjonajava.utils.Logger.log;
+import static lab.proj.mostjonajava.utils.Logger.log;
 import lombok.Data;
 import lombok.ToString;
 
@@ -30,7 +29,7 @@ public class Gombatest {
      */
     public Gombatest() {
         this.id = nextId++;
-        //log("Gombatest letrejott.");
+        log("Gombatest letrejott.");
     }
 
     /**
@@ -46,7 +45,7 @@ public class Gombatest {
         this.gombasz = gombasz;
         this.tekton = tekton;
         this.gombaFonalak = new ArrayList<>();
-        //log("Gombatest letrejott.");
+        log("Gombatest letrejott.");
     }
 
     /**
@@ -56,9 +55,6 @@ public class Gombatest {
      * @param hova
      */
    public void fonalNovesztes(Tekton honnan, Tekton hova) {
-        //hivasLog("fonalNovesztes(Tekton honnan, Tekton hova)",
-           //     List.of("honnan: Tekton - " + honnan.toString(),
-                  //      "hova: Tekton - " + hova.toString()), 0);
        boolean kapcsolodik = gombaFonalak.stream().anyMatch(f ->
                f.getHonnan().equals(honnan) ||
                        f.getHova().equals(honnan) ||
@@ -67,7 +63,7 @@ public class Gombatest {
        );
 
        if(!honnan.szomszedossagEllenorzese(hova) || noveszthetoFonalakSzama <= 0 || kapcsolodik) {
-            //log("Nem novesztheto gombafonal");
+            log("Nem novesztheto gombafonal");
             return;
         }
 
@@ -104,8 +100,6 @@ public class Gombatest {
      * @param fonal
      */
     public void fonalTorles(GombaFonal fonal) {
-        //hivasLog("fonalTorles(GombaFonal fonal)", List.of("fonal: Gombafonal"), 2);
-        
         // 1. A fő fonal mindenképp törlődik mindenhonnan
         fonal.getHonnan().getGombafonalak().remove(fonal);
         fonal.getHova().getGombafonalak().remove(fonal);
@@ -145,7 +139,7 @@ public class Gombatest {
                 }
             }
         }
-        //log("Fonal torlese sikeres.");
+        log("Fonal torlese sikeres.");
     }
 
     /**
@@ -191,6 +185,7 @@ public class Gombatest {
             }
             // levesszük a gombász listájából is
             getGombasz().getGombatestek().remove(this);
+            log("A gombatest elpusztult");
         }
         // különben nem történik semmi
     }
@@ -234,7 +229,6 @@ public class Gombatest {
      * @return 
      */
     public Tekton getTekton() {
-        //hivasLog("getTekton()", List.of(), 0);
         return tekton;
     }
 
@@ -243,7 +237,6 @@ public class Gombatest {
      * //@param ertek
      */
     public void setTekton(Tekton tekton) {
-        //hivasLog("setTekton(Tekton tekton)", List.of("tekton: Tekton"), 0);
         this.tekton = tekton;
     }
 
@@ -252,7 +245,6 @@ public class Gombatest {
      * @return 
      */
     public Gombasz getGombasz() {
-        //hivasLog("getGombasz()", List.of(), 0);
         return gombasz;
     }
 
@@ -261,7 +253,6 @@ public class Gombatest {
      * //@param ertek
      */
     public void setGombasz(Gombasz gombasz) {
-        //hivasLog("setGombasz(Gombasz gombasz)", List.of("gombasz: Gombasz"), 0);
         this.gombasz = gombasz;
     }
 
@@ -270,7 +261,6 @@ public class Gombatest {
      * @return 
      */
     public int getKilohetoSporakSzama() {
-        //hivasLog("getKilohetoSporakSzama()", List.of(), 0);
         return kilohetoSporakSzama;
     }
 
@@ -279,7 +269,6 @@ public class Gombatest {
      * @return 
      */
     public int getElszortSporakSzama() {
-        //hivasLog("getElszortSporakSzama()", List.of(), 0);
         return elszortSporakSzama;
     }
 
@@ -288,7 +277,6 @@ public class Gombatest {
      * @return 
      */
     public int getNoveszthetoFonalakSzama() {
-        //hivasLog("getNoveszthetoFonalakSzama()", List.of(), 0);
         return noveszthetoFonalakSzama;
     }
 
@@ -297,7 +285,6 @@ public class Gombatest {
      * @return 
      */
     public List<GombaFonal> getGombaFonalak() {
-        //hivasLog("getGombaFonalak()", List.of(), 0);
         return gombaFonalak;
     }
 
@@ -305,7 +292,6 @@ public class Gombatest {
      * Minden kör végén resetelődik a növeszthető fonalak száma és termelődik egy spóra
      */
     public void korFrissites() {
-        //hivasLog("korFrissites()", List.of(), 0);
         
         if (kilohetoSporakSzama < 10) {
             kilohetoSporakSzama++;
@@ -314,7 +300,7 @@ public class Gombatest {
         noveszthetoFonalakSzama = 1;
         
         if (elszortSporakSzama >= 10) {
-            //log("A gombatest elpusztul");
+            log("A gombatest elpusztul");
             elpusztulas();
         }
     }

@@ -1,8 +1,6 @@
 package lab.proj.mostjonajava.model;
 
-
-//import static lab.proj.mostjonajava.utils.Logger.hivasLog;
-//import static lab.proj.mostjonajava.utils.Logger.log;
+import static lab.proj.mostjonajava.utils.Logger.log;
 import lombok.Data;
 import lombok.ToString;
 
@@ -21,11 +19,10 @@ public class GombaFonal {
      * @param gombatest
      */
     public GombaFonal(Tekton honnan, Tekton hova, Gombatest gombatest) {
-        //hivasLog("GombaFonal(Tekton honnan, Tekton hova, Gombatest gombatest)", List.of("honnan: Tekton - " + honnan.toString(), "hova: Tekton - " + hova.toString()  +" gombatest: Gombatest"), 2);
         this.honnan = honnan;
         this.hova = hova;
         this.gombatest = gombatest; 
-        //log("Fonal letrejott");
+        log("Fonal letrejott");
     }
 
     /**
@@ -33,12 +30,11 @@ public class GombaFonal {
      * @param rovar
      */
     public void rovarElfogyasztas(Rovar rovar){
-        //hivasLog("rovarElfogyasztas(Rovar rovar)", List.of("rovar: Rovar"), 1);
     
         Tekton rovarTektonja = rovar.getTekton();
 
         if ((!rovarTektonja.equals(honnan) && !rovarTektonja.equals(hova)) || !rovar.getBenulas()) {
-            //log("A rovar nem fogyaszthato el.");
+            log("A rovar nem fogyaszthato el.");
             return;
         }
 
@@ -47,7 +43,7 @@ public class GombaFonal {
 
         Gombatest ujGombatest = new Gombatest(rovarTektonja, gombatest.getGombasz());
         rovarTektonja.setGombatest(ujGombatest); //ha TestNelkuliTektonrol van szó akkor ebben nem történik semmi
-        //log("Rovar elfogyasztva.");
+        log("Rovar elfogyasztva.");
     }
 
     /**
@@ -55,7 +51,6 @@ public class GombaFonal {
      * @return
      */
     public Tekton getHonnan(){
-        //hivasLog("getHonnan()", List.of(), 1);
         return honnan;
     }
 
@@ -64,7 +59,6 @@ public class GombaFonal {
      * @return
      */
     public Tekton getHova(){
-        //hivasLog("getHova()", List.of(), 1);
         return hova;
     }
 
@@ -73,7 +67,6 @@ public class GombaFonal {
      * @return
      */
     public Gombatest getGombatest(){
-        //hivasLog("getGombatest()", List.of(), 1);
         return gombatest;
     }
 
@@ -82,7 +75,6 @@ public class GombaFonal {
      * @param gombatest
      */
     public void setGombatest(Gombatest gombatest){
-        //hivasLog("setGombatest(Gombatest gombatest)", List.of("gombatest: Gombatest"), 0);
         this.gombatest = gombatest;
     }
 

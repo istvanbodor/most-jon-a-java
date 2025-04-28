@@ -3,8 +3,7 @@ package lab.proj.mostjonajava.model;
 import java.util.ArrayList;
 import java.util.List;
 
-//import static lab.proj.mostjonajava.utils.Logger.hivasLog;
-//import static lab.proj.mostjonajava.utils.Logger.log;
+import static lab.proj.mostjonajava.utils.Logger.log;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -18,7 +17,6 @@ public class EgyFonalasTekton extends Tekton {
      */
     public EgyFonalasTekton() {
         super(-1);
-        //hivasLog("EgyFonalasTekton()", List.of(), 1);
     }
 
     /**
@@ -26,12 +24,11 @@ public class EgyFonalasTekton extends Tekton {
      */
     @Override
     public List<Tekton> ketteTores() {
-        //hivasLog("ketteTores()", List.of(), 0);
-    
+
         // uj tekton letrehozasa
         EgyFonalasTekton ujTekton = new EgyFonalasTekton();
         getSzomszedosTektonok().add(ujTekton);
-        
+
         // gombatest elpusztitasa, ha van rajta
         if (this.getGombatest() != null) {
             this.getGombatest().elpusztulas();
@@ -43,10 +40,9 @@ public class EgyFonalasTekton extends Tekton {
         for (GombaFonal fonal : fonalak) {
             fonal.getGombatest().fonalTorles(fonal);
         }
-    
-        // minden spora torlese a tektonbol
+
         this.getSporak().clear();
-        //log("A tekton kettetort.");
+        log("A tekton kettetort.");
         return List.of(this, ujTekton);
     }
 
@@ -56,9 +52,8 @@ public class EgyFonalasTekton extends Tekton {
      */
     @Override
     public void setGombafonal(GombaFonal fonal) {
-        //hivasLog("setGombafonal(GombaFonal fonal)", List.of("fonal: Gombafonal"), 1);
         if(this.getGombafonalak().isEmpty()) {
-            //log("Fonal hozzaadasa sikeres volt.");
+            log("Fonal hozzaadasa sikeres volt.");
             getGombafonalak().add(fonal);
         }
     }

@@ -1,8 +1,6 @@
 package lab.proj.mostjonajava.model;
 
-
-//import static lab.proj.mostjonajava.utils.Logger.hivasLog;
-//import static lab.proj.mostjonajava.utils.Logger.log;
+import static lab.proj.mostjonajava.utils.Logger.log;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
@@ -14,7 +12,7 @@ public class GyorsitoSpora extends Spora {
      */
     public GyorsitoSpora() {
         super(5);
-        //log("Gyorsito spora letrejotte.");
+        log("Gyorsito spora letrejotte.");
     }
 
     /**
@@ -22,8 +20,7 @@ public class GyorsitoSpora extends Spora {
      */
     @Override
     public void hatasKifejtese(Rovar rovar) {
-        //hivasLog("hatasKifejtese(Rovar rovar)", List.of("rovar: Rovar"), 0);
         rovar.setLepesSzam(rovar.getLepesSzam()+1);
-        //log("Gyorsito spora megtette a hatasat.");
+        log("Gyorsito spora megtette a hatasat.");
     }
 }

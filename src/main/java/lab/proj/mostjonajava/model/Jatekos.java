@@ -1,7 +1,5 @@
 package lab.proj.mostjonajava.model;
 
-
-//import static lab.proj.mostjonajava.utils.Logger.hivasLog;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,7 +22,6 @@ public abstract class Jatekos {
      * //@param ertek
      */
     public int getPont() {
-        //hivasLog("getPont()", List.of(), 1);
         return pont;
     }
 
@@ -33,7 +30,6 @@ public abstract class Jatekos {
      * @param ertek
      */
     public void setPont(int ertek) {
-        //hivasLog("setPont(int ertek)", List.of("ertek: int"), 1);
         pont = ertek;
     }
 }
