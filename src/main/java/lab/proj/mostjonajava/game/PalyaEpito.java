@@ -349,6 +349,7 @@ public class PalyaEpito {
         jatek.getTabla().get(1).getSzomszedosTektonok().add(jatek.getTabla().get(0));
 
         Rovar rovar = new Rovar(jatek.getTabla().get(0), jatek.getRovaraszok().get(0));
+        rovar.setBenulas(true);
         jatek.getTabla().get(1).getRovarok().add(rovar);
         jatek.getRovaraszok().get(0).getRovarok().add(rovar);
 

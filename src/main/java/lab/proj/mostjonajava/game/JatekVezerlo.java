@@ -404,7 +404,7 @@ public class JatekVezerlo {
     }
 
     private static boolean fonalFelszivodas(String[] parameterek) {
-        if (parameterVizsgalat(parameterek, 3)) return false;
+        if (parameterVizsgalat(parameterek, 2)) return false;
         int honnanTektonId = Integer.parseInt(parameterek[1]);
         jatek.keresTektonById(honnanTektonId).korFrissites();
         return true;
@@ -417,26 +417,17 @@ public class JatekVezerlo {
         int honnanId = Integer.parseInt(parameterek[2]);
         int hovaId = Integer.parseInt(parameterek[3]);
 
-        if(!jatek.keresTektonById(honnanId).vanFonalKozottuk(jatek.keresTektonById(hovaId))) return false;
-
-        for(int i = 0; i< jatek.getGombaszok().size(); i++)
-        {
-            for(int j = 0; j < jatek.getGombaszok().get(i).getGombatestek().size(); j++)
-            {
-                for(int k = 0; k < jatek.getGombaszok().get(i).getGombatestek().get(j).getGombaFonalak().size(); k++)
-                {
-                    if(jatek.getGombaszok().get(i).getGombatestek().get(j).getGombaFonalak().get(k).getHonnan().equals(
-                            jatek.keresTektonById(honnanId)) &&
-                        jatek.getGombaszok().get(i).getGombatestek().get(j).getGombaFonalak().get(k).getHova().equals(
-                                jatek.keresTektonById(hovaId)));
-                    {
-                        jatek.getGombaszok().get(i).getGombatestek().get(j).getGombaFonalak().get(k).rovarElfogyasztas(
-                                jatek.keresRovarById(rovarId));
-                    }
+        if(!jatek.keresTektonById(honnanId).vanFonalKozottuk(jatek.keresTektonById(hovaId))){
+            return false;
+        } else{
+            for(int i = 0; i < jatek.keresTektonById(honnanId).getGombafonalak().size(); i++) {
+                if(jatek.keresTektonById(honnanId).getGombafonalak().get(i).getHova().getId() == hovaId) {
+                    jatek.keresTektonById(honnanId).getGombafonalak().get(i).rovarElfogyasztas(jatek.keresRovarById(rovarId));
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
 
 }

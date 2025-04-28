@@ -42,7 +42,7 @@ public class Rovar {
      */
     public void lepes(Tekton hova) {
         if (!honnan.vanFonalKozottuk(hova) || benulas) {
-            //log("A lepes sikertelen");
+            log("A lepes sikertelen");
             return;
         }
         honnan.getRovarok().remove(this);
