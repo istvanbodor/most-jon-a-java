@@ -159,7 +159,7 @@ public class JatekVezerlo {
 
     private static boolean osztodoSporaHatasKifejtese(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 2)) return false;
-        int rovarId = Integer.parseInt(parameterek[0]);
+        int rovarId = Integer.parseInt(parameterek[1]);
         jatek.keresTektonById(rovarId).getSporak().get(4).hatasKifejtese(jatek.keresRovarById(rovarId));
         return true;
     }
@@ -355,42 +355,42 @@ public class JatekVezerlo {
 
     private static boolean benitoSporaHatasKifejtese(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 2)) return false;
-        int rovarId = Integer.parseInt(parameterek[0]);
+        int rovarId = Integer.parseInt(parameterek[1]);
         jatek.keresTektonById(rovarId).getSporak().get(1).hatasKifejtese(jatek.keresRovarById(rovarId));
         return true;
     }
 
     private static boolean lassitoSporaHatasKifejtese(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 2)) return false;
-        int rovarId = Integer.parseInt(parameterek[0]);
+        int rovarId = Integer.parseInt(parameterek[1]);
         jatek.keresTektonById(rovarId).getSporak().get(3).hatasKifejtese(jatek.keresRovarById(rovarId));
         return true;
     }
 
     private static boolean gyorsitoSporaHatasKifejtese(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 2)) return false;
-        int rovarId = Integer.parseInt(parameterek[0]);
+        int rovarId = Integer.parseInt(parameterek[1]);
         jatek.keresTektonById(rovarId).getSporak().get(2).hatasKifejtese(jatek.keresRovarById(rovarId));
         return true;
     }
 
     private static boolean vagasBenitoSporaHatasKifejtese(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 2)) return false;
-        int rovarId = Integer.parseInt(parameterek[0]);
+        int rovarId = Integer.parseInt(parameterek[1]);
         jatek.keresTektonById(rovarId).getSporak().get(5).hatasKifejtese(jatek.keresRovarById(rovarId));
         return true;
     }
 
     private static boolean simaSporaHatasKifejtese(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 2)) return false;
-        int rovarId = Integer.parseInt(parameterek[0]);
+        int rovarId = Integer.parseInt(parameterek[1]);
         jatek.keresTektonById(rovarId).getSporak().get(0).hatasKifejtese(jatek.keresRovarById(rovarId));
         return true;
     }
 
     private static boolean fonalFelszivodas(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 3)) return false;
-        int honnanTektonId = Integer.parseInt(parameterek[0]);
+        int honnanTektonId = Integer.parseInt(parameterek[1]);
         jatek.keresTektonById(honnanTektonId).korFrissites();
         return true;
     }

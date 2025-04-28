@@ -174,32 +174,27 @@ public class PalyaEpito {
         Tekton t2 = new TobbFonalasTekton();
 
         jatek.getTabla().addAll(List.of(t1,t2));
-
         // Szomszédságok: t1–t2
         jatek.getTabla().get(0).getSzomszedosTektonok().add(jatek.getTabla().get(1));
         jatek.getTabla().get(1).getSzomszedosTektonok().add(jatek.getTabla().get(0));
-
         // Gombatest t1-en
         Gombatest Gt1 = new Gombatest(jatek.getTabla().get(0), jatek.getGombaszok().get(0));
         jatek.getGombaszok().get(0).getGombatestek().add(Gt1);
         jatek.getTabla().get(0).setGombatest(jatek.getGombaszok().get(0).getGombatestek().get(0));
-
         // Gombafonal t1–t2
         GombaFonal f12 = new GombaFonal(jatek.getTabla().get(0), jatek.getTabla().get(1), jatek.getGombaszok().get(0).getGombatestek().get(0));
         jatek.getTabla().get(0).getGombafonalak().add(f12);
         jatek.getTabla().get(1).getGombafonalak().add(f12);
-
         // t2-re 1 sima spóra
         SimaSpora s = new SimaSpora();
         jatek.getTabla().get(1).getSporak().add(s);
-
         // t1-re egy rovar
         Rovar R1 = new Rovar(jatek.getTabla().get(0), jatek.getRovaraszok().get(0));
         jatek.getTabla().get(0).getRovarok().add(R1);
-
+        jatek.getRovaraszok().get(0).getRovarok().add(jatek.getTabla().get(0).getRovarok().get(0));
         //Rovar vágóképessége nem aktív
-        jatek.getRovaraszok().get(0).getRovarok().get(0).setVagoKepesseg(false);
-
+        jatek.getTabla().get(0).getRovarok().get(0).setVagoKepesseg(false);
+        System.out.println("asd8");
         return jatek;
     }
 
@@ -263,6 +258,7 @@ public class PalyaEpito {
         // t1-re egy rovar
         Rovar R1 = new Rovar(jatek.getTabla().get(0), jatek.getRovaraszok().get(0));
         jatek.getTabla().get(0).getRovarok().add(R1);
+        jatek.getRovaraszok().get(0).getRovarok().add(jatek.getTabla().get(0).getRovarok().get(0));
 
         return jatek;
     }
@@ -327,6 +323,7 @@ public class PalyaEpito {
         // t1-re egy rovar
         Rovar R1 = new Rovar(jatek.getTabla().get(0), jatek.getRovaraszok().get(0));
         jatek.getTabla().get(0).getRovarok().add(R1);
+        jatek.getRovaraszok().get(0).getRovarok().add(jatek.getTabla().get(0).getRovarok().get(0));
 
         return jatek;
     }
