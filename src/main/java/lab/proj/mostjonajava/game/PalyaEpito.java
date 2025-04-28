@@ -152,6 +152,7 @@ public class PalyaEpito {
         jatek.getTabla().get(3).getSporak().add(new LassitoSpora());
         jatek.getTabla().get(3).getSporak().add(new OsztodoSpora());
         Gombatest gombatest = new Gombatest(jatek.getTabla().get(3), jatek.getGombaszok().get(0));
+        jatek.getTabla().get(3).setGombatest(gombatest);
         jatek.getGombaszok().get(0).getGombatestek().add(gombatest);
         jatek.getGombaszok().get(0).getGombatestek().get(3).setElszortSporakSzama(3);
         jatek.getGombaszok().get(0).getGombatestek().get(3).setKilohetoSporakSzama(1);
