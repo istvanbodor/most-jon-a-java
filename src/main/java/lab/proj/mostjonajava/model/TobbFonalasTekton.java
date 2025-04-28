@@ -3,8 +3,7 @@ package lab.proj.mostjonajava.model;
 import java.util.ArrayList;
 import java.util.List;
 
-//import static lab.proj.mostjonajava.utils.Logger.hivasLog;
-//import static lab.proj.mostjonajava.utils.Logger.log;
+import static lab.proj.mostjonajava.utils.Logger.log;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,7 +16,6 @@ public class TobbFonalasTekton extends Tekton {
      */
     public TobbFonalasTekton() {
         super(-1);
-        //hivasLog("TobbFonalasTekton()", List.of(), 1);
     }
 
     /**
@@ -25,7 +23,6 @@ public class TobbFonalasTekton extends Tekton {
      */
     @Override
     public List<Tekton> ketteTores() {
-        //hivasLog("ketteTores()", List.of(), 0);
     
         // uj tekton letrehozasa
         TobbFonalasTekton ujTekton = new TobbFonalasTekton();
@@ -45,7 +42,7 @@ public class TobbFonalasTekton extends Tekton {
     
         // minden spora torlese a tektonbol
         this.getSporak().clear();
-        //log("A tekton kettetort.");
+        log("A tekton kettetort.");
         return List.of(this, ujTekton);
     }
 }

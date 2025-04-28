@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//import static lab.proj.mostjonajava.utils.Logger.hivasLog;
-//import static lab.proj.mostjonajava.utils.Logger.log;
+import static lab.proj.mostjonajava.utils.Logger.log;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -105,14 +104,13 @@ public abstract class Tekton {
      * @param eletTartam
      */
     Tekton(int eletTartam) {
-        //hivasLog("Tekton(int eletTartam)", List.of("eletTartam: int"), 1);
         fonalakElettartama = eletTartam;
         this.id = nextId++;
         this.szomszedosTektonok = new ArrayList<>();
         this.rovarok = new ArrayList<>();
         this.sporak = new ArrayList<>();
         this.gombafonalak = new ArrayList<>();
-        //log("Tekton letrejott.");
+        log("Tekton letrejott.");
     }
 
     /**
@@ -126,14 +124,13 @@ public abstract class Tekton {
      * @return
      */
     public boolean gombatestNoveszthetoE() {
-        //hivasLog("gombatestNoveszthetoE()", List.of(), 0);
         for (GombaFonal fonal : gombafonalak) {
             if ((fonal.getHonnan() == this || fonal.getHova() == this) && sporak.size() >= 3){
-                //log("true");
+                log("true");
                 return true;
             }
         }
-        //log("false");
+        log("false");
         return false;
     }
 
@@ -143,11 +140,10 @@ public abstract class Tekton {
      * @return
      */
     public boolean gombatestFejleszthetoE() {
-        //hivasLog("gombatestFejleszthetoE()", List.of(), 0);
         if(sporak.size() >= 3 && gombatest != null){
-            //log("true");
+            log("true");
             return true;}
-        //log("false");
+        log("false");
         return false;
 
     }
@@ -158,11 +154,10 @@ public abstract class Tekton {
      * @return
      */
     public boolean szomszedossagEllenorzese(Tekton tekton) {
-        //hivasLog("szomszedossagEllenorzese(Tekton tekton)", List.of("tekton: Tekton"), 1);
         if(szomszedosTektonok.contains(tekton)){
-            //log("true");
+            log("true");
             return true;}
-        //log("false");
+        log("false");
         return false;
     }
 
@@ -172,14 +167,13 @@ public abstract class Tekton {
      * @return
      */
     public boolean szomszedSzomszedEllenorzese(Tekton tekton) {
-        //hivasLog("szomszedSzomszedEllenorzese(Tekton tekton)", List.of("tekton: Tekton"), 1);
         for (Tekton szomszed : szomszedosTektonok) {
             if (szomszed.getSzomszedosTektonok().contains(tekton)){
                 //log("true");
                 return true;
             }
         }
-        //log("false");
+        log("false");
         return false;
     }
 
@@ -189,7 +183,6 @@ public abstract class Tekton {
      * @return
      */
     public boolean vanFonalKozottuk(Tekton tekton) {
-        //hivasLog("vanFonalKozottuk(Tekton tekton)", List.of("tekton: Tekton"), 1);
         if (this.equals(tekton)) return false;
         for (GombaFonal fonal : gombafonalak) {
             if ((fonal.getHonnan().equals(this) && fonal.getHova().equals(tekton)) || (fonal.getHova().equals(this) && fonal.getHonnan().equals(tekton))) {
@@ -197,7 +190,7 @@ public abstract class Tekton {
                 return true;
             }
         }
-        //log("false");
+        log("false");
         return false;
     }
 
@@ -212,7 +205,6 @@ public abstract class Tekton {
      * @return
      */
     public List<Tekton> getSzomszedosTektonok() {
-        //hivasLog("getSzomszedosTektonok()", List.of(), 1);
         return szomszedosTektonok;
     }
 
@@ -221,7 +213,6 @@ public abstract class Tekton {
      * @return
      */
     public List<Rovar> getRovarok() {
-        //hivasLog("getRovarok()", List.of(), 1);
         return rovarok;
     }
 
@@ -230,7 +221,6 @@ public abstract class Tekton {
      * @return
      */
     public List<GombaFonal> getGombafonalak() {
-        //hivasLog("getGombafonal()", List.of(), 1);
         return gombafonalak;
     }
 
@@ -239,19 +229,17 @@ public abstract class Tekton {
      * @param fonal
      */
     public void fonalTorlese(GombaFonal fonal) {
-        //hivasLog("fonalTorlese(GombaFonal fonal)", List.of("fonal: Gombafonal"), 1);
         getGombafonalak().remove(fonal);
-        //log("Fonal torlese sikeres.");
+        log("Fonal torlese sikeres.");
     }
 
     /**
      * Hozzáad egy gombafonalat a tektonhoz. - az Egyfonalas tektonban override-ol
      * @param fonal
      */
-    public void setGombafonal(GombaFonal fonal) { 
-        //hivasLog("setGombafonal(GombaFonal fonal)", List.of("fonal: Gombafonal"), 1);
+    public void setGombafonal(GombaFonal fonal) {
         gombafonalak.add(fonal);
-        //log("Fonal hozzaadasa sikeres volt.");
+        log("Fonal hozzaadasa sikeres volt.");
     }
 
     /**
@@ -259,7 +247,6 @@ public abstract class Tekton {
      * @return
      */
     public List<Spora> getSporak() {
-        //hivasLog("getSporak()", List.of(), 1);
         return sporak;
     }
 
@@ -268,7 +255,6 @@ public abstract class Tekton {
      * @return
      */
     public Gombatest getGombatest() {
-        //hivasLog("getGombatest()", List.of(), 1);
         return gombatest;
     }
 
@@ -290,7 +276,6 @@ public abstract class Tekton {
      * Bizonyos tektonoknál (pl. Eltűnő fonalas) számolni kell az eltelt időt, ezt valósítja meg ez a fügvény.
      */
     public void korFrissites() {
-        //hivasLog("korFrissites()", List.of(), 0);
         if (fonalakElettartama == -1) return; // ez nem tűnik el idővel
 
         fonalakElettartama--;
@@ -304,7 +289,7 @@ public abstract class Tekton {
             }
     
             fonalakElettartama = 3;
-            //log("Fonalak torlese megtortent az EltunoFonalasTektonon.");
+            log("Fonalak torlese megtortent az EltunoFonalasTektonon.");
         }
     }
 }
