@@ -288,7 +288,7 @@ public class PalyaEpito {
         GombaFonal f12 = new GombaFonal(jatek.getTabla().get(0), jatek.getTabla().get(1), jatek.getGombaszok().get(0).getGombatestek().get(0));
         jatek.getTabla().get(0).getGombafonalak().add(f12);
         jatek.getTabla().get(0).getGombafonalak().add(f12);
-
+        jatek.getTabla().get(0).setFonalakElettartama(1);
         return jatek;
     }
 
