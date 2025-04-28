@@ -1,0 +1,4 @@
+false
+true
+Gyorsito spora letrejotte.
+Spora kiloves sikeres.
