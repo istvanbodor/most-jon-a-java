@@ -121,7 +121,6 @@ public class JatekVezerlo {
                  BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    log("line " +line);
                    tesztParancsErtelmezo(line);
                 }
                 reader.close();
