@@ -297,7 +297,8 @@ public class JatekVezerlo {
         if (parameterVizsgalat(parameterek,3)) return false;
         int gombaszId = Integer.parseInt(parameterek[1]);
         int tektonId = Integer.parseInt(parameterek[2]);
-        jatek.getGombaszok().get(gombaszId-1).gombaTestFejlesztes(jatek.keresTektonById(tektonId).getGombatest());
+        Gombatest gombatest = jatek.keresTektonById(tektonId).getGombatest();
+        jatek.getGombaszok().get(gombaszId-1).gombaTestFejlesztes(gombatest);
         return true;
     }
 
