@@ -299,7 +299,7 @@ public class JatekVezerlo {
     private static boolean gombaTestNovesztes(String[] parameterek) {
         if (parameterVizsgalat(parameterek,3)) return false;
         int gombaszId = Integer.parseInt(parameterek[1]);
-        int tektonId = Integer.parseInt(parameterek[1]);
+        int tektonId = Integer.parseInt(parameterek[2]);
         jatek.getGombaszok().get(gombaszId-1).gombaTestNovesztes(jatek.keresTektonById(tektonId));
         return true;
     }
@@ -318,8 +318,6 @@ public class JatekVezerlo {
         if(parameterVizsgalat(parameterek, 2)) return false;
 
         int gombatestId = Integer.parseInt(parameterek[1]);
-
-        jatek.keresGombatestById(gombatestId).setKilohetoSporakSzama(0);
 
         jatek.keresGombatestById(gombatestId).elpusztulas();
 
