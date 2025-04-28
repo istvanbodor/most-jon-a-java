@@ -104,13 +104,18 @@ public class JatekVezerlo {
             if (Objects.equals(bemenet, VISSZA)) {
                 return;
             }
+            log("bemenet:" + bemenet);
             try (InputStream is = FungoriumApplication.class.getClassLoader().getResourceAsStream("tests/test-" + bemenet + ".txt");
                  BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
+                    log("line " +line);
                    tesztParancsErtelmezo(line);
                 }
+                reader.close();
+                JATEKMENET_AKTIV = false;
             } catch (Exception e) {
+                hibaLog(e.toString());
                 hibaLog("Nincs ilyet teszteset (lehetosegek: (1-31))");
             }
         }
@@ -154,6 +159,24 @@ public class JatekVezerlo {
     }
 
     private static void jatekEpites(String[] parameterek) {
+        parameterVizsgalat(parameterek, 2);
+        String palyaSzam = parameterek[1];
+        switch (palyaSzam) {
+            case "1" -> jatek = PalyaEpito.palya1();
+            case "2" -> jatek = PalyaEpito.palya2();
+            case "3" -> jatek = PalyaEpito.palya3();
+            case "4" -> jatek = PalyaEpito.palya4();
+            case "5" -> jatek = PalyaEpito.palya5();
+            case "6" -> jatek = PalyaEpito.palya6();
+            case "7" -> jatek = PalyaEpito.palya7();
+            case "8" -> jatek = PalyaEpito.palya8();
+            case "9" -> jatek = PalyaEpito.palya9();
+            case "10" -> jatek = PalyaEpito.palya10();
+            default -> hibaLog("Nem letezo palyat probalsz hasznalni");
+        }
+        if (jatek!= null){
+            JATEKMENET_AKTIV = true;
+        }
     }
 
     private static boolean gombaszParancsErtelmezo(String bemenet) {
@@ -188,10 +211,14 @@ public class JatekVezerlo {
 
     private static void allapot() {
         if (JATEKMENET_AKTIV) {
+            elvalasztas();
             log(jatek.toString());
+            elvalasztas();
         }
         else {
+            elvalasztas();
             log("Nincs aktiv jatekmenet");
+            elvalasztas();
         }
     }
 
@@ -213,7 +240,7 @@ public class JatekVezerlo {
 
         jatek = new Jatek(jatekosokSzama, nevek);
         JATEKMENET_AKTIV = true;
-        JATEKOSOK_SZAMA = 2;
+        JATEKOSOK_SZAMA = jatekosokSzama;
     }
 
     private static boolean parameterVizsgalat(String[] parameterek, int elvartMeret) {
@@ -226,7 +253,6 @@ public class JatekVezerlo {
 
     private static boolean fonalNovesztes(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 4)) return false;
-        jatek = PalyaEpito.palya2();
         int gombatestId = Integer.parseInt(parameterek[1]);
         int honnanTektonId = Integer.parseInt(parameterek[2]);
         int hovaTektonId = Integer.parseInt(parameterek[3]);

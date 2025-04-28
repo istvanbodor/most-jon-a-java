@@ -1,9 +1,11 @@
 package lab.proj.mostjonajava.game;
 
 import lab.proj.mostjonajava.model.*;
+import lab.proj.mostjonajava.utils.Cleaner;
 
 import java.util.List;
 
+import static lab.proj.mostjonajava.utils.Cleaner.cleanUp;
 import static lab.proj.mostjonajava.utils.Logger.log;
 
 public class PalyaEpito {
@@ -15,7 +17,7 @@ public class PalyaEpito {
      * - t2-n 3 darab SimaSpora
      */
     public static Jatek palya1() {
-        Jatek jatek = new Jatek(2, List.of("tesztgombasz", "tesztrovarasz"));
+        Jatek jatek = new Jatek(2,"tesztgombasz,tesztrovarasz");
         Tekton t1 = new TobbFonalasTekton();
         Tekton t2 = new TobbFonalasTekton();
         Tekton t3 = new TobbFonalasTekton();
@@ -56,7 +58,7 @@ public class PalyaEpito {
      * - van t3 is
      */
     public static Jatek palya2() {
-        Jatek jatek = new Jatek(1, List.of("tesztgombasz"));
+        Jatek jatek = new Jatek(1,"tesztgombasz");
         Tekton t1 = new TobbFonalasTekton();
         Tekton t2 = new TobbFonalasTekton();
         Tekton t3 = new EgyFonalasTekton();
@@ -80,7 +82,7 @@ public class PalyaEpito {
      */
     public static Jatek palya3()
     {
-        Jatek jatek = new Jatek(2, List.of("tesztgombasz", "tesztrovarasz"));
+        Jatek jatek = new Jatek(2,"tesztgombasz,tesztrovarasz");
 
         Tekton t1 = new TobbFonalasTekton();
         Tekton t2 = new TobbFonalasTekton();
@@ -118,7 +120,7 @@ public class PalyaEpito {
      * - t4-en sima gombatest (3 elszórt spóra, 1 kilőhető spóra)
      */
     public static Jatek palya4() {
-        Jatek jatek = new Jatek(1, List.of("tesztgombasz"));
+        Jatek jatek = new Jatek(1, "tesztgombasz");
         Tekton t1 = new TobbFonalasTekton();
         Tekton t2 = new TobbFonalasTekton();
         Tekton t3 = new TobbFonalasTekton();
@@ -165,7 +167,7 @@ public class PalyaEpito {
      */
     public static Jatek palya5()
     {
-        Jatek jatek = new Jatek(2, List.of("tesztgombasz", "tesztrovarasz"));
+        Jatek jatek = new Jatek(2, "tesztgombasz,tesztrovarasz");
 
         // Tektonok
         Tekton t1 = new EgyFonalasTekton();
@@ -208,7 +210,7 @@ public class PalyaEpito {
      * - t1-en egy rovar
      */
     public static Jatek palya6() {
-        Jatek jatek = new Jatek(2, List.of("tesztgombasz", "tesztrovarasz"));
+        Jatek jatek = new Jatek(2, "tesztgombasz,tesztrovarasz");
         Tekton t1 = new TobbFonalasTekton();
         Tekton t2 = new TobbFonalasTekton();
         jatek.getTabla().addAll(List.of(t1,t2));
@@ -238,7 +240,7 @@ public class PalyaEpito {
      * - t1-en egy rovar
      */
     public static Jatek palya7(){
-        Jatek jatek = new Jatek(2, List.of("tesztgombasz", "tesztrovarasz"));
+        Jatek jatek = new Jatek(2,"tesztgombasz,tesztrovarasz");
 
         // Tektonok
         Tekton t1 = new TobbFonalasTekton();
@@ -273,7 +275,7 @@ public class PalyaEpito {
      * - t1-en sima gombatest (nincs fejlettség, nincs spóra)
      */
     public static Jatek palya8() {
-        Jatek jatek = new Jatek(2, List.of("tesztgombasz", "tesztrovarasz"));
+        Jatek jatek = new Jatek(2, "tesztgombasz,tesztrovarasz");
 
         // Tektonok
         Tekton t1 = new EltunoFonalasTekton();
@@ -307,7 +309,7 @@ public class PalyaEpito {
      * - nincs gombatest
      */
     public static Jatek palya9(){
-        Jatek jatek = new Jatek(2, List.of("tesztgombasz", "tesztrovarasz"));
+        Jatek jatek = new Jatek(2, "tesztgombasz,tesztrovarasz");
 
         // Tektonok
         Tekton t1 = new EltunoFonalasTekton();
@@ -336,7 +338,7 @@ public class PalyaEpito {
      * - t2-en egy rovar
      */
     public static Jatek palya10() {
-        Jatek jatek = new Jatek(2, List.of("tesztgombasz", "tesztrovarasz"));
+        Jatek jatek = new Jatek(2, "tesztgombasz,tesztrovarasz");
         Tekton t1 = new TobbFonalasTekton();
         Tekton t2 = new TobbFonalasTekton();
         jatek.getTabla().addAll(List.of(t1,t2));

@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter
 public abstract class Tekton {
 
-    private static int nextId = 1;
+    public static int nextId = 1;
     private int id;
     private int fonalakElettartama;
 

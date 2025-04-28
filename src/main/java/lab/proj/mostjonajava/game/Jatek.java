@@ -2,11 +2,16 @@ package lab.proj.mostjonajava.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import lab.proj.mostjonajava.model.*;
 
+import static lab.proj.mostjonajava.utils.Cleaner.*;
 import static lab.proj.mostjonajava.utils.Logger.hivasLog;
+
+import lab.proj.mostjonajava.utils.Cleaner;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 public class Jatek {
@@ -21,21 +26,57 @@ public class Jatek {
      * @param jatekosNevek A jatekosok neveinek a listaja
      */
     public Jatek(int jatekosokSzama, List<String> jatekosNevek) {
-
-        List<String> parameterek = new ArrayList<>();
-        parameterek.add("jatekosokSzama: int - " + jatekosokSzama);
-        parameterek.add("jatekosNevek: List<String> - " + jatekosNevek);
-        hivasLog("Jatek(int jatekosokSzama, List<String> jatekosNevek)", parameterek, 0);
-//        tektonok = new ArrayList<>();
-//        rovaraszok = new ArrayList<>();
-//        gombaszok = new ArrayList<>();
-
+        cleanUp();
+        Random rnd = new Random();
+        int rovaraszIdx = 0;
+        int gombaszIdx = 0;
         for (int i = 0; i < jatekosokSzama; i++) {
             String nev = jatekosNevek.get(i);
+            Tekton tekton;
+            int randomSzam = rnd.nextInt(1,5);
+            System.out.println(randomSzam);
+            switch (randomSzam) {
+                case 1 -> tekton = new TobbFonalasTekton();
+                case 2 -> tekton = new EgyFonalasTekton();
+                case 3 -> tekton = new EltunoFonalasTekton();
+                case 4 -> tekton = new TestNelkuliTekton();
+                default -> tekton = new FonalEltetoTekton();
+            }
             if (i % 2 == 1) {
                rovaraszok.add(new Rovarasz(nev));
+               tabla.add(tekton);
+               rovaraszok.get(rovaraszIdx).getRovarok().add(new Rovar(tabla.get(i), rovaraszok.get(rovaraszIdx)));
+               tabla.get(i).getRovarok().add(rovaraszok.get(rovaraszIdx).getRovarok().get(0));
+               tabla.get(i).getSzomszedosTektonok().add(tabla.get(i-1));
+               tabla.get(i-1).getSzomszedosTektonok().add(tabla.get(i));
+               rovaraszIdx++;
             } else {
                 gombaszok.add(new Gombasz(nev));
+                if (randomSzam == 4) {
+                    tekton = new EgyFonalasTekton();
+                    tabla.add(tekton);
+                }
+                tabla.add(tekton);
+                gombaszok.get(gombaszIdx).getGombatestek().add(new Gombatest(tabla.get(i), gombaszok.get(gombaszIdx)));
+                tabla.get(0).setGombatest(gombaszok.get(gombaszIdx).getGombatestek().get(0));
+                if (i > 0) {
+                    tabla.get(i).getSzomszedosTektonok().add(tabla.get(i-1));
+                    tabla.get(i-1).getSzomszedosTektonok().add(tabla.get(i));
+                }
+                gombaszIdx++;
+            }
+        }
+    }
+
+    public Jatek(int jatekosokSzama, String jatekosokNevei) {
+        cleanUp();
+        String[] jatekosTomb = jatekosokNevei.split(",");
+        for (int i = 0; i < jatekosokSzama; i ++) {
+            if (i % 2 == 1) {
+                rovaraszok.add(new Rovarasz(jatekosTomb[i]));
+            }
+            else {
+                gombaszok.add(new Gombasz(jatekosTomb[i]));
             }
         }
     }

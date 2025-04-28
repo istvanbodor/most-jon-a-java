@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 @Data
 public class Gombasz extends Jatekos {
 
-    private static int nextId;
+    public static int nextId = 1;
     private int id;
 
     private List<Gombatest> gombatestek;

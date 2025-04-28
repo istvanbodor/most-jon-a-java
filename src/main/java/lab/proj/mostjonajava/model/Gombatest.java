@@ -13,7 +13,7 @@ import lombok.ToString;
 @Data
 public class Gombatest {
 
-    private static int nextId = 1;
+    public static int nextId = 1;
     private int id;
 
     private Tekton tekton;

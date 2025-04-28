@@ -14,7 +14,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Rovar {
 
-    private static int nextId = 1;
+    public static int nextId = 1;
     private int id;
 
     @ToString.Exclude
