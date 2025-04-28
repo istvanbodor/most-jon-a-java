@@ -24,7 +24,7 @@ public class EltunoFonalasTekton extends Tekton {
      * A tekton kettetoresenek megvalositasa.
      */
     @Override
-    public void ketteTores() {
+    public List<Tekton> ketteTores() {
         //hivasLog("ketteTores()", List.of(), 0);
     
         // uj tekton letrehozasa
@@ -46,5 +46,6 @@ public class EltunoFonalasTekton extends Tekton {
         // minden spora torlese a tektonbol
         this.getSporak().clear();
         //log("A tekton kettetort.");
+        return List.of(this, ujTekton);
     }
 }

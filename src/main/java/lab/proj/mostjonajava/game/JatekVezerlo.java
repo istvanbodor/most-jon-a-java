@@ -5,8 +5,10 @@ import lab.proj.mostjonajava.model.*;
 import lombok.Data;
 
 import java.io.*;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import static lab.proj.mostjonajava.utils.Logger.hibaLog;
 import static lab.proj.mostjonajava.utils.Logger.log;
@@ -54,10 +56,11 @@ public class JatekVezerlo {
                 hibaLog("Rossz parancsot adtal meg - add meg: (JATEKINDITAS <jatekosokSzama> <jatekosnevekVesszovelElvalasztva>)");
             }
         }
-
+        Random rnd = new Random();
         log("Sikeres jatek inditas - a jatek kezdo allapota:");
-        allapot();
         for (int i = 0; i < Jatek.KOROK_SZAMA; i++) {
+            allapot();
+            elvalasztas();
             int korSzam = i + 1;
             int gombaszIndex = 0;
             int rovaraszIndex = 0;
@@ -74,8 +77,6 @@ public class JatekVezerlo {
                         lepesMegtortent = gombaszParancsErtelmezo(bemenet);
                     }
                     gombaszIndex++;
-                    allapot();
-                    elvalasztas();
                 } else {
                     boolean lepesMegtortent = false;
                     String lepoJatekosNeve = jatek.getRovaraszok().get(rovaraszIndex).getNev();
@@ -85,10 +86,21 @@ public class JatekVezerlo {
                         lepesMegtortent = rovaraszParancsErtelmezo(bemenet);
                     }
                     rovaraszIndex++;
-                    allapot();
-                    elvalasztas();
+                }
+                for (int k = 0; k < jatek.getTabla().size(); k++) {
+                    int chance = rnd.nextInt(1,10);
+                    if (chance == 1) {
+                       List<Tekton> tektons = jatek.getTabla().get(k).ketteTores();
+                       jatek.getTabla().remove(k);
+                       jatek.getTabla().addAll(tektons);
+                    }
                 }
             }
+            log("Jatek vege! Gyoztesek: ");
+            log("Rovarasz: " +  jatek.getRovaraszok().stream()
+                    .max(Comparator.comparingInt(Rovarasz::getPont)).get().getNev());
+            log("Gombasz: " + jatek.getGombaszok().stream()
+                    .max(Comparator.comparingInt(Gombasz::getPont)).get().getNev());
         }
 
     }
@@ -350,7 +362,9 @@ public class JatekVezerlo {
 
         int tektonId = Integer.parseInt(parameterek[1]);
 
-        jatek.keresTektonById(tektonId).ketteTores();
+        List<Tekton> tektons = jatek.keresTektonById(tektonId).ketteTores();
+        jatek.getTabla().remove(jatek.keresTektonById(tektonId));
+        jatek.getTabla().addAll(tektons);
         return true;
     }
 

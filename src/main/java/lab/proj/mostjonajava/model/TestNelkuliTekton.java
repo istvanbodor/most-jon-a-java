@@ -5,6 +5,7 @@ import java.util.List;
 
 //import static lab.proj.mostjonajava.utils.Logger.hivasLog;
 //import static lab.proj.mostjonajava.utils.Logger.log;
+import lab.proj.mostjonajava.game.Jatek;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -24,13 +25,13 @@ public class TestNelkuliTekton extends Tekton{
      * A tekton kettetoresenek megvalositasa.
      */
     @Override
-    public void ketteTores() {
+    public List<Tekton> ketteTores() {
         //hivasLog("ketteTores()", List.of(), 0);
     
         // uj tekton letrehozasa
         TestNelkuliTekton ujTekton = new TestNelkuliTekton();
         getSzomszedosTektonok().add(ujTekton);
-        
+
         // gombatest elpusztitasa, ha van rajta
         if (this.getGombatest() != null) {
             this.getGombatest().elpusztulas();
@@ -46,6 +47,7 @@ public class TestNelkuliTekton extends Tekton{
         // minden spora torlese a tektonbol
         this.getSporak().clear();
         //log("A tekton kettetort.");
+        return List.of(this, ujTekton);
     }
 
     /**

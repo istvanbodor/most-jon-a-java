@@ -1,17 +1,13 @@
 package lab.proj.mostjonajava.game;
 
+import lab.proj.mostjonajava.model.*;
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import lab.proj.mostjonajava.model.*;
-
-import static lab.proj.mostjonajava.utils.Cleaner.*;
-import static lab.proj.mostjonajava.utils.Logger.hivasLog;
-
-import lab.proj.mostjonajava.utils.Cleaner;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import static lab.proj.mostjonajava.utils.Cleaner.cleanUp;
 
 @Data
 public class Jatek {

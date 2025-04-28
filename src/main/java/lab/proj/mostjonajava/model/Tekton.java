@@ -118,7 +118,7 @@ public abstract class Tekton {
     /**
      * Egy tekton ketté törik. Minden származtatott osztályban külön van implementálva.
      */
-    public abstract void ketteTores();
+    public abstract List<Tekton> ketteTores();
 
      /**
      * Ellenőrzi, hogy növeszthető-e gombatest az adott tekton.
