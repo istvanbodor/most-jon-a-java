@@ -10,6 +10,8 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.stage.Stage;
 import java.io.IOException;
+import javafx.event.ActionEvent;
+
 
 public class PlayerNumberController {
 
@@ -22,7 +24,7 @@ public class PlayerNumberController {
     }
 
     @FXML
-    public void onNextClicked() throws IOException {
+    public void onNextClicked(ActionEvent event) throws IOException {
         int count = playerCountSpinner.getValue();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("player-name-view.fxml"));
         Parent root = loader.load();

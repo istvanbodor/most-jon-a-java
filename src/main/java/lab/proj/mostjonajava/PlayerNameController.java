@@ -1,58 +1,69 @@
 package lab.proj.mostjonajava;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.event.ActionEvent;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerNameController {
 
     @FXML
-    private VBox namesContainer;
+    private VBox nameInputContainer;
 
     private final List<TextField> nameFields = new ArrayList<>();
 
-    // Hívjuk meg előző képernyőről
+    // Called from previous screen
     public void setPlayerCount(int count) {
-        namesContainer.getChildren().clear(); // előző mezők törlése
+        nameInputContainer.getChildren().clear();
+        nameFields.clear();
 
-        for (int i = 1; i <= 10; i++) {
-            Label label = new Label("Játékos " + i + ":");
+        for (int i = 1; i <= count; i++) {
             TextField textField = new TextField();
-            textField.setPromptText("Név");
-            textField.setDisable(i > count); // csak az első `count` mező legyen aktív
-
-            HBox row = new HBox(10, label, textField);
-            namesContainer.getChildren().add(row);
+            textField.setPromptText("Player " + i + " name");
+            nameInputContainer.getChildren().add(textField);
             nameFields.add(textField);
         }
     }
 
     @FXML
-    public void onStartGameClicked() {
+    public void onStartGameClicked(ActionEvent event) throws IOException {
         List<String> names = new ArrayList<>();
 
+        // First validate all fields
         for (TextField field : nameFields) {
-            if (!field.isDisabled()) { // csak az aktív mezők számítanak
-                String name = field.getText().trim();
-                if (name.isEmpty()) {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setHeaderText(null);
-                    alert.setContentText("Kérjük, adjon meg nevet minden játékosnak!");
-                    alert.showAndWait();
-                    return;
-                }
-                names.add(name);
+            String name = field.getText().trim();
+            if (name.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText(null);
+                alert.setContentText("Kérjük, adjon meg nevet minden játékosnak!");
+                alert.showAndWait();
+                return;
             }
+            names.add(name);
         }
 
-        System.out.println("Játékosnevek: " + names);
-        // Itt jöhet a játék elindítása vagy átadás a modellnek
-    }
+        // If validation passed, load next screen
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("rovarasznezet.fxml"));
+        Parent root = fxmlLoader.load();
 
+        Scene scene = new Scene(root); // No fixed height
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Game");
+        stage.sizeToScene(); // Resize to fit the layout
+        stage.show();
+
+        System.out.println("Játékosnevek: " + names);
+        // Pass names to the game controller here if needed
+    }
 }

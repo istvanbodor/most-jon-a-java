@@ -14,18 +14,18 @@ public class FungoriumApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("jatekinditas.fxml"));
         Parent root = fxmlLoader.load();
 
-        Scene scene = new Scene(root);
-        stage.setTitle("Hello View");
+        Scene scene = new Scene(root, 250, 200);
+        stage.setTitle("Menu");
         stage.setScene(scene);
         stage.show();
     }
 
     public static void main(String[] args) throws IOException {
         launch(args);
-        JatekVezerlo jatekVezerlo = new JatekVezerlo();
+        //JatekVezerlo jatekVezerlo = new JatekVezerlo();
     }
 
 }
