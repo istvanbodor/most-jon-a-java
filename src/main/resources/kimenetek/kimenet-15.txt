@@ -1,0 +1,2 @@
+false
+Nem lehet fejleszteni a megadott gombatestet.

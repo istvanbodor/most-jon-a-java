@@ -1,0 +1,4 @@
+true
+Gombatest letrejott.
+Gombatest novesztese sikeres.
+line ALLAPOT

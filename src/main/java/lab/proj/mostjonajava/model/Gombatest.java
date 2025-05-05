@@ -177,7 +177,7 @@ public class Gombatest {
     public void elpusztulas() {
         // csak akkor pusztuljon el, ha kifogyott a kilőhető spórából
         // ÉS már lőtt ki legalább egyet (tehát ne töröljük azokat, amiket még nem használtak)
-        if (getKilohetoSporakSzama() == 0 && getElszortSporakSzama() > 0) {
+        if (getKilohetoSporakSzama() == 0 && getElszortSporakSzama() == 10) {
             Tekton t = getTekton();
             if (t != null) {
                 // eltávolítjuk a tektonról
@@ -186,6 +186,9 @@ public class Gombatest {
             // levesszük a gombász listájából is
             getGombasz().getGombatestek().remove(this);
             log("A gombatest elpusztult");
+        }
+        else {
+            log("A gombatest meg nem all keszen a halalra");
         }
         // különben nem történik semmi
     }

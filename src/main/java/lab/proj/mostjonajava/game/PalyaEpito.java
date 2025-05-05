@@ -2,6 +2,7 @@ package lab.proj.mostjonajava.game;
 
 import lab.proj.mostjonajava.model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PalyaEpito {
@@ -63,7 +64,22 @@ public class PalyaEpito {
         jatek.getGombaszok().get(0).getGombatestek().add(gt);
 
         jatek.getTabla().get(0).setGombatest(jatek.getGombaszok().get(0).getGombatestek().get(0));
+
+        List<Spora> sporaList = new ArrayList<>();
+        for(int i = 0; i < 10; i++)
+        {
+            Spora s = new SimaSpora();
+            sporaList.add(s);
+        }
+        jatek.getTabla().get(1).setSporak(sporaList);
+
+        GombaFonal f12 = new GombaFonal(jatek.getTabla().get(0), jatek.getTabla().get(1), jatek.getGombaszok().get(0).getGombatestek().get(0));
+        jatek.getTabla().get(0).setGombafonal(f12);
+        jatek.getTabla().get(1).setGombafonal(f12);
+
         jatek.getGombaszok().get(0).getGombatestek().get(0).setElszortSporakSzama(10);
+
+
 
         jatek.getTabla().get(0).getSzomszedosTektonok().add(jatek.getTabla().get(1));
         jatek.getTabla().get(1).getSzomszedosTektonok().add(jatek.getTabla().get(0));
