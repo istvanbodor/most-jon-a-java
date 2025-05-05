@@ -1,0 +1,4 @@
+true
+Gombatest letrejott.
+A gombatest meg nem all keszen a halalra
+Gombatest fejlesztese sikeres.
