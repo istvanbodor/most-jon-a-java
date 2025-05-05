@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+
+<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="lab.proj.mostjonajava.PlayerNameController">
+
+    <Label text="Add meg a játékosok neveit:"/>
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="Játékos 1:"/>
+        <TextField promptText="Név"/>
+    </HBox>
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="Játékos 2:"/>
+        <TextField promptText="Név"/>
+    </HBox>
+    <Button text="Játék indítása" onAction="#onStartGameClicked"/>
+</VBox>
