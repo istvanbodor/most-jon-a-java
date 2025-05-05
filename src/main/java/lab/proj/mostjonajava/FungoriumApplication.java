@@ -11,6 +11,7 @@ public class FungoriumApplication extends Application {
 
     @Override
     public void start(Stage stage){
+
     }
 
     public static void main(String[] args) throws IOException {
