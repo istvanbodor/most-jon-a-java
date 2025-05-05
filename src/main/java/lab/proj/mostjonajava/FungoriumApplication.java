@@ -1,6 +1,9 @@
 package lab.proj.mostjonajava;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lab.proj.mostjonajava.game.JatekVezerlo;
 
@@ -10,11 +13,18 @@ import java.util.List;
 public class FungoriumApplication extends Application {
 
     @Override
-    public void start(Stage stage){
+    public void start(Stage stage) throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
+        Parent root = fxmlLoader.load();
 
+        Scene scene = new Scene(root);
+        stage.setTitle("Hello View");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) throws IOException {
+        launch(args);
         JatekVezerlo jatekVezerlo = new JatekVezerlo();
     }
 
