@@ -12,7 +12,7 @@ import java.io.IOException;
 public class MenuController {
 
     @FXML
-    public void gameStart(ActionEvent event) throws IOException {
+    public void onJatekInditasClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("jatekosokszamanezet.fxml"));
         Parent root = fxmlLoader.load();
 
@@ -26,7 +26,7 @@ public class MenuController {
     }
 
     @FXML
-    public void kilepes(ActionEvent event) {
+    public void onKilepesClick(ActionEvent event) {
         // Optional: gracefully exit
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close(); // or use Platform.exit();

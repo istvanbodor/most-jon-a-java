@@ -15,6 +15,6 @@
     </padding>
 
     <Label text="Add meg a játékosok számát:"/>
-    <Spinner fx:id="playerCountSpinner"/>
-    <Button text="Tovább!" onAction="#onNextClicked"/>
+    <Spinner fx:id="jatekosSzamSpinner"/>
+    <Button text="Tovább!" onAction="#onTovabbClick"/>
 </VBox>

@@ -15,25 +15,25 @@ import java.util.List;
 public class JatekosokNeveNezetController {
 
     @FXML
-    private VBox nameInputContainer;
+    private VBox nevBemenetContainer;
 
     private final List<TextField> nameFields = new ArrayList<>();
 
     // Called from previous screen
     public void setPlayerCount(int count) {
-        nameInputContainer.getChildren().clear();
+        nevBemenetContainer.getChildren().clear();
         nameFields.clear();
 
         for (int i = 1; i <= count; i++) {
             TextField textField = new TextField();
             textField.setPromptText("Player " + i + " name");
-            nameInputContainer.getChildren().add(textField);
+            nevBemenetContainer.getChildren().add(textField);
             nameFields.add(textField);
         }
     }
 
     @FXML
-    public void onStartGameClicked(ActionEvent event) throws IOException {
+    public void onJatekInditasClick(ActionEvent event) throws IOException {
         List<String> names = new ArrayList<>();
 
         // First validate all fields

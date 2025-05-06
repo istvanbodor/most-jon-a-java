@@ -1,5 +1,6 @@
 package lab.proj.mostjonajava;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -24,4 +25,16 @@ public class GombaszNezetContoller {
     private Button gombatestNovesztesGomb;
     @FXML
     private Button ugrasGomb;
+
+    public void onUgrasClick(ActionEvent actionEvent) {
+    }
+
+    public void onGombaTestNovesztesClick(ActionEvent actionEvent) {
+    }
+
+    public void onFonalNovesztesClick(ActionEvent actionEvent) {
+    }
+
+    public void onSporaSzorasClick(ActionEvent actionEvent) {
+    }
 }

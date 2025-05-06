@@ -14,23 +14,23 @@ import javafx.event.ActionEvent;
 public class JatekosokSzamaNezetController {
 
     @FXML
-    private Spinner<Integer> playerCountSpinner;
+    private Spinner<Integer> jatekosSzamSpinner;
 
     @FXML
     public void initialize() {
-        playerCountSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 10, 2));
+        jatekosSzamSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 10, 2));
     }
 
     @FXML
-    public void onNextClicked(ActionEvent event) throws IOException {
-        int count = playerCountSpinner.getValue();
+    public void onTovabbClick(ActionEvent event) throws IOException {
+        int count = jatekosSzamSpinner.getValue();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("jatekosneveknezet.fxml"));
         Parent root = loader.load();
 
         JatekosokNeveNezetController controller = loader.getController();
         controller.setPlayerCount(count);
 
-        Stage stage = (Stage) playerCountSpinner.getScene().getWindow();
+        Stage stage = (Stage) jatekosSzamSpinner.getScene().getWindow();
         stage.setScene(new Scene(root));
     }
 }

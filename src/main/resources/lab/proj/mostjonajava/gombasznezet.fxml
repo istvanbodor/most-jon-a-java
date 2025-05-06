@@ -39,10 +39,10 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="53.0" prefWidth="299.0" spacing="10.0">
                      <children>
-                        <Button fx:id="sporaSzorasGomb" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="Spóraszórás" onAction="#sporaSzoras"/>
-                        <Button fx:id="fonalNovesztesGomb" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="Fonal növesztése" onAction="#fonalNovesztes"/>
-                        <Button fx:id="gombatestNovesztesGomb" mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="Gombatest" onAction="#gombaTest"/>
-                        <Button fx:id="ugrasGomb" mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="Ugrás" onAction="#ugras"/>
+                        <Button fx:id="sporaSzorasGomb" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="Spóraszórás" onAction="#onSporaSzorasClick"/>
+                        <Button fx:id="fonalNovesztesGomb" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="Fonal növesztése" onAction="#onFonalNovesztesClick"/>
+                        <Button fx:id="gombatestNovesztesGomb" mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="Gombatest" onAction="#onGombaTestNovesztesClick"/>
+                        <Button fx:id="ugrasGomb" mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="Ugrás" onAction="#onUgrasClick"/>
                      </children>
                   </HBox>
                </children>

@@ -1,15 +1,12 @@
 package lab.proj.mostjonajava;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import lab.proj.mostjonajava.game.Jatek;
-import lab.proj.mostjonajava.model.Gombasz;
-import lab.proj.mostjonajava.model.Rovarasz;
-import lab.proj.mostjonajava.model.Tekton;
+import lab.proj.mostjonajava.model.*;
 import lombok.SneakyThrows;
 
 import java.io.IOException;
@@ -21,8 +18,6 @@ import static lab.proj.mostjonajava.utils.Logger.log;
 
 public class GrafikusJatekVezerlo {
     public static Jatek jatek;
-
-    public static boolean lepett;
     private static int jatekosokSzama;
 
     private static Stage stage;
@@ -31,10 +26,10 @@ public class GrafikusJatekVezerlo {
         jatek = new Jatek(nevek.size(), nevek);
         jatekosokSzama = nevek.size();
         GrafikusJatekVezerlo.stage = stage;
-        jatekVezerlo();
+        jatekVezerles();
     }
 
-    private void jatekVezerlo() throws IOException {
+    private void jatekVezerles() throws IOException {
         FXMLLoader gombaszNezet = new FXMLLoader(getClass().getResource("gombasznezet.fxml"));
         FXMLLoader rovaraszNezet = new FXMLLoader(getClass().getResource("rovarasznezet.fxml"));
 
@@ -82,4 +77,23 @@ public class GrafikusJatekVezerlo {
 
     }
 
+    public static void fonalNovesztes(Gombatest gombatest, Tekton honnan, Tekton hova) {
+    }
+
+    public static void simaSporaSzoras(Gombatest gombatest, Tekton hova, int mennyiseg) {
+    }
+
+    public static void fejlettSporaSzoras(Gombatest gombatest, Tekton hova, int mennyiseg) {
+    }
+
+    public static void gombaTestNovesztes(Gombasz gombasz, Tekton hova) {
+    }
+
+    public static void gombaTestFejlesztes(Gombasz gombasz, Tekton hova) {
+    }
+    public static void rovarMozgatas(Rovar rovar, Tekton hova) {
+    }
+
+    public static void fonalVagas(Rovar rovar, Tekton hova) {
+    }
 }

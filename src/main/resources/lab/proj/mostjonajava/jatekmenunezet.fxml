@@ -18,8 +18,8 @@
       <center>
          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
             <children>
-               <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#gameStart" text="Játék Inditás" />
-               <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#kilepes" text="Kilépés" />
+               <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onJatekInditasClick" text="Játék Inditás" />
+               <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onKilepesClick" text="Kilépés" />
             </children>
          </VBox>
       </center>

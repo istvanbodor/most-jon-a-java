@@ -10,8 +10,8 @@
       fillWidth="true">
 
     <children>
-        <Label text="Enter player names:" />
-        <VBox fx:id="nameInputContainer" spacing="5" />
-        <Button text="Start Game" onAction="#onStartGameClicked"/>
+        <Label text="Add neg a játékosok neveit:" />
+        <VBox fx:id="nevBemenetContainer" spacing="5" />
+        <Button text="Játék indítás" onAction="#onJatekInditasClick"/>
     </children>
 </VBox>
