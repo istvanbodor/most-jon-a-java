@@ -26,15 +26,19 @@ public class GombaszNezetContoller {
     @FXML
     private Button ugrasGomb;
 
-    public void onUgrasClick(ActionEvent actionEvent) {
+    @FXML
+    public void onSporaSzorasClick(ActionEvent actionEvent) {
     }
 
-    public void onGombaTestNovesztesClick(ActionEvent actionEvent) {
-    }
-
+    @FXML
     public void onFonalNovesztesClick(ActionEvent actionEvent) {
     }
 
-    public void onSporaSzorasClick(ActionEvent actionEvent) {
+    @FXML
+    public void onGombaTestNovesztesClick(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    public void onUgrasClick(ActionEvent actionEvent) {
     }
 }
