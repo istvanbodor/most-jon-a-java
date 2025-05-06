@@ -1,10 +1,7 @@
 package lab.proj.mostjonajava;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -15,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerNameController {
+public class JatekosokNeveNezetController {
 
     @FXML
     private VBox nameInputContainer;
@@ -51,19 +48,21 @@ public class PlayerNameController {
             }
             names.add(name);
         }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        GrafikusJatekVezerlo jatekVezerlo = new GrafikusJatekVezerlo(names, stage);
 
         // If validation passed, load next screen
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("rovarasznezet.fxml"));
-        Parent root = fxmlLoader.load();
-
-        Scene scene = new Scene(root); // No fixed height
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.setTitle("Game");
-        stage.sizeToScene(); // Resize to fit the layout
-        stage.show();
-
-        System.out.println("Játékosnevek: " + names);
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("rovarasznezet.fxml"));
+//        Parent root = fxmlLoader.load();
+//
+//        Scene scene = new Scene(root); // No fixed height
+//        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        stage.setScene(scene);
+//        stage.setTitle("Game");
+//        stage.sizeToScene(); // Resize to fit the layout
+//        stage.show();
+//
+//        System.out.println("Játékosnevek: " + names);
         // Pass names to the game controller here if needed
     }
 }

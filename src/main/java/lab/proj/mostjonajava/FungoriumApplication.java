@@ -14,7 +14,7 @@ public class FungoriumApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("jatekinditas.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("jatekmenunezet.fxml"));
         Parent root = fxmlLoader.load();
 
         Scene scene = new Scene(root, 250, 200);

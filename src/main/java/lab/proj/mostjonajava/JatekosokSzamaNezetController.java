@@ -1,8 +1,6 @@
 package lab.proj.mostjonajava;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,7 +11,7 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 
 
-public class PlayerNumberController {
+public class JatekosokSzamaNezetController {
 
     @FXML
     private Spinner<Integer> playerCountSpinner;
@@ -26,10 +24,10 @@ public class PlayerNumberController {
     @FXML
     public void onNextClicked(ActionEvent event) throws IOException {
         int count = playerCountSpinner.getValue();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("player-name-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("jatekosneveknezet.fxml"));
         Parent root = loader.load();
 
-        PlayerNameController controller = loader.getController();
+        JatekosokNeveNezetController controller = loader.getController();
         controller.setPlayerCount(count);
 
         Stage stage = (Stage) playerCountSpinner.getScene().getWindow();

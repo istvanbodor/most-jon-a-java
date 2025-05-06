@@ -13,7 +13,7 @@ public class MenuController {
 
     @FXML
     public void gameStart(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("player-number-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("jatekosokszamanezet.fxml"));
         Parent root = fxmlLoader.load();
 
         Scene scene = new Scene(root, 250, 200);
