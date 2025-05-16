@@ -31,27 +31,32 @@ public class FejlettGombatest extends Gombatest {
     /**
      * Felulirja a gombatest spora kilovo metodusat,
      * a szomszedos tektonok szomszedaira is tud sporat loni.
-     * //@param tekton
+     * //@param celTekton
+     * //@param mennyiseg
      */
     @Override
     public void sporaKiloves(Tekton celTekton, int mennyiseg) {
+        // ellenőrizzük,hogy a cél tekton közvetlen szomszéd-e
         boolean direktSzomszed = getTekton().szomszedossagEllenorzese(celTekton);
+        // ellenőrizzük, hogy a cél tekton másodfokú szomszéd-e
         boolean masodikFoku = false;
         for (Tekton tekton : getTekton().getSzomszedosTektonok()) {
             if (tekton.szomszedossagEllenorzese(celTekton))  {
                 masodikFoku = true;
             }
         }
-        // most már engedi a közvetlen és a másodikfokú szomszédot is
+        // most már engedi a közvetlen és a másodikfokú szomszédot is, de elegendő spóra szükséges hozzá
         if (!(direktSzomszed || masodikFoku) || getKilohetoSporakSzama() < mennyiseg) {
             log("Spora kiloves sikertelen.");
             return;
         }
 
+        // kilőhető spórák csökkentése, elszórt spórák számának növelése
         setKilohetoSporakSzama(getKilohetoSporakSzama() - mennyiseg);
         setElszortSporakSzama(getElszortSporakSzama() + mennyiseg);
 
         Random rand = new Random();
+        // a megadott számú spórát véletlenszerűen legeneráljuk és hozzárendeljük a céltektonhoz
         for (int i = 0; i < mennyiseg; i++) {
             Spora spora = switch (rand.nextInt(6)) {
                 case 0 -> new BenitoSpora();

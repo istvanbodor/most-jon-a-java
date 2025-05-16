@@ -16,6 +16,7 @@ public class LassitoSpora extends Spora {
 
     /**
      * Kifejti a hatasat a rovarra, ami a lassitas.
+     * @param rovar
      */
     @Override
     public void hatasKifejtese(Rovar rovar) {

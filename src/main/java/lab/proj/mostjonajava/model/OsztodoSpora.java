@@ -17,6 +17,7 @@ public class OsztodoSpora extends Spora {
 
     /**
      * Kifejti a hatasat a rovarra, ami az osztodas.
+     * @param rovar
      */
     @Override
     public void hatasKifejtese(Rovar rovar) {

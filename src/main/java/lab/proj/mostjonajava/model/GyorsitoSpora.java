@@ -17,6 +17,7 @@ public class GyorsitoSpora extends Spora {
 
     /**
      * Kifejti a hatasat a rovarra, ami a gyorsitas.
+     * @param rovar
      */
     @Override
     public void hatasKifejtese(Rovar rovar) {

@@ -61,16 +61,19 @@ public class Gombasz extends Jatekos {
             for (int i = 0; i < 3 && !tekton.getSporak().isEmpty(); i++) {
                 tekton.getSporak().remove(tekton.getSporak().get(0));
             }
-    
+
+            // új fejlett gombatestet hozunk létre a meglévő példány alapján
             FejlettGombatest ujGombatest = new FejlettGombatest(gombatest);
             gombatest.getTekton().setGombatest(ujGombatest);
             gombatest.getGombasz().getGombatestek().add(ujGombatest);
 
+            // átvesszük a régi gombatest gombafonalait, és átállítjuk az újra
             for (GombaFonal fonal : gombatest.getGombaFonalak()) {
                 fonal.setGombatest(ujGombatest);
                 ujGombatest.getGombaFonalak().add(fonal);
             }
 
+            // a régi gombatestet elpusztítjuk
             gombatest.elpusztulas();
             log("Gombatest fejlesztese sikeres.");
         } else {

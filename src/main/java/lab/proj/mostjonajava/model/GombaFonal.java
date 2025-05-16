@@ -30,19 +30,26 @@ public class GombaFonal {
      * @param rovar
      */
     public void rovarElfogyasztas(Rovar rovar){
-    
+
+        // lekérjük, hogy a rovar melyik tektonon van
         Tekton rovarTektonja = rovar.getTekton();
 
+        // ellenőrizzük, hogy a rovar a gombafonal egyik végpontján van-e és bénult-e
         if ((!rovarTektonja.equals(honnan) && !rovarTektonja.equals(hova)) || !rovar.getBenulas()) {
             log("A rovar nem fogyaszthato el.");
             return;
         }
 
+        // eltávolítjuk a rovart a tektonjáról
         rovarTektonja.getRovarok().remove(rovar);
+        // eltávolítjuk a rovart a hozzá tartozó rovarász rovargyűjteményéből is
         rovar.getRovarasz().getRovarok().remove(rovar);
 
+        // új gombatestet hozunk létre a rovar helyén, a meglévő gombatest gombászával
         Gombatest ujGombatest = new Gombatest(rovarTektonja, gombatest.getGombasz());
-        rovarTektonja.setGombatest(ujGombatest); //ha TestNelkuliTektonrol van szó akkor ebben nem történik semmi
+        // beállítjuk az új gombatestet a tektonra (amennyiben lehetséges)
+        // ha a tekton "TestNelkuliTekton", akkor ez a metódus nem fog változást okozni
+        rovarTektonja.setGombatest(ujGombatest);
         log("Rovar elfogyasztva.");
     }
 

@@ -74,7 +74,7 @@ public class Rovar {
     /**
      * Elvagja a fonalat a kijelolt tekton es az a tekton kozott, ahol a rovar all.
      * Feltételek: legyen a kiválasztott tekton és ad adott tekton között fonál illetve tudjon a rovar fonalat vágni.
-     //* @param tekton
+     * @param hova
      */
     public void fonalVagas(Tekton hova) {
         if (!honnan.vanFonalKozottuk(hova) || !vagoKepesseg) {

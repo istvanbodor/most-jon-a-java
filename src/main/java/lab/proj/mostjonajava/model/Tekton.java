@@ -25,6 +25,13 @@ public abstract class Tekton {
 
     private Gombatest gombatest;
 
+    /**
+     * A Tekton objektum szöveges reprezentációját adja vissza.
+     * Tartalmazza a szomszédos tektonokat, a gombafonal-összeköttetéseket,
+     * a gombatest információit, a spórák listáját, valamint a rajta tartózkodó rovarokat.
+     *
+     * @return A Tekton állapotának részletes szöveges leírása.
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

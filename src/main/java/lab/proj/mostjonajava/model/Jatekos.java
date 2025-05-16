@@ -18,8 +18,7 @@ public abstract class Jatekos {
     Jatekos(String nev) { this.nev = nev; }
 
     /**
-     * A jatekosok pontszamat lehet vele novelni a parameterben megadott ertekkel.
-     * //@param ertek
+     * A jatekosok pontszamat lehet lekérdezni vele.
      */
     public int getPont() {
         return pont;
