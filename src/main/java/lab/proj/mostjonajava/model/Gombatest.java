@@ -309,4 +309,9 @@ public class Gombatest {
             elpusztulas();
         }
     }
+
+    @Override
+    public String toString() {
+        return "Gombatest ID: " + id;
+    }
 }

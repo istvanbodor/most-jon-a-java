@@ -275,7 +275,7 @@ public abstract class Tekton {
         if (gombatest != null) {
             // csak akkor állítjuk be a kétirányú kapcsolatot, ha tényleg van Gombatest
             gombatest.setTekton(this);
-            gombatest.getGombasz().getGombatestek().add(gombatest);
+        //    gombatest.getGombasz().getGombatestek().add(gombatest);
         }
     }
 

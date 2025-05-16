@@ -50,11 +50,12 @@ public class Jatek {
                 gombaszok.add(new Gombasz(nev));
                 if (randomSzam == 4) {
                     tekton = new EgyFonalasTekton();
-                    tabla.add(tekton);
                 }
                 tabla.add(tekton);
                 gombaszok.get(gombaszIdx).getGombatestek().add(new Gombatest(tabla.get(i), gombaszok.get(gombaszIdx)));
-                tabla.get(0).setGombatest(gombaszok.get(gombaszIdx).getGombatestek().get(0));
+                System.out.println("Adding Gombatest: " + gombaszok.get(gombaszIdx).getGombatestek().get(gombaszok.get(gombaszIdx).getGombatestek().size() - 1));
+                System.out.println("Total Gombatestek for Gombasz " + gombaszIdx + ": " + gombaszok.get(gombaszIdx).getGombatestek().size());
+                tabla.get(i).setGombatest(gombaszok.get(gombaszIdx).getGombatestek().get(0));
                 if (i > 0) {
                     tabla.get(i).getSzomszedosTektonok().add(tabla.get(i-1));
                     tabla.get(i-1).getSzomszedosTektonok().add(tabla.get(i));

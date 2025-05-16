@@ -50,19 +50,5 @@ public class JatekosokNeveNezetController {
         }
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         GrafikusJatekVezerlo jatekVezerlo = new GrafikusJatekVezerlo(names, stage);
-
-        // If validation passed, load next screen
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("rovarasznezet.fxml"));
-//        Parent root = fxmlLoader.load();
-//
-//        Scene scene = new Scene(root); // No fixed height
-//        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        stage.setScene(scene);
-//        stage.setTitle("Game");
-//        stage.sizeToScene(); // Resize to fit the layout
-//        stage.show();
-//
-//        System.out.println("Játékosnevek: " + names);
-        // Pass names to the game controller here if needed
     }
 }
