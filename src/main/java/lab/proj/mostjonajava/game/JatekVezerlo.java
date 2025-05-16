@@ -22,6 +22,10 @@ public class JatekVezerlo {
 
     private static BufferedReader streamReader = new BufferedReader(new InputStreamReader(System.in));
 
+    /**
+     * Konzolos fo menurendszer, ahol a felhasznalo valaszthat jatek inditas, teszt futtatas vagy kilepes kozott.
+     * @throws IOException ha a bemenet olvasasa soran hiba lep fel
+     */
     public JatekVezerlo() throws IOException {
         String bemenet;
         while (true) {
@@ -38,6 +42,10 @@ public class JatekVezerlo {
         }
     }
 
+    /**
+     * A jatek inditasat es a korok lebonyolitasat vezerlo metodus. Kezeli a jatekosok lepeseit es a veletlenszeru torteneseket is.
+     * @throws IOException ha bemeneti hiba tortenik
+     */
     private static void jatekVezerlo() throws IOException {
         String bemenet;
         while (!JATEKMENET_AKTIV) {
@@ -105,10 +113,17 @@ public class JatekVezerlo {
 
     }
 
+    /**
+     * Elvalaszto vonal kiiratasa a konzolra a megjelenites segitesehez.
+     */
     private static void elvalasztas() {
         log("--------------------------------------------");
     }
 
+    /**
+     * Tesztparancsok futtatasat vezerlo metodus. Tesztfajlokbol olvassa be a parancsokat.
+     * @throws IOException ha fajl megnyitasa vagy olvasasa kozben hiba tortenik
+     */
     private static void tesztVezerlo() throws IOException {
         while (true) {
             log("Melyik tesztesetet szeretned futtatni? (1-31) : ");
@@ -132,6 +147,10 @@ public class JatekVezerlo {
         }
     }
 
+    /**
+     * A megadott parancs alapjan vezerli a tesztparancs vegrehajtasat.
+     * @param bemenet a parancs szoveges formaja
+     */
     private static void tesztParancsErtelmezo(String bemenet) {
         String[] parameterek = bemenet.split(" ");
         String parancs = parameterek[0];
@@ -168,6 +187,11 @@ public class JatekVezerlo {
         }
     }
 
+    /**
+     * Osztodo spora hatasat fejti ki.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha a hatas sikeres volt
+     */
     private static boolean osztodoSporaHatasKifejtese(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 2)) return false;
         int rovarId = Integer.parseInt(parameterek[1]);
@@ -175,6 +199,10 @@ public class JatekVezerlo {
         return true;
     }
 
+    /**
+     * Palya epitese valasztott palyaszam alapjan.
+     * @param parameterek a palya epites parancs parameterei
+     */
     private static void jatekEpites(String[] parameterek) {
         parameterVizsgalat(parameterek, 2);
         String palyaSzam = parameterek[1];
@@ -196,6 +224,11 @@ public class JatekVezerlo {
         }
     }
 
+    /**
+     * Gombasz jatekos parancsanak ertelmezese.
+     * @param bemenet a parancs szoveges formaja
+     * @return igaz, ha a lepes sikeres volt
+     */
     private static boolean gombaszParancsErtelmezo(String bemenet) {
         boolean lepesMegtortent = false;
         String[] parameterek = bemenet.split(" ");
@@ -212,6 +245,11 @@ public class JatekVezerlo {
         return lepesMegtortent;
     }
 
+    /**
+     * Rovarasz jatekos parancsanak ertelmezese.
+     * @param bemenet a parancs szoveges formaja
+     * @return igaz, ha a lepes sikeres volt
+     */
     private static boolean rovaraszParancsErtelmezo(String bemenet) {
         boolean lepesMegtortent = false;
         String[] parameterek = bemenet.split(" ");
@@ -225,7 +263,9 @@ public class JatekVezerlo {
         return lepesMegtortent;
     }
 
-
+    /**
+     * Kiirja az aktualis jatek allapotat.
+     */
     private static void allapot() {
         if (JATEKMENET_AKTIV) {
             elvalasztas();
@@ -239,6 +279,10 @@ public class JatekVezerlo {
         }
     }
 
+    /**
+     * Elinditja a jatekot a megadott parameterlista alapjan.
+     * @param parameterek parancs es parameterei
+     */
     private static void jatekInditasa(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 3)) return;
 
@@ -268,6 +312,11 @@ public class JatekVezerlo {
         return false;
     }
 
+    /**
+     * Gombafonal novesztes parancs feldolgozasa.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha a parancs sikeresen vegrehajtodott
+     */
     private static boolean fonalNovesztes(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 4)) return false;
         int gombatestId = Integer.parseInt(parameterek[1]);
@@ -276,6 +325,12 @@ public class JatekVezerlo {
         jatek.keresGombatestById(gombatestId).fonalNovesztes(jatek.keresTektonById(honnanTektonId), jatek.keresTektonById(hovaTektonId));
         return true;
     }
+
+    /**
+     * Sima spora szoras feldolgozasa.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha a parancs sikeres volt
+     */
     private static boolean simaSporaSzoras(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 4)) return false;
         int gombatestId = Integer.parseInt(parameterek[1]);
@@ -285,6 +340,11 @@ public class JatekVezerlo {
         return true;
     }
 
+    /**
+     * Fejlett spora szoras feldolgozasa.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha a parancs sikeresen vegrehajtodott
+     */
     private static boolean fejlettSporaSzoras(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 4)) return false;
         int gombatestId = Integer.parseInt(parameterek[1]);
@@ -294,6 +354,11 @@ public class JatekVezerlo {
         return true;
     }
 
+    /**
+     * Gombatest novesztes egy adott tektonra.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha a parancs sikeres volt
+     */
     //!!!valtozas:GOMBATESTNOVESZTES <gombaszId><tektonId>
     private static boolean gombaTestNovesztes(String[] parameterek) {
         if (parameterVizsgalat(parameterek,3)) return false;
@@ -303,6 +368,11 @@ public class JatekVezerlo {
         return true;
     }
 
+    /**
+     * Gombatest fejlesztese adott tektonon.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha a parancs sikeres volt
+     */
     //!!!valtozas: GOMBATESTFEJLESZTES <gombaszId><tektonId>
     private static boolean gombaTestFejlesztes(String[] parameterek) {
         if (parameterVizsgalat(parameterek,3)) return false;
@@ -313,6 +383,11 @@ public class JatekVezerlo {
         return true;
     }
 
+    /**
+     * Egy gombatest elpusztitasa.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha sikerult elpusztitani
+     */
     private static boolean gombaTestElpusztul(String[] parameterek) {
         if(parameterVizsgalat(parameterek, 2)) return false;
 
@@ -323,6 +398,11 @@ public class JatekVezerlo {
         return true;
     }
 
+    /**
+     * Rovar mozgatasa egy adott tektonra.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha a mozgas sikeres volt
+     */
     private static boolean rovarMozgatas(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 3)) return false;
 
@@ -333,6 +413,11 @@ public class JatekVezerlo {
         return true;
     }
 
+    /**
+     * Rovar sporat fogyaszt adott tektonon.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha a fogyasztas sikeres volt
+     */
     private static boolean sporaFogyasztas(String[] parameterek) {
         if(parameterVizsgalat(parameterek, 3)) return false;
 
@@ -344,6 +429,11 @@ public class JatekVezerlo {
         return true;
     }
 
+    /**
+     * Gombafonal vagasa adott rovar altal.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha a vagas sikeres volt
+     */
     private static boolean fonalVagas(String[] parameterek) {
         if(parameterVizsgalat(parameterek, 3)) return false;
 
@@ -354,6 +444,11 @@ public class JatekVezerlo {
         return true;
     }
 
+    /**
+     * Tekton kettetoresenek feldolgozasa.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha sikeres volt a kettetores
+     */
     private static boolean tektonTores(String[] parameterek) {
         if(parameterVizsgalat(parameterek, 2)) return false;
 
@@ -365,6 +460,11 @@ public class JatekVezerlo {
         return true;
     }
 
+    /**
+     * Benito spora hatasat fejti ki.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha a hatas sikeres volt
+     */
     private static boolean benitoSporaHatasKifejtese(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 2)) return false;
         int rovarId = Integer.parseInt(parameterek[1]);
@@ -372,6 +472,11 @@ public class JatekVezerlo {
         return true;
     }
 
+    /**
+     * Lassito spora hatasat fejti ki.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha a hatas sikeres volt
+     */
     private static boolean lassitoSporaHatasKifejtese(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 2)) return false;
         int rovarId = Integer.parseInt(parameterek[1]);
@@ -379,6 +484,11 @@ public class JatekVezerlo {
         return true;
     }
 
+    /**
+     * Gyorsito spora hatasat fejti ki.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha a hatas sikeres volt
+     */
     private static boolean gyorsitoSporaHatasKifejtese(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 2)) return false;
         int rovarId = Integer.parseInt(parameterek[1]);
@@ -386,6 +496,11 @@ public class JatekVezerlo {
         return true;
     }
 
+    /**
+     * Vagasbenito spora hatasat fejti ki.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha a hatas sikeres volt
+     */
     private static boolean vagasBenitoSporaHatasKifejtese(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 2)) return false;
         int rovarId = Integer.parseInt(parameterek[1]);
@@ -393,6 +508,11 @@ public class JatekVezerlo {
         return true;
     }
 
+    /**
+     * Sima spora hatasat fejti ki.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha a hatas sikeres volt
+     */
     private static boolean simaSporaHatasKifejtese(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 2)) return false;
         int rovarId = Integer.parseInt(parameterek[1]);
@@ -400,6 +520,11 @@ public class JatekVezerlo {
         return true;
     }
 
+    /**
+     * Fonal felszivodasa adott tektonon.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha sikeres volt a felszivodas
+     */
     private static boolean fonalFelszivodas(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 2)) return false;
         int honnanTektonId = Integer.parseInt(parameterek[1]);
@@ -407,6 +532,11 @@ public class JatekVezerlo {
         return true;
     }
 
+    /**
+     * Rovar elfogyasztasa egy gombafonal altal.
+     * @param parameterek a parancs parameterlistaja
+     * @return true, ha sikeresen megtortent az elfogyasztas
+     */
     private static boolean rovarElfogyasztasa(String[] parameterek) {
         if (parameterVizsgalat(parameterek, 4)) return false;
 

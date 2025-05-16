@@ -64,6 +64,16 @@ public class Jatek {
         }
     }
 
+    /**
+     * Jatek osztály konstruktora, amely a megadott játékosnevek alapján
+     * létrehozza a megfelelő típusú játékosokat (Gombász vagy Rovarász).
+     *
+     * @param jatekosokSzama     A játékosok száma.
+     * @param jatekosokNevei     A játékosok nevei vesszővel elválasztva.
+     *
+     * A páros indexű játékosok (0, 2, ...) Gombászok lesznek,
+     * míg a páratlan indexűek (1, 3, ...) Rovarászok.
+     */
     public Jatek(int jatekosokSzama, String jatekosokNevei) {
         cleanUp();
         String[] jatekosTomb = jatekosokNevei.split(",");
