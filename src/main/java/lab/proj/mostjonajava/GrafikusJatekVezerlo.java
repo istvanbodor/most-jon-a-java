@@ -26,6 +26,8 @@ public class GrafikusJatekVezerlo {
 
     private static Stage stage;
 
+    public static boolean JATEK_AKTIV = false;
+
     @SneakyThrows
     public GrafikusJatekVezerlo(List<String> nevek, Stage stage) {
         jatek = new Jatek(nevek.size(), nevek);
@@ -37,7 +39,7 @@ public class GrafikusJatekVezerlo {
     private void jatekVezerles() throws IOException {
 
 
-
+        JATEK_AKTIV = true;
         Random rnd = new Random();
         for (int i = 0; i < Jatek.KOROK_SZAMA; i++) {
             int korSzam = i + 1;
@@ -58,7 +60,9 @@ public class GrafikusJatekVezerlo {
                     modalStage.initModality(Modality.APPLICATION_MODAL);
                     modalStage.setTitle("Gombasz nezet - " + lepoJatekosNeve);
                     modalStage.setScene(scene);
-                    modalStage.showAndWait();
+                    if(JATEK_AKTIV) {
+                        modalStage.showAndWait();
+                    }
 
                     gombaszIndex++;
                 } else {
@@ -73,7 +77,9 @@ public class GrafikusJatekVezerlo {
                     modalStage.initModality(Modality.APPLICATION_MODAL);
                     modalStage.setTitle("Rovarasz nezet - " + lepoJatekosNeve);
                     modalStage.setScene(scene);
-                    modalStage.showAndWait();
+                    if(JATEK_AKTIV) {
+                        modalStage.showAndWait();
+                    }
                     rovaraszIndex++;
                 }
                 for (int k = 0; k < jatek.getTabla().size(); k++) {
@@ -86,11 +92,14 @@ public class GrafikusJatekVezerlo {
                 }
             }
         }
+        JATEK_AKTIV = false;
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("Jatek vege!");
         alert.setContentText("Jatek vege! Gyoztesek: \n" + "Rovarasz: " + jatek.getRovaraszok().stream()
-                .max(Comparator.comparingInt(Rovarasz::getPont)).get().getNev() + "\n Gombasz: " + jatek.getGombaszok().stream()
-                .max(Comparator.comparingInt(Gombasz::getPont)).get().getNev());
+                .max(Comparator.comparingInt(Rovarasz::getPont)).get().getNev() + " - " + jatek.getRovaraszok().stream()
+                .max(Comparator.comparingInt(Rovarasz::getPont)).get().getPont() + "\nGombasz: " + jatek.getGombaszok().stream()
+                .max(Comparator.comparingInt(Gombasz::getPont)).get().getNev() + " - " + jatek.getGombaszok().stream()
+                .max(Comparator.comparingInt(Gombasz::getPont)).get().getPont());
         alert.showAndWait();
         FXMLLoader menu = new FXMLLoader(getClass().getResource("jatekmenunezet.fxml"));
         Parent menuStageRoot = menu.load();
@@ -104,12 +113,13 @@ public class GrafikusJatekVezerlo {
     }
 
     public static void sporaSzoras(Gombatest gombatest, Tekton hova, int mennyiseg) {
-        jatek.keresGombatestById(gombatest.getId()).fonalNovesztes(gombatest.getTekton(), hova);
+        jatek.keresGombatestById(gombatest.getId()).sporaKiloves(hova, mennyiseg);
     }
 
 
     public static void gombaTestNovesztes(Gombasz gombasz, Tekton hova) {
         jatek.keresGombatestById(aktivGombasz.getId()).getGombasz().gombaTestNovesztes(hova);
+        System.out.println(aktivGombasz.getGombatestek());
     }
 
     public static void gombaTestFejlesztes(Gombatest gombatest, Tekton hova) {

@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.shape.Rectangle;
@@ -30,40 +31,105 @@ public class GombaszNezetContoller {
 
     private Gombatest aktivGombatest;
 
+    private Tekton aktivTekton;
+    @FXML
+    private Button fejlesztesGomb;
+    @FXML
+    private Button jatekVegeGomb;
+    @FXML
+    private Button aktivTektonValtasGomb;
+    @FXML
+    private Button aktivGombatestValtasGomb;
+
     @FXML
     private void initialize() {
         ObservableList<Gombatest> gombatestek =
                 FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivGombasz.getGombatestek());
         gombak.setItems(gombatestek);
         aktivGombatest = gombatestek.get(0);
+        aktivTekton = aktivGombatest.getTekton();
         ObservableList<Tekton> tektonok =
                 FXCollections.observableArrayList(aktivGombatest.getTekton().getSzomszedosTektonok());
         szomszedosTektonok.setItems(tektonok);
     }
 
+
     @FXML
     public void onSporaSzorasClick(ActionEvent actionEvent) {
         GrafikusJatekVezerlo.sporaSzoras(aktivGombatest, szomszedosTektonok.getSelectionModel().getSelectedItem(), 1);
+        listakFrissitese();
     }
 
     @FXML
     public void onFonalNovesztesClick(ActionEvent actionEvent) {
-        GrafikusJatekVezerlo.fonalNovesztes(aktivGombatest, aktivGombatest.getTekton(), szomszedosTektonok.getSelectionModel().getSelectedItem());
+        GrafikusJatekVezerlo.fonalNovesztes(aktivGombatest, aktivTekton, szomszedosTektonok.getSelectionModel().getSelectedItem());
+        listakFrissitese();
     }
 
     @FXML
     public void onGombaTestNovesztesClick(ActionEvent actionEvent) {
-        if (szomszedosTektonok.getSelectionModel().getSelectedItem().getGombatest() == null) {
             GrafikusJatekVezerlo.gombaTestNovesztes(GrafikusJatekVezerlo.aktivGombasz, szomszedosTektonok.getSelectionModel().getSelectedItem());
-        }
-        else {
-
-        }
-
+            listakFrissitese();
     }
 
     @FXML
     public void onUgrasClick(ActionEvent actionEvent) {
         ((Button) actionEvent.getSource()).getScene().getWindow().hide();
+    }
+
+    @FXML
+    public void onFejlesztesClick(ActionEvent actionEvent) {
+        if (aktivTekton.getGombatest() != null) {
+            GrafikusJatekVezerlo.gombaTestFejlesztes(aktivTekton.getGombatest(), aktivTekton);
+            listakFrissitese();
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Az aktív tektonon nincs gombatest!");
+            alert.showAndWait();
+        }
+
+    }
+
+    @FXML
+    public void onJatekVegeClick(ActionEvent actionEvent) {
+        GrafikusJatekVezerlo.JATEK_AKTIV = false;
+        ((Button) actionEvent.getSource()).getScene().getWindow().hide();
+    }
+
+
+    @FXML
+    public void onAktivTektonValtasClick(ActionEvent actionEvent) {
+        if (szomszedosTektonok.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Válassz ki egy tektont a váltáshoz!");
+            alert.showAndWait();
+        }
+        else {
+            aktivTekton = szomszedosTektonok.getSelectionModel().getSelectedItem();
+            listakFrissitese();
+        }
+
+    }
+
+    private void listakFrissitese() {
+        ObservableList<Tekton> tektonok =
+                FXCollections.observableArrayList(aktivTekton.getSzomszedosTektonok());
+        szomszedosTektonok.setItems(tektonok);
+        ObservableList<Gombatest> gombatestek =
+                FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivGombasz.getGombatestek());
+        gombak.setItems(gombatestek);
+
+    }
+
+    @FXML
+    public void onAktivGombatestValtasClick(ActionEvent actionEvent) {
+        if (gombak.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Válassz ki egy gombatestet a váltáshoz!");
+            alert.showAndWait();
+        }
+        else {
+            aktivGombatest = gombak.getSelectionModel().getSelectedItem();
+            aktivTekton = aktivGombatest.getTekton();
+            listakFrissitese();
+        }
     }
 }

@@ -28,6 +28,8 @@ public class RovaraszNezetController {
     private Button ugrasGomb;
 
     private Rovar aktivRovar;
+    @FXML
+    private Button jatekVegeGomb;
 
 
     @FXML
@@ -40,19 +42,35 @@ public class RovaraszNezetController {
                 FXCollections.observableArrayList(aktivRovar.getTekton().getSzomszedosTektonok());
         szomszedosTektonok.setItems(tektonok);
     }
+    private void listakFrissitese() {
+        ObservableList<Tekton> tektonok =
+                FXCollections.observableArrayList(aktivRovar.getTekton().getSzomszedosTektonok());
+        szomszedosTektonok.setItems(tektonok);
+        ObservableList<Rovar> obsRovarok =
+                FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivRovarasz.getRovarok());
+        rovarok.setItems(obsRovarok);
+    }
 
     @FXML
     public void onRovarLepesClick(ActionEvent actionEvent) {
         GrafikusJatekVezerlo.rovarMozgatas(aktivRovar, szomszedosTektonok.getSelectionModel().getSelectedItem());
+        listakFrissitese();
     }
 
     @FXML
     public void onFonalVagasClick(ActionEvent actionEvent) {
         GrafikusJatekVezerlo.fonalVagas(aktivRovar, szomszedosTektonok.getSelectionModel().getSelectedItem());
+        listakFrissitese();
     }
 
     @FXML
     public void onUgrasClick(ActionEvent actionEvent) {
+        ((Button) actionEvent.getSource()).getScene().getWindow().hide();
+    }
+
+    @FXML
+    public void onJatekVegeClick(ActionEvent actionEvent) {
+        GrafikusJatekVezerlo.JATEK_AKTIV = false;
         ((Button) actionEvent.getSource()).getScene().getWindow().hide();
     }
 }

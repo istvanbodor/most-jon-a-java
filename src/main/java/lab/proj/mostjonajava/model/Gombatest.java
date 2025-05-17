@@ -18,7 +18,7 @@ public class Gombatest {
     private Tekton tekton;
     @ToString.Exclude
     private Gombasz gombasz;
-    private int kilohetoSporakSzama;
+    private int kilohetoSporakSzama = 6;
     private int elszortSporakSzama;
     private int noveszthetoFonalakSzama = 1;
 
@@ -64,6 +64,10 @@ public class Gombatest {
 
        if(!honnan.szomszedossagEllenorzese(hova) || noveszthetoFonalakSzama <= 0 || kapcsolodik) {
             log("Nem novesztheto gombafonal");
+//            log("----");
+//            log(String.valueOf(honnan.szomszedossagEllenorzese(hova)));
+//            log(String.valueOf(noveszthetoFonalakSzama));
+//            log(String.valueOf(kapcsolodik));
             return;
         }
 

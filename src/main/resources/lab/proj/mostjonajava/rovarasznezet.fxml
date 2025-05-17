@@ -42,6 +42,7 @@
                         <Button fx:id="lepesGomb" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onRovarLepesClick" prefHeight="31.0" prefWidth="75.0" text="Lépés" />
                         <Button fx:id="vagasGomb" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onFonalVagasClick" prefHeight="31.0" prefWidth="75.0" text="Vágás" />
                         <Button fx:id="ugrasGomb" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onUgrasClick" prefHeight="31.0" prefWidth="75.0" text="Ugrás" />
+                         <Button fx:id="jatekVegeGomb" onAction="#onJatekVegeClick" prefHeight="31.0" prefWidth="90.0" text="Játék vége" />
                      </children>
                   </HBox>
                </children>

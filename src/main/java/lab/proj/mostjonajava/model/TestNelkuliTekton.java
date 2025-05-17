@@ -28,7 +28,7 @@ public class TestNelkuliTekton extends Tekton{
         // uj tekton letrehozasa
         TestNelkuliTekton ujTekton = new TestNelkuliTekton();
         getSzomszedosTektonok().add(ujTekton);
-
+        ujTekton.getSzomszedosTektonok().add(this);
         // gombatest elpusztitasa, ha van rajta
         if (this.getGombatest() != null) {
             this.getGombatest().elpusztulas();

@@ -28,7 +28,7 @@ public class EgyFonalasTekton extends Tekton {
         // uj tekton letrehozasa
         EgyFonalasTekton ujTekton = new EgyFonalasTekton();
         getSzomszedosTektonok().add(ujTekton);
-
+        ujTekton.getSzomszedosTektonok().add(this);
         // gombatest elpusztitasa, ha van rajta
         if (this.getGombatest() != null) {
             this.getGombatest().elpusztulas();
