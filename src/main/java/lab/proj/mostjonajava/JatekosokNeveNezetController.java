@@ -15,40 +15,40 @@ import java.util.List;
 public class JatekosokNeveNezetController {
 
     @FXML
-    private VBox nevBemenetContainer;
+    private VBox nevBemenetTarolo;
 
-    private final List<TextField> nameFields = new ArrayList<>();
+    private final List<TextField> nevMezok = new ArrayList<>();
 
     // Called from previous screen
-    public void setPlayerCount(int count) {
-        nevBemenetContainer.getChildren().clear();
-        nameFields.clear();
+    public void setPlayerCount(int db) {
+        nevBemenetTarolo.getChildren().clear();
+        nevMezok.clear();
 
-        for (int i = 1; i <= count; i++) {
-            TextField textField = new TextField();
-            textField.setPromptText("Player " + i + " name");
-            nevBemenetContainer.getChildren().add(textField);
-            nameFields.add(textField);
+        for (int i = 1; i <= db; i++) {
+            TextField szovegMezo = new TextField();
+            szovegMezo.setPromptText("Játékos " + i + " neve");
+            nevBemenetTarolo.getChildren().add(szovegMezo);
+            nevMezok.add(szovegMezo);
         }
     }
 
     @FXML
     public void onJatekInditasClick(ActionEvent event) throws IOException {
-        List<String> names = new ArrayList<>();
+        List<String> nevek = new ArrayList<>();
 
         // First validate all fields
-        for (TextField field : nameFields) {
-            String name = field.getText().trim();
-            if (name.isEmpty()) {
+        for (TextField field : nevMezok) {
+            String nev = field.getText().trim();
+            if (nev.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText(null);
                 alert.setContentText("Kérjük, adjon meg nevet minden játékosnak!");
                 alert.showAndWait();
                 return;
             }
-            names.add(name);
+            nevek.add(nev);
         }
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        GrafikusJatekVezerlo jatekVezerlo = new GrafikusJatekVezerlo(names, stage);
+        Stage mezo = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        GrafikusJatekVezerlo jatekVezerlo = new GrafikusJatekVezerlo(nevek, mezo);
     }
 }

@@ -63,9 +63,9 @@
             </AnchorPane>
             <VBox alignment="CENTER" prefWidth="300.0" spacing="10.0">
                 <children>
-                    <HBox alignment="CENTER" spacing="10.0">
+                    <HBox alignment="CENTER" spacing="5.0">
                         <children>
-                            <Button fx:id="sporaSzorasGomb" onAction="#onSporaSzorasClick" prefHeight="25.0" prefWidth="90.0" text="Spóraszórás" />
+                            <Button fx:id="sporaSzorasGomb" onAction="#onSporaSzorasClick" prefHeight="25.0" prefWidth="95.0" text="Spóraszórás" />
                             <Button fx:id="fonalNovesztesGomb" onAction="#onFonalNovesztesClick" prefHeight="25.0" prefWidth="115.0" text="Fonal növesztés" />
                             <Button fx:id="gombatestNovesztesGomb" onAction="#onGombaTestNovesztesClick" prefHeight="25.0" prefWidth="105.0" text="Test növesztés" />
                         </children>

@@ -61,7 +61,7 @@ public class GombaszNezetContoller {
         GrafikusJatekVezerlo.sporaSzoras(aktivGombatest,hova, 1);
         listakFrissitese();
         if (sporaSzam < hova.getSporak().size()) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sikeres spóra szórás!");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeres spóra szórás!");
             alert.showAndWait();
         }
         else {
@@ -76,7 +76,7 @@ public class GombaszNezetContoller {
         GrafikusJatekVezerlo.fonalNovesztes(aktivGombatest, aktivTekton, szomszedosTektonok.getSelectionModel().getSelectedItem());
         listakFrissitese();
         if (fonalakSzama < aktivGombatest.getGombaFonalak().size()) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sikeres fonal növesztés!");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeres fonal növesztés!");
             alert.showAndWait();
         }
         else {
@@ -96,12 +96,14 @@ public class GombaszNezetContoller {
             listakFrissitese();
 
             if (hova.getGombatest() != gombatest) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sikeres gombatest növesztés!");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeres gombatest növesztés!");
+                alert.setHeaderText("Ügyi vagy :D");
                 alert.showAndWait();
                 ((Button) actionEvent.getSource()).getScene().getWindow().hide();
             }
             else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Gomba test növesztés sikertelen!");
+                alert.setHeaderText("Hiba :C");
                 alert.showAndWait();
             }
     }
@@ -118,7 +120,7 @@ public class GombaszNezetContoller {
             GrafikusJatekVezerlo.gombaTestFejlesztes(aktivTekton.getGombatest(), aktivTekton);
             listakFrissitese();
             if (aktivTekton.getGombatest().getId() != id) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sikeres fejlesztés!");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeres fejlesztés!");
                 alert.showAndWait();
                 ((Button) actionEvent.getSource()).getScene().getWindow().hide();
             }

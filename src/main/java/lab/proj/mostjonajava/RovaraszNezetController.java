@@ -58,7 +58,8 @@ public class RovaraszNezetController {
         GrafikusJatekVezerlo.rovarMozgatas(aktivRovar, hova);
         listakFrissitese();
         if (aktivRovar.getTekton() == hova) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sikeresen lépett a rovar!");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeresen lépett a rovar!");
+            alert.setHeaderText("Ügyi vagy :D");
             alert.showAndWait();
             if (aktivRovar.getLepesSzam() == 0) {
                 ((Button) actionEvent.getSource()).getScene().getWindow().hide();
@@ -67,6 +68,7 @@ public class RovaraszNezetController {
         else {
             System.out.println(aktivRovar.getTekton());
             Alert alert = new Alert(Alert.AlertType.ERROR, "Lépés sikertelen!");
+            alert.setHeaderText("Hiba :C");
             alert.showAndWait();
         }
     }
@@ -76,7 +78,7 @@ public class RovaraszNezetController {
         int meret = aktivRovar.getTekton().getGombafonalak().size();
         GrafikusJatekVezerlo.fonalVagas(aktivRovar, szomszedosTektonok.getSelectionModel().getSelectedItem());
         if (meret > aktivRovar.getTekton().getGombafonalak().size()) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sikeres fonal vágás!");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeres fonal vágás!");
             alert.showAndWait();
             if (aktivRovar.getLepesSzam() == 0) {
                 ((Button) actionEvent.getSource()).getScene().getWindow().hide();

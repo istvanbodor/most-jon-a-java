@@ -18,7 +18,7 @@ public class Gombatest {
     private Tekton tekton;
     @ToString.Exclude
     private Gombasz gombasz;
-    private int kilohetoSporakSzama =6;
+    private int kilohetoSporakSzama = 6;
     private int elszortSporakSzama;
     private int noveszthetoFonalakSzama = 1;
 

@@ -11,7 +11,7 @@
 
     <children>
         <Label text="Add neg a játékosok neveit:" />
-        <VBox fx:id="nevBemenetContainer" spacing="5" />
+        <VBox fx:id="nevBemenetTarolo" spacing="5" />
         <Button text="Játék indítás" onAction="#onJatekInditasClick"/>
     </children>
 </VBox>
