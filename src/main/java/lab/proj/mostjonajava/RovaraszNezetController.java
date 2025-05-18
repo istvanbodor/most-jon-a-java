@@ -83,40 +83,56 @@ public class RovaraszNezetController {
     @FXML
     public void onRovarLepesClick(ActionEvent actionEvent) {
         Tekton hova = szomszedosTektonok.getSelectionModel().getSelectedItem();
-        GrafikusJatekVezerlo.rovarMozgatas(aktivRovar, hova);
-        if (aktivRovar.getTekton() == hova) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeresen lépett a rovar!");
-            alert.setHeaderText("Yay! :D");
-            alert.showAndWait();
-            listakFrissitese();
-            if (rovarokOsszLepesSzama <= 0) {
-                ((Button) actionEvent.getSource()).getScene().getWindow().hide();
+        if (aktivRovar.getLepesSzam() > 0) {
+            GrafikusJatekVezerlo.rovarMozgatas(aktivRovar, hova);
+            if (aktivRovar.getTekton() == hova) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeresen lépett a rovar!");
+                alert.setHeaderText("Yay! :D");
+                alert.showAndWait();
+                listakFrissitese();
+                if (rovarokOsszLepesSzama <= 0) {
+                    ((Button) actionEvent.getSource()).getScene().getWindow().hide();
+                }
+            } else {
+                System.out.println(aktivRovar.getTekton());
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Lépés sikertelen!");
+                alert.setHeaderText("Hiba :C");
+                alert.showAndWait();
             }
-        } else {
-            System.out.println(aktivRovar.getTekton());
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Lépés sikertelen!");
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Az aktív rovar már nem léphet!");
             alert.setHeaderText("Hiba :C");
             alert.showAndWait();
         }
+
     }
 
     @FXML
     public void onFonalVagasClick(ActionEvent actionEvent) {
         int meret = aktivRovar.getTekton().getGombafonalak().size();
-        GrafikusJatekVezerlo.fonalVagas(aktivRovar, szomszedosTektonok.getSelectionModel().getSelectedItem());
-        if (meret > aktivRovar.getTekton().getGombafonalak().size()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeres fonal vágás!");
-            alert.setHeaderText("Yay! :C");
-            alert.showAndWait();
-            listakFrissitese();
-            if (rovarokOsszLepesSzama == 0) {
-                ((Button) actionEvent.getSource()).getScene().getWindow().hide();
+        if (aktivRovar.getLepesSzam() > 0) {
+            GrafikusJatekVezerlo.fonalVagas(aktivRovar, szomszedosTektonok.getSelectionModel().getSelectedItem());
+            if (meret > aktivRovar.getTekton().getGombafonalak().size()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeres fonal vágás!");
+                alert.setHeaderText("Yay! :C");
+                alert.showAndWait();
+                listakFrissitese();
+                if (rovarokOsszLepesSzama == 0) {
+                    ((Button) actionEvent.getSource()).getScene().getWindow().hide();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Fonal vágás sikertelen!");
+                alert.setHeaderText("Hiba :C");
+                alert.showAndWait();
             }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Fonal vágás sikertelen!");
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Az aktív rovar már nem léphet!");
             alert.setHeaderText("Hiba :C");
             alert.showAndWait();
         }
+
 
     }
 
