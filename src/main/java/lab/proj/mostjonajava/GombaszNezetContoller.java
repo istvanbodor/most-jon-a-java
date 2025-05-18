@@ -11,6 +11,8 @@ import javafx.scene.shape.Rectangle;
 import lab.proj.mostjonajava.model.Gombatest;
 import lab.proj.mostjonajava.model.Tekton;
 
+import java.util.stream.Collectors;
+
 public class GombaszNezetContoller {
     @FXML
     private ListView<Gombatest> gombak;
@@ -52,6 +54,7 @@ public class GombaszNezetContoller {
             ObservableList<Tekton> tektonok =
                     FXCollections.observableArrayList(aktivGombatest.getTekton().getSzomszedosTektonok());
             szomszedosTektonok.setItems(tektonok);
+            updateTektonDetails(aktivTekton);
         }
        else {
             javafx.application.Platform.runLater(() -> {
@@ -195,7 +198,7 @@ public class GombaszNezetContoller {
         ObservableList<Gombatest> gombatestek =
                 FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivGombasz.getGombatestek());
         gombak.setItems(gombatestek);
-
+        updateTektonDetails(aktivTekton);
     }
 
     @FXML
@@ -210,5 +213,59 @@ public class GombaszNezetContoller {
             aktivTekton = aktivGombatest.getTekton();
             listakFrissitese();
         }
+    }
+
+    @FXML
+    private void updateTektonDetails(Tekton tekton) {
+        ObservableList<String> details = FXCollections.observableArrayList();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Tekton[").append(tekton.getId()).append("]\n");
+
+        sb.append("  Gombafonal-osszekottetesek: ");
+        if (tekton.getGombafonalak().isEmpty()) {
+            sb.append("nincs");
+        } else {
+            String kapcsolatok = tekton.getGombafonalak().stream()
+                    .map(f -> {
+                        Tekton masik = f.getHonnan().equals(tekton) ? f.getHova() : f.getHonnan();
+                        return String.valueOf(masik.getId());
+                    })
+                    .distinct()
+                    .collect(Collectors.joining(", "));
+            sb.append(kapcsolatok);
+        }
+        sb.append("\n");
+
+        sb.append("  Gombatest: ");
+        if (tekton.getGombatest() != null) {
+            sb.append("Gombatest[").append(tekton.getGombatest().getId()).append("]");
+        } else {
+            sb.append("nincs");
+        }
+        sb.append("\n");
+
+        sb.append("  Sporak: ");
+        if (tekton.getSporak().isEmpty()) {
+            sb.append("nincs");
+        } else {
+            sb.append(tekton.getSporak().stream()
+                    .map(sp -> sp.getClass().getSimpleName())
+                    .collect(Collectors.joining(", ")));
+        }
+        sb.append("\n");
+
+        sb.append("  Rovarok: ");
+        if (tekton.getRovarok().isEmpty()) {
+            sb.append("nincsenek");
+        } else {
+            sb.append(tekton.getRovarok().stream()
+                    .map(r -> String.format("ID=%d, lepSz=%d, benult=%b, vago=%b",
+                            r.getId(), r.getLepesSzam(), r.getBenulas(), r.getVagoKepesseg()))
+                    .collect(Collectors.joining(" | ")));
+        }
+        sb.append("\n");
+
+        details.add(sb.toString());
+        informaciok.setItems(details);
     }
 }
