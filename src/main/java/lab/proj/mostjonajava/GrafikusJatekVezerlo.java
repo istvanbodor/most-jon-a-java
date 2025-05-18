@@ -158,7 +158,7 @@ public class GrafikusJatekVezerlo {
             jatek.getGombatestIkonok().put(aktivGombasz.getGombatestek().get(aktivGombasz.getGombatestek().size()-1).getId(), "/ikonok/FejlettGombaTest.png");
         }
         else {
-            log("asdémasdémamdéadlsmadélamdélasdséadmalda");
+            log("gombatestIkonNoNo");
         }
     }
 

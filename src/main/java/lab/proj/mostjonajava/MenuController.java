@@ -16,11 +16,11 @@ public class MenuController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("jatekosokszamanezet.fxml"));
         Parent root = fxmlLoader.load();
 
-        Scene scene = new Scene(root, 250, 200);
+        Scene scene = new Scene(root, 300, 200);
 
         // Get the current stage from the event
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Player Number");
+        stage.setTitle("JatekosokSzama");
         stage.setScene(scene);
         stage.show();
     }

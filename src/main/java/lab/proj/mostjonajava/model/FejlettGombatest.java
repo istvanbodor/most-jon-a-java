@@ -102,7 +102,6 @@ public class FejlettGombatest extends Gombatest {
                     })
                     .collect(Collectors.joining(", ")));
         }
-        sb.append("\n");
 
         return sb.toString();
     }

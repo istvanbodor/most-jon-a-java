@@ -31,6 +31,7 @@ public class JatekosokSzamaNezetController {
         controller.setPlayerCount(count);
 
         Stage stage = (Stage) jatekosSzamSpinner.getScene().getWindow();
+        stage.setTitle("JatekosokNeve");
         stage.setScene(new Scene(root));
     }
 }
