@@ -36,8 +36,8 @@ public abstract class Tekton {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         // 1) Szomszédok
-        sb.append("Tekton id=" + id);
-        sb.append("\nSzomszedok: ");
+        sb.append("Tekton ID=" + id);
+        sb.append("\n   Szomszedok: ");
         if (szomszedosTektonok.isEmpty()) {
             sb.append("nincs");
         } else {
@@ -46,7 +46,7 @@ public abstract class Tekton {
                     .collect(Collectors.joining(", ")));
         }
         // 2) Gombafonal-összeköttetések
-        sb.append("\nGombafonalak: ");
+        sb.append("\n   Gombafonalak: ");
         if (gombafonalak.isEmpty()) {
             sb.append("nincs");
         } else {
@@ -60,28 +60,41 @@ public abstract class Tekton {
             sb.append(kapcsolatok);
         }
         // 3) Gombatest
-        sb.append("\nGombatest: ");
+        sb.append("\n   Gombatest: ");
         if (gombatest == null) {
             sb.append("nincs");
         } else {
-            sb.append(gombatest.getClass().getSimpleName());
+            sb.append(gombatest.getClass().getSimpleName() + "[ID: " + gombatest.getId() + "]");
+        }
+
+        sb.append("\n   Spórák száma: ");
+        if (this.getSporak().isEmpty()) {
+            sb.append("0");
+        } else {
+            sb.append(this.getSporak().size());
         }
 
         // 4) Spórák
-        sb.append("\nSporak szama: ");
-        if (sporak.isEmpty()) {
+        sb.append("\n   Utolsó spóra: ");
+        if (this.getSporak().isEmpty()) {
             sb.append("nincs");
         } else {
-            sb.append(sporak.stream().count());
+            sb.append(this.getSporak().get(sporak.size()));
         }
 
         // 5) Rovarok
-        sb.append("\nRovarok szama: ");
+        sb.append("\n   Rovarok ID: ");
         if (rovarok.isEmpty()) {
             sb.append("nincsenek");
         } else {
-            sb.append(rovarok.stream().count());
+            sb.append(rovarok.stream()
+                    .map(r -> String.format(
+                            "%d",
+                            r.getId()
+                    ))
+                    .collect(Collectors.joining(" | ")));
         }
+        sb.append("\n");
         /*
         sb.append("Tekton[").append(id).append("]\n");
 
