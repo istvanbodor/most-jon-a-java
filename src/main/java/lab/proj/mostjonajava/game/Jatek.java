@@ -31,8 +31,9 @@ public class Jatek {
         for (int i = 0; i < jatekosokSzama; i++) {
             String nev = jatekosNevek.get(i);
             Tekton tekton;
-            int randomSzam = rnd.nextInt(1,5);
+            int randomSzam = rnd.nextInt(1,6);
             System.out.println(randomSzam);
+            System.out.println("EEEEEZ");
             switch (randomSzam) {
                 case 1 -> tekton = new TobbFonalasTekton();
                 case 2 -> tekton = new EgyFonalasTekton();
