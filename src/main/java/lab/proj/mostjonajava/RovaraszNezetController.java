@@ -54,13 +54,15 @@ public class RovaraszNezetController {
 
     @FXML
     public void onRovarLepesClick(ActionEvent actionEvent) {
-        GrafikusJatekVezerlo.rovarMozgatas(aktivRovar, szomszedosTektonok.getSelectionModel().getSelectedItem());
+        Tekton hova = szomszedosTektonok.getSelectionModel().getSelectedItem();
+        GrafikusJatekVezerlo.rovarMozgatas(aktivRovar, hova);
         listakFrissitese();
-        if (aktivRovar.getTekton() == szomszedosTektonok.getSelectionModel().getSelectedItem()) {
+        if (aktivRovar.getTekton() == hova) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sikeresen lépett a rovar!");
             alert.showAndWait();
         }
         else {
+            System.out.println(aktivRovar.getTekton());
             Alert alert = new Alert(Alert.AlertType.ERROR, "Lépés sikertelen!");
             alert.showAndWait();
         }
