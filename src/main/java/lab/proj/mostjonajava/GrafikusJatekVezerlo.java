@@ -139,11 +139,12 @@ public class GrafikusJatekVezerlo {
 
     public static void gombaTestNovesztes(Gombasz gombasz, Tekton hova) {
         jatek.keresGombatestById(aktivGombasz.getId()).getGombasz().gombaTestNovesztes(hova);
-        System.out.println(aktivGombasz.getGombatestek());
+        jatek.getGombatestIkonok().put(aktivGombasz.getGombatestek().get(aktivGombasz.getGombatestek().size()-1).getId(), "/ikonok/SimaGombaTest.png");
     }
 
     public static void gombaTestFejlesztes(Gombatest gombatest, Tekton hova) {
         jatek.keresGombatestById(aktivGombasz.getId()).getGombasz().gombaTestFejlesztes(gombatest);
+        jatek.getGombatestIkonok().put(aktivGombasz.getGombatestek().get(aktivGombasz.getGombatestek().size()-1).getId(), "/ikonok/FejlettGombaTest.png");
     }
 
     public static void rovarMozgatas(Rovar rovar, Tekton hova) {

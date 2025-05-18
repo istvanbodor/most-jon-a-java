@@ -15,6 +15,8 @@ public class Jatek {
     private List<Gombasz> gombaszok = new ArrayList<>();
     private List<Rovarasz> rovaraszok = new ArrayList<>();
 
+    private Map<Integer, String> gombatestIkonok = new HashMap<>();
+
     private Map<Tekton, Color> tektonSzinek = new HashMap<>();
 
 
@@ -62,9 +64,9 @@ public class Jatek {
                     tektonSzinek.put(tekton, Color.GREEN);
                 }
                 tabla.add(tekton);
-                gombaszok.get(gombaszIdx).getGombatestek().add(new Gombatest(tabla.get(i), gombaszok.get(gombaszIdx)));
-                System.out.println("Adding Gombatest: " + gombaszok.get(gombaszIdx).getGombatestek().get(gombaszok.get(gombaszIdx).getGombatestek().size() - 1));
-                System.out.println("Total Gombatestek for Gombasz " + gombaszIdx + ": " + gombaszok.get(gombaszIdx).getGombatestek().size());
+                Gombatest gombatest = new Gombatest(tabla.get(i), gombaszok.get(gombaszIdx));
+                gombaszok.get(gombaszIdx).getGombatestek().add(gombatest);
+                gombatestIkonok.put(gombatest.getId(), "/ikonok/SimaGombaTest.png");
                 tabla.get(i).setGombatest(gombaszok.get(gombaszIdx).getGombatestek().get(0));
                 if (i > 0) {
                     tabla.get(i).getSzomszedosTektonok().add(tabla.get(i-1));

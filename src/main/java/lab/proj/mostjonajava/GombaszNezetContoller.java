@@ -7,10 +7,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import lab.proj.mostjonajava.model.Gombatest;
 import lab.proj.mostjonajava.model.Tekton;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class GombaszNezetContoller {
@@ -42,6 +45,12 @@ public class GombaszNezetContoller {
     private Button aktivTektonValtasGomb;
     @FXML
     private Button aktivGombatestValtasGomb;
+    @FXML
+    private ImageView gombatesticon;
+    @FXML
+    private ImageView rovaricon;
+    @FXML
+    private ImageView sporaicon;
 
     @FXML
     private void initialize() {
@@ -56,12 +65,36 @@ public class GombaszNezetContoller {
             szomszedosTektonok.setItems(tektonok);
             updateTektonDetails(aktivTekton);
             aktualisTekton.setFill(GrafikusJatekVezerlo.jatek.getTektonSzinek().get(aktivTekton));
+            ikonokMegjelenitese();
         }
        else {
             javafx.application.Platform.runLater(() -> {
                 ugrasGomb.getScene().getWindow().hide();
             });
         }
+    }
+
+    private void ikonokMegjelenitese() {
+        if (aktivTekton.getGombatest() != null) {
+            gombatesticon.setImage(new Image(Objects.requireNonNull(getClass().getResource(GrafikusJatekVezerlo.jatek.getGombatestIkonok().get(aktivTekton.getGombatest().getId()))).toExternalForm()));
+
+        }
+        else {
+            gombatesticon.setImage(null);
+        }
+        if (aktivTekton.getSporak().size() > 0) {
+            sporaicon.setImage(new Image(Objects.requireNonNull(getClass().getResource("/ikonok/Spora.png")).toExternalForm()));
+        }
+        else {
+            sporaicon.setImage(null);
+        }
+        if (aktivTekton.getRovarok().size()>0) {
+            rovaricon.setImage(new Image(Objects.requireNonNull(getClass().getResource("/ikonok/Rovar.png")).toExternalForm()));
+        }
+       else {
+           rovaricon.setImage(null);
+        }
+
     }
 
     @FXML
@@ -201,6 +234,7 @@ public class GombaszNezetContoller {
         gombak.setItems(gombatestek);
         updateTektonDetails(aktivTekton);
         aktualisTekton.setFill(GrafikusJatekVezerlo.jatek.getTektonSzinek().get(aktivTekton));
+        ikonokMegjelenitese();
 
     }
 
@@ -218,7 +252,7 @@ public class GombaszNezetContoller {
         }
     }
 
-    @FXML
+    @Deprecated
     private void updateTektonDetails(Tekton tekton) {
         ObservableList<String> details = FXCollections.observableArrayList();
         StringBuilder sb = new StringBuilder();
