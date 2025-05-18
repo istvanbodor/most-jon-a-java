@@ -35,14 +35,15 @@ public class Gombasz extends Jatekos {
 
         if (tekton.gombatestNoveszthetoE()) {
             // 3 spóra törlése
-            for (int i = 0; i < 3 && !tekton.getSporak().isEmpty(); i++) {
-                tekton.getSporak().remove(tekton.getSporak().get(0));
-            }
+
             Gombatest ujGombatest = new Gombatest(tekton, this);
            if(tekton.setGombatest(ujGombatest)) {
                gombatestek.add(ujGombatest);
                if(tekton.getGombatest() != null)
                {   setPont(getPont() + 1);
+                   for (int i = 0; i < 3 && !tekton.getSporak().isEmpty(); i++) {
+                       tekton.getSporak().remove(tekton.getSporak().get(0));
+                   }
                    log("Gombatest novesztese sikeres.");
                }
            }
