@@ -63,7 +63,7 @@ public class RovaraszNezetController {
             ObservableList<Tekton> tektonok =
                     FXCollections.observableArrayList(aktivRovar.getTekton().getSzomszedosTektonok());
             szomszedosTektonok.setItems(tektonok);
-            updateTektonDetails(aktivTekton);
+            //updateTektonDetails(aktivTekton);
             tekton.setFill(GrafikusJatekVezerlo.jatek.getTektonSzinek().get(aktivTekton));
             ikonokMegjelenitese();
         } else {
@@ -112,7 +112,7 @@ public class RovaraszNezetController {
         ObservableList<Rovar> obsRovarok =
                 FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivRovarasz.getRovarok());
         rovarok.setItems(obsRovarok);
-        updateTektonDetails(aktivTekton);
+        //updateTektonDetails(aktivTekton);
         rovarOsszLepesBeallitas();
         tekton.setFill(GrafikusJatekVezerlo.jatek.getTektonSzinek().get(aktivTekton));
         ikonokMegjelenitese();
@@ -198,6 +198,7 @@ public class RovaraszNezetController {
         }
     }
 
+    /*
     @Deprecated
     private void updateTektonDetails(Tekton tekton) {
         ObservableList<String> details = FXCollections.observableArrayList();
@@ -250,5 +251,5 @@ public class RovaraszNezetController {
 
         details.add(sb.toString());
         informaciok.setItems(details);
-    }
+    }*/
 }

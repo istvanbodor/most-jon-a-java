@@ -118,7 +118,22 @@ public class GrafikusJatekVezerlo {
                         jatek.getTabla().addAll(tektons);
                     }
                 }
-
+                for(int g = 0; g < jatek.getGombaszok().size(); g++) {
+                    for (int gt = 0; gt < jatek.getGombaszok().get(g).getGombatestek().size(); gt++) {
+                        for (int gf = 0; gf < jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().size(); gf++) {
+                            for (int r = 0; r < jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().get(gf).getHonnan().getRovarok().size(); r++) {
+                                if (jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().get(gf).getHonnan().getRovarok().get(r).getBenulas()) {
+                                    jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().get(gf).rovarElfogyasztas(jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().get(gf).getHonnan().getRovarok().get(r));
+                                }
+                            }
+                            for (int r = 0; r < jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().get(gf).getHova().getRovarok().size(); r++) {
+                                if (jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().get(gf).getHova().getRovarok().get(r).getBenulas()) {
+                                    jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().get(gf).rovarElfogyasztas(jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().get(gf).getHova().getRovarok().get(r));
+                                }
+                            }
+                        }
+                    }
+                }
 
             }
         }

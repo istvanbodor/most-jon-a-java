@@ -63,7 +63,7 @@ public class GombaszNezetContoller {
             ObservableList<Tekton> tektonok =
                     FXCollections.observableArrayList(aktivGombatest.getTekton().getSzomszedosTektonok());
             szomszedosTektonok.setItems(tektonok);
-            updateTektonDetails(aktivTekton);
+            //updateTektonDetails(aktivTekton);
             aktualisTekton.setFill(GrafikusJatekVezerlo.jatek.getTektonSzinek().get(aktivTekton));
             ikonokMegjelenitese();
         }
@@ -234,7 +234,7 @@ public class GombaszNezetContoller {
         ObservableList<Gombatest> gombatestek =
                 FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivGombasz.getGombatestek());
         gombak.setItems(gombatestek);
-        updateTektonDetails(aktivTekton);
+        //updateTektonDetails(aktivTekton);
         aktualisTekton.setFill(GrafikusJatekVezerlo.jatek.getTektonSzinek().get(aktivTekton));
         ikonokMegjelenitese();
 
@@ -254,6 +254,7 @@ public class GombaszNezetContoller {
         }
     }
 
+    /*
     @Deprecated
     private void updateTektonDetails(Tekton tekton) {
         ObservableList<String> details = FXCollections.observableArrayList();
@@ -276,8 +277,8 @@ public class GombaszNezetContoller {
         sb.append("\n");
 
         sb.append("  Gombatest: ");
-        if (tekton.getGombatest() != null) {
-            sb.append("Gombatest[").append(tekton.getGombatest().getId()).append("]");
+        if (aktivTekton.getGombatest() != null) {
+            sb.append("Gombatest[").append(aktivTekton.getGombatest().getId()).append("]");
         } else {
             sb.append("nincs");
         }
@@ -306,5 +307,5 @@ public class GombaszNezetContoller {
 
         details.add(sb.toString());
         informaciok.setItems(details);
-    }
+    }*/
 }
