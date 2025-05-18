@@ -79,7 +79,8 @@ public abstract class Tekton {
         if (this.getSporak().isEmpty()) {
             sb.append("nincs");
         } else {
-            sb.append(this.getSporak().get(sporak.size()));
+            String utolsoSporaNev = this.getSporak().get(this.getSporak().size() - 1).getClass().getSimpleName();
+            sb.append(utolsoSporaNev);
         }
 
         // 5) Rovarok
