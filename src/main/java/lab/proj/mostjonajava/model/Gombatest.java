@@ -318,21 +318,20 @@ public class Gombatest {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Gombatest[").append(id).append("]\n");
+        sb.append("Gombatest[").append(id).append("]");
 
-        sb.append("  Tekton: ");
+        sb.append("\nTekton: ");
         if (tekton != null) {
             sb.append("ID=").append(tekton.getId());
         } else {
             sb.append("nincs");
         }
-        sb.append("\n");
 
-        sb.append("  Kiloheto sporak szama: ").append(kilohetoSporakSzama).append("\n");
-        sb.append("  Elszort sporak szama: ").append(elszortSporakSzama).append("\n");
-        sb.append("  Novesztheto fonalak szama: ").append(noveszthetoFonalakSzama).append("\n");
+        sb.append("\nKiloheto sporak szama: ").append(kilohetoSporakSzama);
+        sb.append("\nElszort sporak szama: ").append(elszortSporakSzama);
+        sb.append("\nNovesztheto fonalak szama: ").append(noveszthetoFonalakSzama);
 
-        sb.append("  Gombafonalak: ");
+        sb.append("\nGombafonalak: ");
         if (gombaFonalak.isEmpty()) {
             sb.append("nincs");
         } else {

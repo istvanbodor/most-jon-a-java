@@ -1,6 +1,7 @@
 package lab.proj.mostjonajava.model;
 
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static lab.proj.mostjonajava.utils.Logger.log;
 import lombok.Data;
@@ -69,5 +70,40 @@ public class FejlettGombatest extends Gombatest {
             celTekton.getSporak().add(spora);
             log("Spora kiloves sikeres.");
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Fejlett Gombatest[").append(getId()).append("]");
+
+        sb.append("\nTekton: ");
+        if (getTekton() != null) {
+            sb.append("ID=").append(getTekton().getId());
+        } else {
+            sb.append("nincs");
+        }
+
+        sb.append("\nKiloheto sporak szama: ").append(getKilohetoSporakSzama());
+        sb.append("\nElszort sporak szama: ").append(getElszortSporakSzama());
+        sb.append("\nNovesztheto fonalak szama: ").append(getNoveszthetoFonalakSzama());
+
+        sb.append("\nGombafonalak: ");
+        if (getGombaFonalak().isEmpty()) {
+            sb.append("nincs");
+        } else {
+            sb.append(getGombaFonalak().stream()
+                    .map(f -> {
+                        Tekton honnan = f.getHonnan();
+                        Tekton hova = f.getHova();
+                        return String.format("[%d -> %d]",
+                                honnan != null ? honnan.getId() : -1,
+                                hova != null ? hova.getId() : -1);
+                    })
+                    .collect(Collectors.joining(", ")));
+        }
+        sb.append("\n");
+
+        return sb.toString();
     }
 }
