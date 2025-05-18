@@ -32,8 +32,6 @@ public class Jatek {
             String nev = jatekosNevek.get(i);
             Tekton tekton;
             int randomSzam = rnd.nextInt(1,6);
-            System.out.println(randomSzam);
-            System.out.println("EEEEEZ");
             switch (randomSzam) {
                 case 1 -> tekton = new TobbFonalasTekton();
                 case 2 -> tekton = new EgyFonalasTekton();
@@ -131,6 +129,5 @@ public class Jatek {
                 .orElse(null);
     }
 
-    // ide jöhetnek még a játékvezérlő metódusok (korindítás, állapotfrissítés, mentés/ betöltés, stb.)
 
 }
