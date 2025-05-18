@@ -27,6 +27,11 @@ public class Jatek {
      */
     public Jatek(int jatekosokSzama, List<String> jatekosNevek) {
         cleanUp();
+        tabla = new ArrayList<>();
+        gombaszok = new ArrayList<>();
+        rovaraszok = new ArrayList<>();
+        gombatestIkonok = new HashMap<>();
+        tektonSzinek = new HashMap<>();
         Random rnd = new Random();
         int rovaraszIdx = 0;
         int gombaszIdx = 0;
