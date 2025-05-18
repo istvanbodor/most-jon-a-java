@@ -68,7 +68,9 @@ public class RovaraszNezetController {
             ikonokMegjelenitese();
         } else {
             javafx.application.Platform.runLater(() -> {
-                lepesGomb.getScene().getWindow().hide();
+                if (ugrasGomb.getScene() != null) {
+                    ugrasGomb.getScene().getWindow().hide();
+                }
             });
         }
     }

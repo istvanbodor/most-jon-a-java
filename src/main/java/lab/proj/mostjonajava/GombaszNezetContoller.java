@@ -69,7 +69,9 @@ public class GombaszNezetContoller {
         }
        else {
             javafx.application.Platform.runLater(() -> {
-                ugrasGomb.getScene().getWindow().hide();
+                if (ugrasGomb.getScene() != null) {
+                    ugrasGomb.getScene().getWindow().hide();
+                }
             });
         }
     }

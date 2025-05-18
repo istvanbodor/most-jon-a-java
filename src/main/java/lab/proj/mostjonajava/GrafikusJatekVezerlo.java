@@ -12,6 +12,7 @@ import lombok.SneakyThrows;
 
 import java.io.IOException;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -57,8 +58,20 @@ public class GrafikusJatekVezerlo {
                 }
             }
             for (int d = 0; d < jatek.getGombaszok().size(); d++) {
-                for (Gombatest gombatest : jatek.getGombaszok().get(d).getGombatestek()) {
-                    gombatest.korFrissites();
+                List<Gombatest> gombatestek = jatek.getGombaszok().get(d).getGombatestek();
+                Iterator<Gombatest> it = gombatestek.iterator();
+                while (it.hasNext()) {
+                    Gombatest gombatest = it.next();
+                    if (gombatest.getElszortSporakSzama() >= 10) {
+                        gombatest.getGombaFonalak().clear();
+                        Tekton t = gombatest.getTekton();
+                        if (t != null) {
+                            t.setGombatest(null);
+                        }
+                        it.remove();
+                    } else {
+                        gombatest.korFrissites();
+                    }
                 }
             }
             for (int j = 0; j < jatekosokSzama; j++) {

@@ -182,7 +182,7 @@ public class Gombatest {
     public void elpusztulas() {
         // csak akkor pusztuljon el, ha kifogyott a kilőhető spórából
         // ÉS már lőtt ki legalább egyet (tehát ne töröljük azokat, amiket még nem használtak)
-        if (getKilohetoSporakSzama() == 0 && getElszortSporakSzama() == 10) {
+        if (getElszortSporakSzama() >= 10) {
             Tekton t = getTekton();
             if (t != null) {
                 // eltávolítjuk a tektonról
