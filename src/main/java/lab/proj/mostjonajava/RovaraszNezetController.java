@@ -1,5 +1,6 @@
 package lab.proj.mostjonajava;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -52,6 +53,7 @@ public class RovaraszNezetController {
 
     @FXML
     void initialize() {
+        setControlsDisabled(true);
         if (GrafikusJatekVezerlo.aktivRovarasz.getRovarok().size() > 0) {
             rovarOsszLepesBeallitas();
             ObservableList<Rovar> obsRovarok =
@@ -63,16 +65,25 @@ public class RovaraszNezetController {
             ObservableList<Tekton> tektonok =
                     FXCollections.observableArrayList(aktivRovar.getTekton().getSzomszedosTektonok());
             szomszedosTektonok.setItems(tektonok);
-            //updateTektonDetails(aktivTekton);
             tekton.setFill(GrafikusJatekVezerlo.jatek.getTektonSzinek().get(aktivTekton));
             ikonokMegjelenitese();
         } else {
-            javafx.application.Platform.runLater(() -> {
+            Platform.runLater(() -> {
                 if (ugrasGomb.getScene() != null) {
                     ugrasGomb.getScene().getWindow().hide();
                 }
             });
         }
+        Platform.runLater(() -> setControlsDisabled(false));
+    }
+    private void setControlsDisabled(boolean disabled) {
+        lepesGomb.setDisable(disabled);
+        vagasGomb.setDisable(disabled);
+        ugrasGomb.setDisable(disabled);
+        jatekVegeGomb.setDisable(disabled);
+        aktivRovarVatlasGomb.setDisable(disabled);
+        rovarok.setDisable(disabled);
+        szomszedosTektonok.setDisable(disabled);
     }
 
     private void ikonokMegjelenitese() {
@@ -112,7 +123,6 @@ public class RovaraszNezetController {
         ObservableList<Rovar> obsRovarok =
                 FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivRovarasz.getRovarok());
         rovarok.setItems(obsRovarok);
-        //updateTektonDetails(aktivTekton);
         rovarOsszLepesBeallitas();
         tekton.setFill(GrafikusJatekVezerlo.jatek.getTektonSzinek().get(aktivTekton));
         ikonokMegjelenitese();
@@ -198,7 +208,6 @@ public class RovaraszNezetController {
         }
     }
 
-    /*
     @Deprecated
     private void updateTektonDetails(Tekton tekton) {
         ObservableList<String> details = FXCollections.observableArrayList();
@@ -251,5 +260,5 @@ public class RovaraszNezetController {
 
         details.add(sb.toString());
         informaciok.setItems(details);
-    }*/
+    }
 }

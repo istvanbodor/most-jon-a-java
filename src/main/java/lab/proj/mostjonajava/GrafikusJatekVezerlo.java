@@ -172,9 +172,6 @@ public class GrafikusJatekVezerlo {
         if (jatek.keresGombatestById(gombatest.getId()) == null) {
             jatek.getGombatestIkonok().put(aktivGombasz.getGombatestek().get(aktivGombasz.getGombatestek().size()-1).getId(), "/ikonok/FejlettGombaTest.png");
         }
-        else {
-            log("asdémasdémamdéadlsmadélamdélasdséadmalda");
-        }
     }
 
     public static void rovarMozgatas(Rovar rovar, Tekton hova) {
