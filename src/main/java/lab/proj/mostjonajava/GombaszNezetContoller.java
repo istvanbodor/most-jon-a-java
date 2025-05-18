@@ -55,6 +55,7 @@ public class GombaszNezetContoller {
                     FXCollections.observableArrayList(aktivGombatest.getTekton().getSzomszedosTektonok());
             szomszedosTektonok.setItems(tektonok);
             updateTektonDetails(aktivTekton);
+            aktualisTekton.setFill(GrafikusJatekVezerlo.jatek.getTektonSzinek().get(aktivTekton));
         }
        else {
             javafx.application.Platform.runLater(() -> {
@@ -199,6 +200,8 @@ public class GombaszNezetContoller {
                 FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivGombasz.getGombatestek());
         gombak.setItems(gombatestek);
         updateTektonDetails(aktivTekton);
+        aktualisTekton.setFill(GrafikusJatekVezerlo.jatek.getTektonSzinek().get(aktivTekton));
+
     }
 
     @FXML

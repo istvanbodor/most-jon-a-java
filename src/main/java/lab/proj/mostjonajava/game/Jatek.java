@@ -1,11 +1,10 @@
 package lab.proj.mostjonajava.game;
 
+import javafx.scene.paint.Color;
 import lab.proj.mostjonajava.model.*;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static lab.proj.mostjonajava.utils.Cleaner.cleanUp;
 
@@ -15,6 +14,9 @@ public class Jatek {
     private List<Tekton> tabla = new ArrayList<>();
     private List<Gombasz> gombaszok = new ArrayList<>();
     private List<Rovarasz> rovaraszok = new ArrayList<>();
+
+    private Map<Tekton, Color> tektonSzinek = new HashMap<>();
+
 
     /**
      * A jatek konstruktora
@@ -38,6 +40,13 @@ public class Jatek {
                 case 4 -> tekton = new TestNelkuliTekton();
                 default -> tekton = new FonalEltetoTekton();
             }
+            switch (randomSzam) {
+                case 1 -> tektonSzinek.put(tekton, Color.AQUA);
+                case 2 -> tektonSzinek.put(tekton, Color.GREEN);
+                case 3 -> tektonSzinek.put(tekton, Color.YELLOW);
+                case 4 -> tektonSzinek.put(tekton, Color.RED);
+                default -> tektonSzinek.put(tekton, Color.PURPLE);
+            }
             if (i % 2 == 1) {
                rovaraszok.add(new Rovarasz(nev));
                tabla.add(tekton);
@@ -49,7 +58,9 @@ public class Jatek {
             } else {
                 gombaszok.add(new Gombasz(nev));
                 if (randomSzam == 4) {
+                    tektonSzinek.remove(tekton);
                     tekton = new EgyFonalasTekton();
+                    tektonSzinek.put(tekton, Color.GREEN);
                 }
                 tabla.add(tekton);
                 gombaszok.get(gombaszIdx).getGombatestek().add(new Gombatest(tabla.get(i), gombaszok.get(gombaszIdx)));

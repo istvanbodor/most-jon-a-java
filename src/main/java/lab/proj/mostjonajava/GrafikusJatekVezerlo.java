@@ -100,8 +100,11 @@ public class GrafikusJatekVezerlo {
                 for (int k = 0; k < jatek.getTabla().size(); k++) {
                     int chance = rnd.nextInt(1, 30);
                     if (chance == 1) {
+                        Tekton tekton = jatek.getTabla().get(k);
                         List<Tekton> tektons = jatek.getTabla().get(k).ketteTores();
-                        jatek.getTabla().remove(k);
+                        jatek.getTabla().remove(tekton);
+                        jatek.getTektonSzinek().put(tektons.get(0), jatek.getTektonSzinek().get(tekton));
+                        jatek.getTektonSzinek().put(tektons.get(1), jatek.getTektonSzinek().get(tekton));
                         jatek.getTabla().addAll(tektons);
                     }
                 }

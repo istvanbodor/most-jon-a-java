@@ -55,6 +55,7 @@ public class RovaraszNezetController {
                     FXCollections.observableArrayList(aktivRovar.getTekton().getSzomszedosTektonok());
             szomszedosTektonok.setItems(tektonok);
             updateTektonDetails(aktivTekton);
+            tekton.setFill(GrafikusJatekVezerlo.jatek.getTektonSzinek().get(aktivTekton));
         } else {
             javafx.application.Platform.runLater(() -> {
                 lepesGomb.getScene().getWindow().hide();
@@ -70,6 +71,7 @@ public class RovaraszNezetController {
     }
 
     private void listakFrissitese() {
+        aktivTekton = aktivRovar.getTekton();
         ObservableList<Tekton> tektonok =
                 FXCollections.observableArrayList(aktivRovar.getTekton().getSzomszedosTektonok());
         szomszedosTektonok.setItems(tektonok);
@@ -78,6 +80,7 @@ public class RovaraszNezetController {
         rovarok.setItems(obsRovarok);
         updateTektonDetails(aktivTekton);
         rovarOsszLepesBeallitas();
+        tekton.setFill(GrafikusJatekVezerlo.jatek.getTektonSzinek().get(aktivTekton));
     }
 
     @FXML
