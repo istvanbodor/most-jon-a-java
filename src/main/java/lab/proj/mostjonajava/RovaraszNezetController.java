@@ -78,7 +78,7 @@ public class RovaraszNezetController {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeresen lépett a rovar!");
             alert.setHeaderText("Yay! :D");
             alert.showAndWait();
-            if (aktivRovar.getLepesSzam() == 0) {
+            if (aktivRovar.getLepesSzam() <= 0) {
                 ((Button) actionEvent.getSource()).getScene().getWindow().hide();
             }
         } else {
