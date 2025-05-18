@@ -65,6 +65,7 @@ public class GombaszNezetContoller {
     public void onSporaSzorasClick(ActionEvent actionEvent) {
         if (szomszedosTektonok.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Válaszdd ki hova szeretnél spórát szórni!");
+            alert.setHeaderText("Hiba :C");
             alert.showAndWait();
             return;
         }
@@ -74,10 +75,12 @@ public class GombaszNezetContoller {
         listakFrissitese();
         if (sporaSzam < hova.getSporak().size()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeres spóra szórás!");
+            alert.setHeaderText("Yay! :D");
             alert.showAndWait();
         }
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Spóra szórás sikertelen!");
+            alert.setHeaderText("Hiba :C");
             alert.showAndWait();
         }
     }
@@ -86,6 +89,7 @@ public class GombaszNezetContoller {
     public void onFonalNovesztesClick(ActionEvent actionEvent) {
         if (szomszedosTektonok.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Válaszdd ki hova szeretnél fonalat növeszteni!");
+            alert.setHeaderText("Hiba :C");
             alert.showAndWait();
             return;
         }
@@ -94,10 +98,13 @@ public class GombaszNezetContoller {
         listakFrissitese();
         if (fonalakSzama < aktivGombatest.getGombaFonalak().size()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeres fonal növesztés!");
+            alert.setHeaderText("Yay! :D");
+
             alert.showAndWait();
         }
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Fonal növesztés nem lehetséges!");
+            alert.setHeaderText("Hiba :C");
             alert.showAndWait();
         }
         if (aktivGombatest.getNoveszthetoFonalakSzama() == 0) {
@@ -143,16 +150,19 @@ public class GombaszNezetContoller {
             listakFrissitese();
             if (aktivTekton.getGombatest().getId() != id) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeres fejlesztés!");
+                alert.setHeaderText("Ügyi vagy :D");
                 alert.showAndWait();
                 ((Button) actionEvent.getSource()).getScene().getWindow().hide();
             }
             else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Fejlesztés sikertelen!");
+                alert.setHeaderText("Hiba :C");
                 alert.showAndWait();
             }
         }
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Az aktív tektonon nincs gombatest!");
+            alert.setHeaderText("Hiba :C");
             alert.showAndWait();
         }
 
@@ -169,6 +179,7 @@ public class GombaszNezetContoller {
     public void onAktivTektonValtasClick(ActionEvent actionEvent) {
         if (szomszedosTektonok.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Válassz ki egy tektont a váltáshoz!");
+            alert.setHeaderText("Hiba :C");
             alert.showAndWait();
         }
         else {
@@ -192,6 +203,7 @@ public class GombaszNezetContoller {
     public void onAktivGombatestValtasClick(ActionEvent actionEvent) {
         if (gombak.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Válassz ki egy gombatestet a váltáshoz!");
+            alert.setHeaderText("Hiba :C");
             alert.showAndWait();
         }
         else {
