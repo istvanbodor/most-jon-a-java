@@ -3,6 +3,7 @@ package lab.proj.mostjonajava.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static lab.proj.mostjonajava.utils.Logger.log;
 import lombok.Data;
@@ -316,10 +317,38 @@ public class Gombatest {
 
     @Override
     public String toString() {
-    String ki = "ID= " + id + "\nSporak szama= " + kilohetoSporakSzama
-            + "\nElszort= " + elszortSporakSzama +
-            "\nnovelhetoFonalak= " + noveszthetoFonalakSzama;
+        StringBuilder sb = new StringBuilder();
+        sb.append("Gombatest[").append(id).append("]\n");
 
-            return ki;
+        sb.append("  Tekton: ");
+        if (tekton != null) {
+            sb.append("ID=").append(tekton.getId());
+        } else {
+            sb.append("nincs");
         }
+        sb.append("\n");
+
+        sb.append("  Kiloheto sporak szama: ").append(kilohetoSporakSzama).append("\n");
+        sb.append("  Elszort sporak szama: ").append(elszortSporakSzama).append("\n");
+        sb.append("  Novesztheto fonalak szama: ").append(noveszthetoFonalakSzama).append("\n");
+
+        sb.append("  Gombafonalak: ");
+        if (gombaFonalak.isEmpty()) {
+            sb.append("nincs");
+        } else {
+            sb.append(gombaFonalak.stream()
+                    .map(f -> {
+                        Tekton honnan = f.getHonnan();
+                        Tekton hova = f.getHova();
+                        return String.format("[%d -> %d]",
+                                honnan != null ? honnan.getId() : -1,
+                                hova != null ? hova.getId() : -1);
+                    })
+                    .collect(Collectors.joining(", ")));
+        }
+        sb.append("\n");
+
+        return sb.toString();
+    }
+
 }

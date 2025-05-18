@@ -184,7 +184,7 @@ public class Rovar {
         String benulasString  = getBenulas() ? "Bénult" : "Nem bénult";
         String vagoKepessegString = getVagoKepesseg() ? "Tud vágni" : "Nem tud vágni";
 
-        String ki = "ID=" + this.getId() + "\nLepésSzám=" + this.getLepesSzam()
+        String ki = "ID=" + this.getId() + "\nTekton ID:" + this.getTekton().getId()+ "\nLepésSzám=" + this.getLepesSzam()
                 + "\nBénulás=" + benulasString + "\nVágóképesség=" + vagoKepessegString;
 
         return ki;
