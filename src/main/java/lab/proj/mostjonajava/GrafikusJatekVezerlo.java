@@ -11,10 +11,7 @@ import lab.proj.mostjonajava.model.*;
 import lombok.SneakyThrows;
 
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static lab.proj.mostjonajava.utils.Logger.log;
 
@@ -157,7 +154,12 @@ public class GrafikusJatekVezerlo {
 
     public static void gombaTestFejlesztes(Gombatest gombatest, Tekton hova) {
         jatek.keresGombatestById(aktivGombasz.getId()).getGombasz().gombaTestFejlesztes(gombatest);
-        jatek.getGombatestIkonok().put(aktivGombasz.getGombatestek().get(aktivGombasz.getGombatestek().size()-1).getId(), "/ikonok/FejlettGombaTest.png");
+        if (jatek.keresGombatestById(gombatest.getId()) == null) {
+            jatek.getGombatestIkonok().put(aktivGombasz.getGombatestek().get(aktivGombasz.getGombatestek().size()-1).getId(), "/ikonok/FejlettGombaTest.png");
+        }
+        else {
+            log("asdémasdémamdéadlsmadélamdélasdséadmalda");
+        }
     }
 
     public static void rovarMozgatas(Rovar rovar, Tekton hova) {
