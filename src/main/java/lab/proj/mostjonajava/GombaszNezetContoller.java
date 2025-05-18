@@ -43,14 +43,21 @@ public class GombaszNezetContoller {
 
     @FXML
     private void initialize() {
-        ObservableList<Gombatest> gombatestek =
-                FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivGombasz.getGombatestek());
-        gombak.setItems(gombatestek);
-        aktivGombatest = gombatestek.get(0);
-        aktivTekton = aktivGombatest.getTekton();
-        ObservableList<Tekton> tektonok =
-                FXCollections.observableArrayList(aktivGombatest.getTekton().getSzomszedosTektonok());
-        szomszedosTektonok.setItems(tektonok);
+        if (GrafikusJatekVezerlo.aktivGombasz.getGombatestek().size() > 0) {
+            ObservableList<Gombatest> gombatestek =
+                    FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivGombasz.getGombatestek());
+            gombak.setItems(gombatestek);
+            aktivGombatest = gombatestek.get(0);
+            aktivTekton = aktivGombatest.getTekton();
+            ObservableList<Tekton> tektonok =
+                    FXCollections.observableArrayList(aktivGombatest.getTekton().getSzomszedosTektonok());
+            szomszedosTektonok.setItems(tektonok);
+        }
+       else {
+            javafx.application.Platform.runLater(() -> {
+                ugrasGomb.getScene().getWindow().hide();
+            });
+        }
     }
 
 

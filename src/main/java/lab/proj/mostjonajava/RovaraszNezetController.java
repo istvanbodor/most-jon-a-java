@@ -29,20 +29,33 @@ public class RovaraszNezetController {
     private Button ugrasGomb;
 
     private Rovar aktivRovar;
+
+    private Tekton aktivTekton;
     @FXML
     private Button jatekVegeGomb;
+    @FXML
+    private Button aktivRovarVatlasGomb;
 
 
     @FXML
     void initialize() {
-        ObservableList<Rovar> obsRovarok =
-                FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivRovarasz.getRovarok());
-        rovarok.setItems(obsRovarok);
-        aktivRovar = rovarok.getItems().get(0);
-        ObservableList<Tekton> tektonok =
-                FXCollections.observableArrayList(aktivRovar.getTekton().getSzomszedosTektonok());
-        szomszedosTektonok.setItems(tektonok);
+        if (GrafikusJatekVezerlo.aktivRovarasz.getRovarok().size() > 0) {
+            ObservableList<Rovar> obsRovarok =
+                    FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivRovarasz.getRovarok());
+            rovarok.setItems(obsRovarok);
+
+            aktivRovar = rovarok.getItems().get(0);
+            aktivTekton = aktivRovar.getTekton();
+            ObservableList<Tekton> tektonok =
+                    FXCollections.observableArrayList(aktivRovar.getTekton().getSzomszedosTektonok());
+            szomszedosTektonok.setItems(tektonok);
+        } else {
+            javafx.application.Platform.runLater(() -> {
+                lepesGomb.getScene().getWindow().hide();
+            });
+        }
     }
+
     private void listakFrissitese() {
         ObservableList<Tekton> tektonok =
                 FXCollections.observableArrayList(aktivRovar.getTekton().getSzomszedosTektonok());
@@ -63,8 +76,7 @@ public class RovaraszNezetController {
             if (aktivRovar.getLepesSzam() == 0) {
                 ((Button) actionEvent.getSource()).getScene().getWindow().hide();
             }
-        }
-        else {
+        } else {
             System.out.println(aktivRovar.getTekton());
             Alert alert = new Alert(Alert.AlertType.ERROR, "Lépés sikertelen!");
             alert.showAndWait();
@@ -81,8 +93,7 @@ public class RovaraszNezetController {
             if (aktivRovar.getLepesSzam() == 0) {
                 ((Button) actionEvent.getSource()).getScene().getWindow().hide();
             }
-        }
-        else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Fonal vágás sikertelen!");
             alert.showAndWait();
         }
@@ -98,5 +109,17 @@ public class RovaraszNezetController {
     public void onJatekVegeClick(ActionEvent actionEvent) {
         GrafikusJatekVezerlo.JATEK_AKTIV = false;
         ((Button) actionEvent.getSource()).getScene().getWindow().hide();
+    }
+
+    @FXML
+    public void onAktivRovarValtas(ActionEvent actionEvent) {
+        if (rovarok.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Válassz ki egy rovart a váltáshoz!");
+            alert.showAndWait();
+        } else {
+            aktivRovar = rovarok.getSelectionModel().getSelectedItem();
+            aktivTekton = aktivRovar.getTekton();
+            listakFrissitese();
+        }
     }
 }
