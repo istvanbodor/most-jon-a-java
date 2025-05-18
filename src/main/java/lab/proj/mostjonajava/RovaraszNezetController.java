@@ -38,10 +38,13 @@ public class RovaraszNezetController {
     @FXML
     private Button aktivRovarVatlasGomb;
 
+    private int rovarokOsszLepesSzama;
+
 
     @FXML
     void initialize() {
         if (GrafikusJatekVezerlo.aktivRovarasz.getRovarok().size() > 0) {
+            rovarOsszLepesBeallitas();
             ObservableList<Rovar> obsRovarok =
                     FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivRovarasz.getRovarok());
             rovarok.setItems(obsRovarok);
@@ -59,6 +62,13 @@ public class RovaraszNezetController {
         }
     }
 
+    private void rovarOsszLepesBeallitas() {
+        rovarokOsszLepesSzama = 0;
+        for (Rovar rovar : GrafikusJatekVezerlo.aktivRovarasz.getRovarok()) {
+            rovarokOsszLepesSzama += rovar.getLepesSzam();
+        }
+    }
+
     private void listakFrissitese() {
         ObservableList<Tekton> tektonok =
                 FXCollections.observableArrayList(aktivRovar.getTekton().getSzomszedosTektonok());
@@ -67,18 +77,19 @@ public class RovaraszNezetController {
                 FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivRovarasz.getRovarok());
         rovarok.setItems(obsRovarok);
         updateTektonDetails(aktivTekton);
+        rovarOsszLepesBeallitas();
     }
 
     @FXML
     public void onRovarLepesClick(ActionEvent actionEvent) {
         Tekton hova = szomszedosTektonok.getSelectionModel().getSelectedItem();
         GrafikusJatekVezerlo.rovarMozgatas(aktivRovar, hova);
-        listakFrissitese();
         if (aktivRovar.getTekton() == hova) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeresen lépett a rovar!");
             alert.setHeaderText("Yay! :D");
             alert.showAndWait();
-            if (aktivRovar.getLepesSzam() <= 0) {
+            listakFrissitese();
+            if (rovarokOsszLepesSzama <= 0) {
                 ((Button) actionEvent.getSource()).getScene().getWindow().hide();
             }
         } else {
@@ -97,7 +108,8 @@ public class RovaraszNezetController {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeres fonal vágás!");
             alert.setHeaderText("Yay! :C");
             alert.showAndWait();
-            if (aktivRovar.getLepesSzam() == 0) {
+            listakFrissitese();
+            if (rovarokOsszLepesSzama == 0) {
                 ((Button) actionEvent.getSource()).getScene().getWindow().hide();
             }
         } else {
@@ -105,7 +117,7 @@ public class RovaraszNezetController {
             alert.setHeaderText("Hiba :C");
             alert.showAndWait();
         }
-        listakFrissitese();
+
     }
 
     @FXML
