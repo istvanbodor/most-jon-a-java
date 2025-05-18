@@ -35,7 +35,6 @@ public abstract class Tekton {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        // 1) Szomszédok
         sb.append("Tekton ID=" + id);
         sb.append("\n   Szomszedok: ");
         if (szomszedosTektonok.isEmpty()) {
@@ -45,7 +44,7 @@ public abstract class Tekton {
                     .map(t -> String.valueOf(t.getId()))
                     .collect(Collectors.joining(", ")));
         }
-        // 2) Gombafonal-összeköttetések
+
         sb.append("\n   Gombafonalak: ");
         if (gombafonalak.isEmpty()) {
             sb.append("nincs");
@@ -59,7 +58,7 @@ public abstract class Tekton {
                     .collect(Collectors.joining(", "));
             sb.append(kapcsolatok);
         }
-        // 3) Gombatest
+
         sb.append("\n   Gombatest: ");
         if (gombatest == null) {
             sb.append("nincs");
@@ -74,7 +73,6 @@ public abstract class Tekton {
             sb.append(this.getSporak().size());
         }
 
-        // 4) Spórák
         sb.append("\n   Utolsó spóra: ");
         if (this.getSporak().isEmpty()) {
             sb.append("nincs");
@@ -83,7 +81,6 @@ public abstract class Tekton {
             sb.append(utolsoSporaNev);
         }
 
-        // 5) Rovarok
         sb.append("\n   Rovarok ID: ");
         if (rovarok.isEmpty()) {
             sb.append("nincsenek");
@@ -96,75 +93,6 @@ public abstract class Tekton {
                     .collect(Collectors.joining(" | ")));
         }
         sb.append("\n");
-        /*
-        sb.append("Tekton[").append(id).append("]\n");
-
-        // 1) Szomszédok
-        sb.append("  Szomszedok: ");
-        if (szomszedosTektonok.isEmpty()) {
-            sb.append("nincs");
-        } else {
-            sb.append(szomszedosTektonok.stream()
-                    .map(t -> String.valueOf(t.getId()))
-                    .collect(Collectors.joining(", ")));
-        }
-        sb.append("\n");
-
-        // 2) Gombafonal-összeköttetések
-        sb.append("  Gombafonal-osszekottetesek: ");
-        if (gombafonalak.isEmpty()) {
-            sb.append("nincs");
-        } else {
-            String kapcsolatok = gombafonalak.stream()
-                    .map(f -> {
-                        Tekton masik = f.getHonnan().equals(this) ? f.getHova() : f.getHonnan();
-                        return String.valueOf(masik.getId());
-                    })
-                    .distinct()
-                    .collect(Collectors.joining(", "));
-            sb.append(kapcsolatok);
-        }
-        sb.append("\n");
-
-        // 3) Gombatest
-        sb.append("  Gombatest: ");
-        if (gombatest != null) {
-            String tipus = gombatest.getClass().getSimpleName(); // "Gombatest" vagy "FejlettGombatest"
-            sb.append(tipus)
-                    .append("[ID=").append(gombatest.getId())
-                    .append(", kiloSpora=").append(gombatest.getKilohetoSporakSzama())
-                    .append(", elSzortSpora=").append(gombatest.getElszortSporakSzama())
-                    .append(", novelhetoFonalSzama=").append(gombatest.getNoveszthetoFonalakSzama())
-                    .append("]\n");
-        } else {
-            sb.append("nincs\n");
-        }
-
-        // 4) Spórák
-        sb.append("\nSporak: ");
-        if (sporak.isEmpty()) {
-            sb.append("nincs");
-        } else {
-            sb.append(sporak.stream()
-                    .map(sp -> sp.getClass().getSimpleName() + "(tap=" + sp.getTapanyag() + ")")
-                    .collect(Collectors.joining(", ")));
-        }
-        sb.append("\n");
-
-        // 5) Rovarok
-        sb.append("  Rovarok: ");
-        if (rovarok.isEmpty()) {
-            sb.append("nincsenek");
-        } else {
-            sb.append(rovarok.stream()
-                    .map(r -> String.format(
-                            "ID=%d, lepSz=%d, benult=%b, vago=%b",
-                            r.getId(), r.getLepesSzam(), r.getBenulas(), r.getVagoKepesseg()
-                    ))
-                    .collect(Collectors.joining(" | ")));
-        }
-        sb.append("\n");
-*/
         return sb.toString();
     }
 
@@ -255,7 +183,6 @@ public abstract class Tekton {
         if (this.equals(tekton)) return false;
         for (GombaFonal fonal : gombafonalak) {
             if ((fonal.getHonnan().equals(this) && fonal.getHova().equals(tekton)) || (fonal.getHova().equals(this) && fonal.getHonnan().equals(tekton))) {
-                //log("true");
                 return true;
             }
         }
