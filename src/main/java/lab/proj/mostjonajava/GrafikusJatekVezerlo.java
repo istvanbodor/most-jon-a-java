@@ -129,12 +129,12 @@ public class GrafikusJatekVezerlo {
                             for (int r = 0; r < jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().get(gf).getHova().getRovarok().size(); r++) {
                                 if (jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().get(gf).getHova().getRovarok().get(r).getBenulas()) {
                                     jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().get(gf).rovarElfogyasztas(jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().get(gf).getHova().getRovarok().get(r));
+                                    jatek.getGombatestIkonok().put(jatek.getGombaszok().get(g).getGombatestek().get(jatek.getGombaszok().get(g).getGombatestek().size()-1).getId(), "/ikonok/SimaGombaTest.png");
                                 }
                             }
                         }
                     }
                 }
-
             }
         }
         JATEK_AKTIV = false;
