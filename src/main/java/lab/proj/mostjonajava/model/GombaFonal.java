@@ -47,6 +47,7 @@ public class GombaFonal {
 
         // új gombatestet hozunk létre a rovar helyén, a meglévő gombatest gombászával
         Gombatest ujGombatest = new Gombatest(rovarTektonja, gombatest.getGombasz());
+        gombatest.getGombasz().getGombatestek().add(ujGombatest);
         // beállítjuk az új gombatestet a tektonra (amennyiben lehetséges)
         // ha a tekton "TestNelkuliTekton", akkor ez a metódus nem fog változást okozni
         rovarTektonja.setGombatest(ujGombatest);
