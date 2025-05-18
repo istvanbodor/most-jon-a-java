@@ -316,6 +316,10 @@ public class Gombatest {
 
     @Override
     public String toString() {
-        return "Gombatest ID: " + id;
-    }
+    String ki = "ID= " + id + "\nSporak szama= " + kilohetoSporakSzama
+            + "\nElszort= " + elszortSporakSzama +
+            "\nnovelhetoFonalak= " + noveszthetoFonalakSzama;
+
+            return ki;
+        }
 }
