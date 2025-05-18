@@ -46,6 +46,21 @@ public class GrafikusJatekVezerlo {
             int gombaszIndex = 0;
             int rovaraszIndex = 0;
             log(korSzam + ". kor");
+            for (Tekton tekton: jatek.getTabla()
+            ) {
+                tekton.korFrissites();
+            }
+            for (int c = 0; c < jatek.getRovaraszok().size(); c++) {
+                for (Rovar rovar: jatek.getRovaraszok().get(c).getRovarok()
+                ) {
+                    rovar.korFrissites();
+                }
+            }
+            for (int d = 0; d < jatek.getGombaszok().size(); d++) {
+                for (Gombatest gombatest : jatek.getGombaszok().get(d).getGombatestek()) {
+                    gombatest.korFrissites();
+                }
+            }
             for (int j = 0; j < jatekosokSzama; j++) {
                 int lepesSzam = j + 1;
                 if (j % 2 == 0) {
@@ -90,6 +105,8 @@ public class GrafikusJatekVezerlo {
                         jatek.getTabla().addAll(tektons);
                     }
                 }
+
+
             }
         }
         JATEK_AKTIV = false;

@@ -49,6 +49,7 @@ public class Rovar {
         hova.getRovarok().add(this);
         honnan = hova;
         sporaElfogyasztas(hova);
+        lepesSzam--;
         log("Sikeresen lepett a rovar");
     }
 
@@ -92,6 +93,7 @@ public class Rovar {
         if (torlendoFonal == null) {  return; }
 
         torlendoFonal.getGombatest().fonalTorles(torlendoFonal);
+        lepesSzam--;
         log("Fonalvagas vege: fonal(ak) sikeresen torolve.");
     }
 
