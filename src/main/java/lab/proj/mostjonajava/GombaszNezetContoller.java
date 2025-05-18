@@ -43,19 +43,31 @@ public class GombaszNezetContoller {
 
     @FXML
     private void initialize() {
-        ObservableList<Gombatest> gombatestek =
-                FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivGombasz.getGombatestek());
-        gombak.setItems(gombatestek);
-        aktivGombatest = gombatestek.get(0);
-        aktivTekton = aktivGombatest.getTekton();
-        ObservableList<Tekton> tektonok =
-                FXCollections.observableArrayList(aktivGombatest.getTekton().getSzomszedosTektonok());
-        szomszedosTektonok.setItems(tektonok);
+        if (GrafikusJatekVezerlo.aktivGombasz.getGombatestek().size() > 0) {
+            ObservableList<Gombatest> gombatestek =
+                    FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivGombasz.getGombatestek());
+            gombak.setItems(gombatestek);
+            aktivGombatest = gombatestek.get(0);
+            aktivTekton = aktivGombatest.getTekton();
+            ObservableList<Tekton> tektonok =
+                    FXCollections.observableArrayList(aktivGombatest.getTekton().getSzomszedosTektonok());
+            szomszedosTektonok.setItems(tektonok);
+        }
+       else {
+            javafx.application.Platform.runLater(() -> {
+                ugrasGomb.getScene().getWindow().hide();
+            });
+        }
     }
 
 
     @FXML
     public void onSporaSzorasClick(ActionEvent actionEvent) {
+        if (szomszedosTektonok.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Válaszdd ki hova szeretnél spórát szórni!");
+            alert.showAndWait();
+            return;
+        }
         Tekton hova = szomszedosTektonok.getSelectionModel().getSelectedItem();
         int sporaSzam = hova.getSporak().size();
         GrafikusJatekVezerlo.sporaSzoras(aktivGombatest,hova, 1);
@@ -72,6 +84,11 @@ public class GombaszNezetContoller {
 
     @FXML
     public void onFonalNovesztesClick(ActionEvent actionEvent) {
+        if (szomszedosTektonok.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Válaszdd ki hova szeretnél fonalat növeszteni!");
+            alert.showAndWait();
+            return;
+        }
         int fonalakSzama = aktivGombatest.getGombaFonalak().size();
         GrafikusJatekVezerlo.fonalNovesztes(aktivGombatest, aktivTekton, szomszedosTektonok.getSelectionModel().getSelectedItem());
         listakFrissitese();
@@ -90,20 +107,25 @@ public class GombaszNezetContoller {
 
     @FXML
     public void onGombaTestNovesztesClick(ActionEvent actionEvent) {
-            Tekton hova = szomszedosTektonok.getSelectionModel().getSelectedItem();
-            Gombatest gombatest = hova.getGombatest();
-            GrafikusJatekVezerlo.gombaTestNovesztes(GrafikusJatekVezerlo.aktivGombasz, hova);
-            listakFrissitese();
-
-            if (hova.getGombatest() != gombatest) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeres gombatest növesztés!");
-                alert.setHeaderText("Ügyi vagy :D");
-                alert.showAndWait();
-                ((Button) actionEvent.getSource()).getScene().getWindow().hide();
+        Tekton hova = szomszedosTektonok.getSelectionModel().getSelectedItem();
+            if (hova != null) {
+                Gombatest gombatest = hova.getGombatest();
+                GrafikusJatekVezerlo.gombaTestNovesztes(GrafikusJatekVezerlo.aktivGombasz, hova);
+                listakFrissitese();
+                if (hova.getGombatest() != gombatest) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Sikeres gombatest növesztés!");
+                    alert.setHeaderText("Ügyi vagy :D");
+                    alert.showAndWait();
+                    ((Button) actionEvent.getSource()).getScene().getWindow().hide();
+                }
+                else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Gomba test növesztés sikertelen!");
+                    alert.setHeaderText("Hiba :C");
+                    alert.showAndWait();
+                }
             }
             else {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Gomba test növesztés sikertelen!");
-                alert.setHeaderText("Hiba :C");
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Válaszdd ki hova szeretnél növeszteni!");
                 alert.showAndWait();
             }
     }
