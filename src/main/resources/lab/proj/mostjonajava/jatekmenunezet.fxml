@@ -6,12 +6,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lab.proj.mostjonajava.MenuController">
-   <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="152.0" prefWidth="193.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="lab.proj.mostjonajava.MenuController">
+   <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+               minWidth="-Infinity" prefHeight="150.0" prefWidth="190.0"
+               xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
       <top>
-         <HBox prefHeight="44.0" prefWidth="567.0" BorderPane.alignment="CENTER">
+         <HBox prefHeight="45.0" prefWidth="565.0" BorderPane.alignment="CENTER">
             <children>
-               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="235.0" text="FungoriumApp" />
+               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="235.0" text="FungoriumApp" />
             </children>
          </HBox>
       </top>
