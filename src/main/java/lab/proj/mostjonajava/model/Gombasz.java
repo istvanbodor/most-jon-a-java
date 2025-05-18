@@ -39,12 +39,16 @@ public class Gombasz extends Jatekos {
                 tekton.getSporak().remove(tekton.getSporak().get(0));
             }
             Gombatest ujGombatest = new Gombatest(tekton, this);
-            tekton.setGombatest(ujGombatest);
-            gombatestek.add(ujGombatest);
-            if(tekton.getGombatest() != null) 
-            {   setPont(getPont() + 1);
-                log("Gombatest novesztese sikeres.");
-            }
+           if(tekton.setGombatest(ujGombatest)) {
+               gombatestek.add(ujGombatest);
+               if(tekton.getGombatest() != null)
+               {   setPont(getPont() + 1);
+                   log("Gombatest novesztese sikeres.");
+               }
+           }
+           else {
+               log("Nem lehet gombatestet noveszteni a megadott tektonon.");
+           }
         } else {
             log("Nem lehet gombatestet noveszteni a megadott tektonon.");
         }

@@ -269,14 +269,16 @@ public abstract class Tekton {
      * Hozzáad egy gombatestet a tektonhoz. - a TestNelkuli tektonban override-ol
      * @param gombatest
      */
-    public void setGombatest(Gombatest gombatest) {
+    public boolean setGombatest(Gombatest gombatest) {
         // null-beállításkor csak törlünk, de nem hívunk rajta módszereket
         this.gombatest = gombatest;
         if (gombatest != null) {
             // csak akkor állítjuk be a kétirányú kapcsolatot, ha tényleg van Gombatest
             gombatest.setTekton(this);
+            return true;
         //    gombatest.getGombasz().getGombatestek().add(gombatest);
         }
+        return false;
     }
 
     /**

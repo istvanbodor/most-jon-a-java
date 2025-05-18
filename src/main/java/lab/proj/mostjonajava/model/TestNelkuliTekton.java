@@ -52,7 +52,8 @@ public class TestNelkuliTekton extends Tekton{
      * @param gombatest
      */
     @Override
-    public void setGombatest(Gombatest gombatest) {
+    public boolean setGombatest(Gombatest gombatest) {
         log("Gombatest beallitasa sikertelen");
+        return false;
     }
 }
