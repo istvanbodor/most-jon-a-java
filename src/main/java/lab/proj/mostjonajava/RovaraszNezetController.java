@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.shape.Rectangle;
@@ -55,6 +56,14 @@ public class RovaraszNezetController {
     public void onRovarLepesClick(ActionEvent actionEvent) {
         GrafikusJatekVezerlo.rovarMozgatas(aktivRovar, szomszedosTektonok.getSelectionModel().getSelectedItem());
         listakFrissitese();
+        if (aktivRovar.getTekton() == szomszedosTektonok.getSelectionModel().getSelectedItem()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sikeresen lépett a rovar!");
+            alert.showAndWait();
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Lépés sikertelen!");
+            alert.showAndWait();
+        }
     }
 
     @FXML
