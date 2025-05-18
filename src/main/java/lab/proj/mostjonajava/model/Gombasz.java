@@ -34,7 +34,6 @@ public class Gombasz extends Jatekos {
     public void gombaTestNovesztes(Tekton tekton) {
 
         if (tekton.gombatestNoveszthetoE()) {
-            // 3 spóra törlése
 
             Gombatest ujGombatest = new Gombatest(tekton, this);
            if(tekton.setGombatest(ujGombatest)) {
