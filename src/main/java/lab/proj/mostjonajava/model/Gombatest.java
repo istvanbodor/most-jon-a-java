@@ -315,10 +315,6 @@ public class Gombatest {
         }
     }
 
-    /**
-     * tostring, ez írja ki az információkat
-     * @return
-     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

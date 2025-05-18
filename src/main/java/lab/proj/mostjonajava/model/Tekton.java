@@ -35,6 +35,54 @@ public abstract class Tekton {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        // 1) Szomszédok
+        sb.append("Tekton id=" + id);
+        sb.append("\nSzomszedok: ");
+        if (szomszedosTektonok.isEmpty()) {
+            sb.append("nincs");
+        } else {
+            sb.append(szomszedosTektonok.stream()
+                    .map(t -> String.valueOf(t.getId()))
+                    .collect(Collectors.joining(", ")));
+        }
+        // 2) Gombafonal-összeköttetések
+        sb.append("\nGombafonalak: ");
+        if (gombafonalak.isEmpty()) {
+            sb.append("nincs");
+        } else {
+            String kapcsolatok = gombafonalak.stream()
+                    .map(f -> {
+                        Tekton masik = f.getHonnan().equals(this) ? f.getHova() : f.getHonnan();
+                        return String.valueOf(masik.getId());
+                    })
+                    .distinct()
+                    .collect(Collectors.joining(", "));
+            sb.append(kapcsolatok);
+        }
+        // 3) Gombatest
+        sb.append("\nGombatest: ");
+        if (gombatest == null) {
+            sb.append("nincs");
+        } else {
+            sb.append(gombatest.getClass().getSimpleName());
+        }
+
+        // 4) Spórák
+        sb.append("\nSporak szama: ");
+        if (sporak.isEmpty()) {
+            sb.append("nincs");
+        } else {
+            sb.append(sporak.stream().count());
+        }
+
+        // 5) Rovarok
+        sb.append("\nRovarok szama: ");
+        if (rovarok.isEmpty()) {
+            sb.append("nincsenek");
+        } else {
+            sb.append(rovarok.stream().count());
+        }
+        /*
         sb.append("Tekton[").append(id).append("]\n");
 
         // 1) Szomszédok
@@ -79,7 +127,7 @@ public abstract class Tekton {
         }
 
         // 4) Spórák
-        sb.append("  Sporak: ");
+        sb.append("\nSporak: ");
         if (sporak.isEmpty()) {
             sb.append("nincs");
         } else {
@@ -102,7 +150,7 @@ public abstract class Tekton {
                     .collect(Collectors.joining(" | ")));
         }
         sb.append("\n");
-
+*/
         return sb.toString();
     }
 
