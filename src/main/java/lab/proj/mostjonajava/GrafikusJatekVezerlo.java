@@ -83,7 +83,7 @@ public class GrafikusJatekVezerlo {
                     rovaraszIndex++;
                 }
                 for (int k = 0; k < jatek.getTabla().size(); k++) {
-                    int chance = rnd.nextInt(1, 10);
+                    int chance = rnd.nextInt(1, 30);
                     if (chance == 1) {
                         List<Tekton> tektons = jatek.getTabla().get(k).ketteTores();
                         jatek.getTabla().remove(k);
