@@ -19,7 +19,6 @@ public class JatekosokNeveNezetController {
 
     private final List<TextField> nevMezok = new ArrayList<>();
 
-    // Called from previous screen
     public void setPlayerCount(int db) {
         nevBemenetTarolo.getChildren().clear();
         nevMezok.clear();
@@ -36,7 +35,6 @@ public class JatekosokNeveNezetController {
     public void onJatekInditasClick(ActionEvent event) throws IOException {
         List<String> nevek = new ArrayList<>();
 
-        // First validate all fields
         for (TextField field : nevMezok) {
             String nev = field.getText().trim();
             if (nev.isEmpty()) {
