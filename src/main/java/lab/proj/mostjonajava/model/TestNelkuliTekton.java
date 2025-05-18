@@ -30,11 +30,11 @@ public class TestNelkuliTekton extends Tekton{
         getSzomszedosTektonok().add(ujTekton);
         ujTekton.getSzomszedosTektonok().add(this);
         // gombatest elpusztitasa, ha van rajta
-        if (this.getGombatest() != null) {
-            this.getGombatest().elpusztulas();
-            this.setGombatest(null);
-        }
-    
+//        if (this.getGombatest() != null) {
+//            this.getGombatest().elpusztulas();
+//            this.setGombatest(null);
+//        }
+//
         // minden fonal torlese a tektonrol
         List<GombaFonal> fonalak = new ArrayList<>(this.getGombafonalak());
         for (GombaFonal fonal : fonalak) {

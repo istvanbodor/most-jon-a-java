@@ -54,6 +54,7 @@ public class GombaszNezetContoller {
 
     @FXML
     private void initialize() {
+        setUIEnabled(false);
         if (GrafikusJatekVezerlo.aktivGombasz.getGombatestek().size() > 0) {
             ObservableList<Gombatest> gombatestek =
                     FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivGombasz.getGombatestek());
@@ -66,6 +67,7 @@ public class GombaszNezetContoller {
             updateTektonDetails(aktivTekton);
             aktualisTekton.setFill(GrafikusJatekVezerlo.jatek.getTektonSzinek().get(aktivTekton));
             ikonokMegjelenitese();
+            setUIEnabled(true);
         }
        else {
             javafx.application.Platform.runLater(() -> {
@@ -74,6 +76,19 @@ public class GombaszNezetContoller {
                 }
             });
         }
+    }
+
+    private void setUIEnabled(boolean enabled) {
+        sporaSzorasGomb.setDisable(!enabled);
+        fonalNovesztesGomb.setDisable(!enabled);
+        gombatestNovesztesGomb.setDisable(!enabled);
+        ugrasGomb.setDisable(!enabled);
+        fejlesztesGomb.setDisable(!enabled);
+        jatekVegeGomb.setDisable(!enabled);
+        aktivTektonValtasGomb.setDisable(!enabled);
+        aktivGombatestValtasGomb.setDisable(!enabled);
+        gombak.setDisable(!enabled);
+        szomszedosTektonok.setDisable(!enabled);
     }
 
     private void ikonokMegjelenitese() {
