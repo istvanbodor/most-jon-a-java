@@ -60,7 +60,6 @@ public class GombaszNezetContoller {
         }
     }
 
-
     @FXML
     public void onSporaSzorasClick(ActionEvent actionEvent) {
         if (szomszedosTektonok.getSelectionModel().getSelectedItem() == null) {

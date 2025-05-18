@@ -177,5 +177,17 @@ public class Rovar {
         vagoKepesseg = true;
         lepesSzam = 2; 
     }
+
+    @Override
+    public String toString()
+    {
+        String benulasString  = getBenulas() ? "Bénult" : "Nem bénult";
+        String vagoKepessegString = getVagoKepesseg() ? "Tud vágni" : "Nem tud vágni";
+
+        String ki = "ID=" + this.getId() + "\nLepésSzám=" + this.getLepesSzam()
+                + "\nBénulás=" + benulasString + "\nVágóképesség=" + vagoKepessegString;
+
+        return ki;
+    }
 }
 
