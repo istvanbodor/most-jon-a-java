@@ -225,7 +225,7 @@ public class GombaszNezetContoller {
     public void onFejlesztesClick(ActionEvent actionEvent) {
 
         if (aktivTekton.getGombatest() != null) {
-            if (GrafikusJatekVezerlo.aktivGombasz.getGombatestek().contains(aktivTekton.getGombatest())) {
+            if (!GrafikusJatekVezerlo.aktivGombasz.getGombatestek().contains(aktivTekton.getGombatest())) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Csak a saját gombatestedet fejlesztheted!");
                 alert.setHeaderText("Hiba :C");
                 alert.showAndWait();
