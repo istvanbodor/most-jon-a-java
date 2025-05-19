@@ -114,23 +114,14 @@ public class GrafikusJatekVezerlo {
                     }
                     rovaraszIndex++;
                 }
-                for (int k = 0; k < jatek.getTabla().size(); k++) {
-                    int chance = rnd.nextInt(1, 30);
-                    if (chance == 1) {
-                        Tekton tekton = jatek.getTabla().get(k);
-                        List<Tekton> tektons = jatek.getTabla().get(k).ketteTores();
-                        jatek.getTabla().remove(tekton);
-                        jatek.getTektonSzinek().put(tektons.get(0), jatek.getTektonSzinek().get(tekton));
-                        jatek.getTektonSzinek().put(tektons.get(1), jatek.getTektonSzinek().get(tekton));
-                        jatek.getTabla().addAll(tektons);
-                    }
-                }
+
                 for(int g = 0; g < jatek.getGombaszok().size(); g++) {
                     for (int gt = 0; gt < jatek.getGombaszok().get(g).getGombatestek().size(); gt++) {
                         for (int gf = 0; gf < jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().size(); gf++) {
                             for (int r = 0; r < jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().get(gf).getHonnan().getRovarok().size(); r++) {
                                 if (jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().get(gf).getHonnan().getRovarok().get(r).getBenulas()) {
                                     jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().get(gf).rovarElfogyasztas(jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().get(gf).getHonnan().getRovarok().get(r));
+                                    jatek.getGombatestIkonok().put(jatek.getGombaszok().get(g).getGombatestek().get(jatek.getGombaszok().get(g).getGombatestek().size()-1).getId(), "/ikonok/SimaGombaTest.png");
                                 }
                             }
                             for (int r = 0; r < jatek.getGombaszok().get(g).getGombatestek().get(gt).getGombaFonalak().get(gf).getHova().getRovarok().size(); r++) {
@@ -143,6 +134,19 @@ public class GrafikusJatekVezerlo {
                     }
                 }
             }
+
+                for (int k = 0; k < jatek.getTabla().size(); k++) {
+                    int chance = rnd.nextInt(1, 30);
+                    if (chance == 1) {
+                        Tekton tekton = jatek.getTabla().get(k);
+                        List<Tekton> tektons = jatek.getTabla().get(k).ketteTores();
+                        jatek.getTabla().remove(tekton);
+                        jatek.getTektonSzinek().put(tektons.get(0), jatek.getTektonSzinek().get(tekton));
+                        jatek.getTektonSzinek().put(tektons.get(1), jatek.getTektonSzinek().get(tekton));
+                        jatek.getTabla().addAll(tektons);
+                    }
+                }
+
         }
         JATEK_AKTIV = false;
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
