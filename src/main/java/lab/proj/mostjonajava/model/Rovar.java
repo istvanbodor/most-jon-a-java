@@ -177,7 +177,11 @@ public class Rovar {
         vagoKepesseg = true;
         lepesSzam = 2; 
     }
-
+    /**
+     * Az objektum szöveges reprezentációját visszaadó metódus.
+     *
+     * @return A rovar részletes szöveges leírása
+     */
     @Override
     public String toString()
     {

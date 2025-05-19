@@ -50,7 +50,10 @@ public class RovaraszNezetController {
     @FXML
     private ImageView sporaicon;
 
-
+    /**
+     * Inicializáló metódus, amely beállítja a kezdeti állapotot.
+     * Betölti a rovarász rovarlistáját és a szomszédos tektönöket.
+     */
     @FXML
     void initialize() {
         setControlsDisabled(true);
@@ -76,6 +79,10 @@ public class RovaraszNezetController {
         }
         Platform.runLater(() -> setControlsDisabled(false));
     }
+    /**
+     * A felhasználói felület elemek engedélyezését/letiltását vezérli.
+     * @param disabled true esetén letiltja a UI elemeket, false esetén engedélyezi
+     */
     private void setControlsDisabled(boolean disabled) {
         lepesGomb.setDisable(disabled);
         vagasGomb.setDisable(disabled);
@@ -85,7 +92,9 @@ public class RovaraszNezetController {
         rovarok.setDisable(disabled);
         szomszedosTektonok.setDisable(disabled);
     }
-
+    /**
+     * Megjeleníti a tektönhöz tartozó ikonokat (gombatest, rovar, spóra).
+     */
     private void ikonokMegjelenitese() {
         if (aktivTekton.getGombatest() != null) {
             gombatesticon.setImage(new Image(Objects.requireNonNull(getClass().getResource(GrafikusJatekVezerlo.jatek.getGombatestIkonok().get(aktivTekton.getGombatest().getId()))).toExternalForm()));
@@ -107,14 +116,18 @@ public class RovaraszNezetController {
         }
 
     }
-
+    /**
+     * Kiszámolja a rovarok összes lépésszámát.
+     */
     private void rovarOsszLepesBeallitas() {
         rovarokOsszLepesSzama = 0;
         for (Rovar rovar : GrafikusJatekVezerlo.aktivRovarasz.getRovarok()) {
             rovarokOsszLepesSzama += rovar.getLepesSzam();
         }
     }
-
+    /**
+     * Frissíti a listákat és a tektön részleteket.
+     */
     private void listakFrissitese() {
         aktivTekton = aktivRovar.getTekton();
         ObservableList<Tekton> tektonok =
@@ -127,7 +140,10 @@ public class RovaraszNezetController {
         tekton.setFill(GrafikusJatekVezerlo.jatek.getTektonSzinek().get(aktivTekton));
         ikonokMegjelenitese();
     }
-
+    /**
+     * Rovar lépése gomb eseménykezelője.
+     * @param actionEvent az esemény objektum
+     */
     @FXML
     public void onRovarLepesClick(ActionEvent actionEvent) {
         Tekton hova = szomszedosTektonok.getSelectionModel().getSelectedItem();
@@ -155,7 +171,10 @@ public class RovaraszNezetController {
         }
 
     }
-
+    /**
+     * Fonal vágás gomb eseménykezelője.
+     * @param actionEvent az esemény objektum
+     */
     @FXML
     public void onFonalVagasClick(ActionEvent actionEvent) {
         int meret = aktivRovar.getTekton().getGombafonalak().size();
@@ -180,21 +199,28 @@ public class RovaraszNezetController {
             alert.setHeaderText("Hiba :C");
             alert.showAndWait();
         }
-
-
     }
-
+    /**
+     * Ugrás (kör vége) gomb eseménykezelője.
+     * @param actionEvent az esemény objektum
+     */
     @FXML
     public void onUgrasClick(ActionEvent actionEvent) {
         ((Button) actionEvent.getSource()).getScene().getWindow().hide();
     }
-
+    /**
+     * Játék vége gomb eseménykezelője.
+     * @param actionEvent az esemény objektum
+     */
     @FXML
     public void onJatekVegeClick(ActionEvent actionEvent) {
         GrafikusJatekVezerlo.JATEK_AKTIV = false;
         ((Button) actionEvent.getSource()).getScene().getWindow().hide();
     }
-
+    /**
+     * Aktív rovar váltása gomb eseménykezelője.
+     * @param actionEvent az esemény objektum
+     */
     @FXML
     public void onAktivRovarValtas(ActionEvent actionEvent) {
         if (rovarok.getSelectionModel().getSelectedItem() == null) {
@@ -207,7 +233,11 @@ public class RovaraszNezetController {
             listakFrissitese();
         }
     }
-
+    /**
+     * Frissíti a tektön részleteit megjelenítő listát.
+     * @param tekton a megjelenítendő tekton
+     * @deprecated helyette használj más megjelenítési módszert
+     */
     @Deprecated
     private void updateTektonDetails(Tekton tekton) {
         ObservableList<String> details = FXCollections.observableArrayList();

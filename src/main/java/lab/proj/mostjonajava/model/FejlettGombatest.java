@@ -71,7 +71,11 @@ public class FejlettGombatest extends Gombatest {
             log("Spora kiloves sikeres.");
         }
     }
-
+    /**
+     * Az objektum szöveges reprezentációját visszaadó metódus.
+     *
+     * @return A gombatest részletes szöveges leírása
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

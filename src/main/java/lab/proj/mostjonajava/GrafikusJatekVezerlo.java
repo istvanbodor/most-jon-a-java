@@ -26,6 +26,11 @@ public class GrafikusJatekVezerlo {
 
     public static boolean JATEK_AKTIV = false;
 
+    /**
+     * A grafikus játékvezérlő konstruktora
+     * @param nevek
+     * @param stage
+     */
     @SneakyThrows
     public GrafikusJatekVezerlo(List<String> nevek, Stage stage) {
         jatek = new Jatek(nevek.size(), nevek);
@@ -34,9 +39,11 @@ public class GrafikusJatekVezerlo {
         jatekVezerles();
     }
 
+    /**
+     * A játék köreinek a kezeléséért és a felhasználói nézetek frissítéséért felel
+     * @throws IOException
+     */
     private void jatekVezerles() throws IOException {
-
-
         JATEK_AKTIV = true;
         Random rnd = new Random();
         for (int i = 0; i < Jatek.KOROK_SZAMA; i++) {
@@ -153,20 +160,40 @@ public class GrafikusJatekVezerlo {
         stage.show();
     }
 
+    /**
+     * A fonal növesztéséért felel két tekton között
+     * @param gombatest A gombatest amihez tartozik a növesztendő fonal
+     * @param honnan A tekton ahonnan nő a fonal
+     * @param hova A tekton ahova nő a fonal
+     */
     public static void fonalNovesztes(Gombatest gombatest, Tekton honnan, Tekton hova) {
         jatek.keresGombatestById(gombatest.getId()).fonalNovesztes(honnan, hova);
     }
 
+    /**
+     * Spórát szór egy tektonra
+     * @param gombatest A gombatest ami elszórja a spórát
+     * @param hova A tekton ahova szórja a spórát
+     * @param mennyiseg Az elszórt spórák száma
+     */
     public static void sporaSzoras(Gombatest gombatest, Tekton hova, int mennyiseg) {
         jatek.keresGombatestById(gombatest.getId()).sporaKiloves(hova, mennyiseg);
     }
-
-
+    /**
+     *Gombatestet növeszt egy tektonra
+     * @param gombasz A gombász akihez tartozik a gombatest
+     * @param hova A tekton ahova nő az új gombatest
+     */
     public static void gombaTestNovesztes(Gombasz gombasz, Tekton hova) {
         jatek.keresGombatestById(aktivGombasz.getId()).getGombasz().gombaTestNovesztes(hova);
         jatek.getGombatestIkonok().put(aktivGombasz.getGombatestek().get(aktivGombasz.getGombatestek().size()-1).getId(), "/ikonok/SimaGombaTest.png");
     }
 
+    /**
+     * Egy már létező gombatestet fejleszt fejlettGombatesté
+     * @param gombatest A fejlesztendő gombatest
+     * @param hova A tekton amin a gombatest van
+     */
     public static void gombaTestFejlesztes(Gombatest gombatest, Tekton hova) {
         jatek.keresGombatestById(aktivGombasz.getId()).getGombasz().gombaTestFejlesztes(gombatest);
         if (jatek.keresGombatestById(gombatest.getId()) == null) {
@@ -177,10 +204,20 @@ public class GrafikusJatekVezerlo {
         }
     }
 
+    /**
+     * A rovart mozgatja az egyik tektonról a másikra
+     * @param rovar A rovar ami lép
+     * @param hova A tekton amire lép a rovar
+     */
     public static void rovarMozgatas(Rovar rovar, Tekton hova) {
         jatek.keresRovarById(rovar.getId()).lepes(hova);
     }
 
+    /**
+     * Elvágja a fonalat a rovar és a kiválasztott tekton között
+     * @param rovar A rovar ami elvágja a fonalat
+     * @param hova A tekton ami és maga között a rovar elvágja a fonalat
+     */
     public static void fonalVagas(Rovar rovar, Tekton hova) {
         jatek.keresRovarById(rovar.getId()).fonalVagas(hova);
     }

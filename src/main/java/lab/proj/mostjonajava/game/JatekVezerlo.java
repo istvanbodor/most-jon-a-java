@@ -13,13 +13,26 @@ import java.util.Random;
 import static lab.proj.mostjonajava.utils.Logger.hibaLog;
 import static lab.proj.mostjonajava.utils.Logger.log;
 import static lab.proj.mostjonajava.utils.Parancsok.*;
-
+/**
+ * A játék fő vezérlőosztálya, amely kezeli a játék menetét, a játékosok körét,
+    valamint a parancsok feldolgozását konzolos és teszt módban is.
+    Ez az osztály felelős:
+    A játék inicializálásáért és beállításáért</li>
+    A játékosok lépéseinek feldolgozásáért</li>
+    Tesztesetek végrehajtásáért</li>
+    A játék állapotának kezeléséért</li>
+ *
+ * @Data Lombok annotáció, ami generál getter/setter metódusokat, toString(), equals() és hashCode() metódusokat
+ */
 @Data
 public class JatekVezerlo {
+    /** Az aktuális játék példány */
     private static Jatek jatek;
+    /** Jelző, ami azt mutatja, hogy aktív-e játékmenet */
     public static boolean JATEKMENET_AKTIV = false;
+    /** Az aktuális játékban résztvevő játékosok száma */
     private static int JATEKOSOK_SZAMA = 0;
-
+    /** Konzolbemenet olvasására használt olvasó */
     private static BufferedReader streamReader = new BufferedReader(new InputStreamReader(System.in));
 
     /**

@@ -8,22 +8,31 @@ import java.util.*;
 
 import static lab.proj.mostjonajava.utils.Cleaner.cleanUp;
 
+/**
+ * A játék fő osztálya, amely tartalmazza a játék állapotát és logikáját.
+ * Kezeli a játékosokat, a pályaelemeket és az azok közötti interakciókat.
+ *
+ * @Data Lombok annotáció, ami generál getter/setter metódusokat, toString(), equals() és hashCode() metódusokat
+ */
 @Data
 public class Jatek {
+    /** A játékban szereplő körök száma */
     public static int KOROK_SZAMA = 10;
+    /** A játék tábláját alkotó Tektönök listája */
     private List<Tekton> tabla = new ArrayList<>();
+    /** A játékban részt vevő Gombászok listája */
     private List<Gombasz> gombaszok = new ArrayList<>();
+    /** A játékban részt vevő Rovarászok listája */
     private List<Rovarasz> rovaraszok = new ArrayList<>();
-
+    /** Gombatestek ikonjait tároló map (ID -> ikon elérési út) */
     private Map<Integer, String> gombatestIkonok = new HashMap<>();
-
+    /** Tektönök színeit tároló map (Tekton -> Color) */
     private Map<Tekton, Color> tektonSzinek = new HashMap<>();
-
-
     /**
-     * A jatek konstruktora
-     * @param jatekosokSzama A jatekosok szama
-     * @param jatekosNevek A jatekosok neveinek a listaja
+     * A játék konstruktora, amely inicializálja a játékot a megadott játékosokkal.
+     *
+     * @param jatekosokSzama A játékosok száma
+     * @param jatekosNevek A játékosok neveinek listája
      */
     public Jatek(int jatekosokSzama, List<String> jatekosNevek) {
         cleanUp();
@@ -39,6 +48,7 @@ public class Jatek {
             String nev = jatekosNevek.get(i);
             Tekton tekton;
             int randomSzam = rnd.nextInt(1,6);
+            // Véletlenszerűen választunk Tektön típust
             switch (randomSzam) {
                 case 1 -> tekton = new TobbFonalasTekton();
                 case 2 -> tekton = new EgyFonalasTekton();
@@ -46,6 +56,7 @@ public class Jatek {
                 case 4 -> tekton = new TestNelkuliTekton();
                 default -> tekton = new FonalEltetoTekton();
             }
+            // Tektönhöz szín hozzárendelése
             switch (randomSzam) {
                 case 1 -> tektonSzinek.put(tekton, Color.AQUA);
                 case 2 -> tektonSzinek.put(tekton, Color.GREEN);
@@ -54,7 +65,8 @@ public class Jatek {
                 default -> tektonSzinek.put(tekton, Color.PURPLE);
             }
             if (i % 2 == 1) {
-               rovaraszok.add(new Rovarasz(nev));
+                // Páratlan indexű játékos: Rovarász
+                rovaraszok.add(new Rovarasz(nev));
                tabla.add(tekton);
                rovaraszok.get(rovaraszIdx).getRovarok().add(new Rovar(tabla.get(i), rovaraszok.get(rovaraszIdx)));
                tabla.get(i).getRovarok().add(rovaraszok.get(rovaraszIdx).getRovarok().get(0));
@@ -62,6 +74,7 @@ public class Jatek {
                tabla.get(i-1).getSzomszedosTektonok().add(tabla.get(i));
                rovaraszIdx++;
             } else {
+                // Páros indexű játékos: Gombász
                 gombaszok.add(new Gombasz(nev));
                 if (randomSzam == 4) {
                     tektonSzinek.remove(tekton);
@@ -81,7 +94,6 @@ public class Jatek {
             }
         }
     }
-
     /**
      * Jatek osztály konstruktora, amely a megadott játékosnevek alapján
      * létrehozza a megfelelő típusú játékosokat (Gombász vagy Rovarász).
@@ -104,21 +116,37 @@ public class Jatek {
             }
         }
     }
-
+    /**
+     * Visszaadja a játék tábláját alkotó Tektönök listáját.
+     * @return A Tektönök listája
+     */
     public List<Tekton> getTabla() { return tabla; }
+    /**
+     * Visszaadja a játékban részt vevő Gombászok listáját.
+     * @return A Gombászok listája
+     */
     public List<Gombasz> getGombaszok() { return gombaszok; }
+    /**
+     * Visszaadja a játékban részt vevő Rovarászok listáját.
+     * @return A Rovarászok listája
+     */
     public List<Rovarasz> getRovaraszok() { return rovaraszok; }
-
-    /** Keres egy tektont azonosito alapjan. */
+    /**
+     * Tektön keresése ID alapján.
+     * @param id A keresett Tektön ID-ja
+     * @return A megtalált Tektön, vagy null ha nem található
+     */
     public Tekton keresTektonById(int id) {
         return tabla.stream()
                 .filter(t -> t.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
-
-    /** Keres egy gombatestet azonosito alapjan. */
-    // game/Jatek.java
+    /**
+     * Gombatest keresése ID alapján.
+     * @param id A keresett Gombatest ID-ja
+     * @return A megtalált Gombatest, vagy null ha nem található
+     */
     public Gombatest keresGombatestById(int id) {
         return gombaszok.stream()
                 .flatMap(g -> g.getGombatestek().stream())
@@ -126,8 +154,11 @@ public class Jatek {
                 .findFirst()
                 .orElse(null);
     }
-
-    /** Keres egy rovart azonosito alapjan. */
+    /**
+     * Rovar keresése ID alapján.
+     * @param id A keresett Rovar ID-ja
+     * @return A megtalált Rovar, vagy null ha nem található
+     */
     public Rovar keresRovarById(int id) {
         return rovaraszok.stream()
                 .flatMap(rz -> rz.getRovarok().stream())
@@ -135,6 +166,4 @@ public class Jatek {
                 .findFirst()
                 .orElse(null);
     }
-
-
 }

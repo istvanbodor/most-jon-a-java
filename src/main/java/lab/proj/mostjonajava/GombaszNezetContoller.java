@@ -15,7 +15,10 @@ import lab.proj.mostjonajava.model.Tekton;
 
 import java.util.Objects;
 import java.util.stream.Collectors;
-
+/**
+ * A gombász nézetet kezelő kontroller osztály.
+ * Felelős a gombász játékos által végrehajtható akciók kezeléséért és megjelenítéséért.
+ */
 public class GombaszNezetContoller {
     @FXML
     private ListView<Gombatest> gombak;
@@ -33,9 +36,9 @@ public class GombaszNezetContoller {
     private Button gombatestNovesztesGomb;
     @FXML
     private Button ugrasGomb;
-
+    /** Az aktuálisan kiválasztott gombatest */
     private Gombatest aktivGombatest;
-
+    /** Az aktuálisan kiválasztott tekton */
     private Tekton aktivTekton;
     @FXML
     private Button fejlesztesGomb;
@@ -51,7 +54,10 @@ public class GombaszNezetContoller {
     private ImageView rovaricon;
     @FXML
     private ImageView sporaicon;
-
+    /**
+     * Inicializáló metódus, amely beállítja a kezdeti állapotot.
+     * Betölti a gombász gombatestjeit és a szomszédos tektönöket.
+     */
     @FXML
     private void initialize() {
         setUIEnabled(false);
@@ -77,7 +83,10 @@ public class GombaszNezetContoller {
             });
         }
     }
-
+    /**
+     * A felhasználói felület elemek engedélyezését/letiltását vezérli.
+     * @param enabled true esetén engedélyezi a UI elemeket, false esetén letiltja
+     */
     private void setUIEnabled(boolean enabled) {
         sporaSzorasGomb.setDisable(!enabled);
         fonalNovesztesGomb.setDisable(!enabled);
@@ -90,7 +99,9 @@ public class GombaszNezetContoller {
         gombak.setDisable(!enabled);
         szomszedosTektonok.setDisable(!enabled);
     }
-
+    /**
+     * Megjeleníti a tektönhöz tartozó ikonokat (gombatest, rovar, spóra).
+     */
     private void ikonokMegjelenitese() {
         if (aktivTekton.getGombatest() != null) {
             gombatesticon.setImage(new Image(Objects.requireNonNull(getClass().getResource(GrafikusJatekVezerlo.jatek.getGombatestIkonok().get(aktivTekton.getGombatest().getId()))).toExternalForm()));
@@ -113,7 +124,10 @@ public class GombaszNezetContoller {
         }
 
     }
-
+    /**
+     * Spóra szórás gomb eseménykezelője.
+     * @param actionEvent az esemény objektum
+     */
     @FXML
     public void onSporaSzorasClick(ActionEvent actionEvent) {
         if (szomszedosTektonok.getSelectionModel().getSelectedItem() == null) {
@@ -137,7 +151,10 @@ public class GombaszNezetContoller {
             alert.showAndWait();
         }
     }
-
+    /**
+     * Fonálnövesztés gomb eseménykezelője.
+     * @param actionEvent az esemény objektum
+     */
     @FXML
     public void onFonalNovesztesClick(ActionEvent actionEvent) {
         if (szomszedosTektonok.getSelectionModel().getSelectedItem() == null) {
@@ -164,7 +181,10 @@ public class GombaszNezetContoller {
             ((Button) actionEvent.getSource()).getScene().getWindow().hide();
         }
     }
-
+    /**
+     * Gombatest-növesztés gomb eseménykezelője.
+     * @param actionEvent az esemény objektum
+     */
     @FXML
     public void onGombaTestNovesztesClick(ActionEvent actionEvent) {
         Tekton hova = szomszedosTektonok.getSelectionModel().getSelectedItem();
@@ -189,12 +209,18 @@ public class GombaszNezetContoller {
                 alert.showAndWait();
             }
     }
-
+    /**
+     * Ugrás (kör vége) gomb eseménykezelője.
+     * @param actionEvent az esemény objektum
+     */
     @FXML
     public void onUgrasClick(ActionEvent actionEvent) {
         ((Button) actionEvent.getSource()).getScene().getWindow().hide();
     }
-
+    /**
+     * Gombatest fejlesztése gomb eseménykezelője.
+     * @param actionEvent az esemény objektum
+     */
     @FXML
     public void onFejlesztesClick(ActionEvent actionEvent) {
         if (aktivTekton.getGombatest() != null) {
@@ -220,14 +246,20 @@ public class GombaszNezetContoller {
         }
 
     }
-
+    /**
+     * Játék vége gomb eseménykezelője.
+     * @param actionEvent az esemény objektum
+     */
     @FXML
     public void onJatekVegeClick(ActionEvent actionEvent) {
         GrafikusJatekVezerlo.JATEK_AKTIV = false;
         ((Button) actionEvent.getSource()).getScene().getWindow().hide();
     }
 
-
+    /**
+     * Aktív tekton váltása gomb eseménykezelője.
+     * @param actionEvent az esemény objektum
+     */
     @FXML
     public void onAktivTektonValtasClick(ActionEvent actionEvent) {
         if (szomszedosTektonok.getSelectionModel().getSelectedItem() == null) {
@@ -241,7 +273,9 @@ public class GombaszNezetContoller {
         }
 
     }
-
+    /**
+     * Frissíti a listákat és a tektön részleteket.
+     */
     private void listakFrissitese() {
         ObservableList<Tekton> tektonok =
                 FXCollections.observableArrayList(aktivTekton.getSzomszedosTektonok());
@@ -254,7 +288,10 @@ public class GombaszNezetContoller {
         ikonokMegjelenitese();
 
     }
-
+    /**
+     * Aktív gombatest váltása gomb eseménykezelője.
+     * @param actionEvent az esemény objektum
+     */
     @FXML
     public void onAktivGombatestValtasClick(ActionEvent actionEvent) {
         if (gombak.getSelectionModel().getSelectedItem() == null) {
@@ -268,7 +305,11 @@ public class GombaszNezetContoller {
             listakFrissitese();
         }
     }
-
+    /**
+     * Frissíti a tektön részleteit megjelenítő listát.
+     * @param tekton a megjelenítendő tekton
+     * @deprecated helyette használj más megjelenítési módszert
+     */
     @Deprecated
     private void updateTektonDetails(Tekton tekton) {
         ObservableList<String> details = FXCollections.observableArrayList();
