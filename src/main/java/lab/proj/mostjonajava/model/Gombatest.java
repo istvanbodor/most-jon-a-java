@@ -58,9 +58,9 @@ public class Gombatest {
    public void fonalNovesztes(Tekton honnan, Tekton hova) {
        boolean kapcsolodik = gombaFonalak.stream().anyMatch(f ->
                f.getHonnan().equals(honnan) &&
-                       f.getHova().equals(honnan) ||
+                       f.getHova().equals(hova) ||
                        f.getHonnan().equals(hova) &&
-                       f.getHova().equals(hova)
+                       f.getHova().equals(honnan)
        );
 
        if(!honnan.szomszedossagEllenorzese(hova) || noveszthetoFonalakSzama <= 0 || kapcsolodik) {
