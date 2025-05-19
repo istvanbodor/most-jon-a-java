@@ -372,7 +372,6 @@ public class JatekVezerlo {
      * @param parameterek a parancs parameterlistaja
      * @return true, ha a parancs sikeres volt
      */
-    //!!!valtozas:GOMBATESTNOVESZTES <gombaszId><tektonId>
     private static boolean gombaTestNovesztes(String[] parameterek) {
         if (parameterVizsgalat(parameterek,3)) return false;
         int gombaszId = Integer.parseInt(parameterek[1]);
@@ -386,7 +385,6 @@ public class JatekVezerlo {
      * @param parameterek a parancs parameterlistaja
      * @return true, ha a parancs sikeres volt
      */
-    //!!!valtozas: GOMBATESTFEJLESZTES <gombaszId><tektonId>
     private static boolean gombaTestFejlesztes(String[] parameterek) {
         if (parameterVizsgalat(parameterek,3)) return false;
         int gombaszId = Integer.parseInt(parameterek[1]);

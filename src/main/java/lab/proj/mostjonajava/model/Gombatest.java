@@ -165,25 +165,17 @@ public class Gombatest {
     /**
      * Megsemmisíti a gombatestet, az összes fonalával együtt.
      */
-    /*public void elpusztulas() {
-       // hivasLog("elpusztulas()", List.of(), 0);
-
-        List<GombaFonal> torlendoFonalak = new ArrayList<>(gombaFonalak);
-        for (GombaFonal fonal : torlendoFonalak) {
-            fonal.getHonnan().getGombafonalak().remove(fonal);
-            fonal.getHova().getGombafonalak().remove(fonal);
-        }
-        gombaFonalak.clear();
-        tekton.setGombatest(null);
-        gombasz.getGombatestek().remove(this);
-
-        //log("A gombatest elpusztult");
-    }*/
     public void elpusztulas() {
         // csak akkor pusztuljon el, ha kifogyott a kilőhető spórából
         // ÉS már lőtt ki legalább egyet (tehát ne töröljük azokat, amiket még nem használtak)
         if (getElszortSporakSzama() >= 10) {
             Tekton t = getTekton();
+            List<GombaFonal> torlendoFonalak = new ArrayList<>(gombaFonalak);
+            for (GombaFonal fonal : torlendoFonalak) {
+                fonal.getHonnan().getGombafonalak().remove(fonal);
+                fonal.getHova().getGombafonalak().remove(fonal);
+            }
+            gombaFonalak.clear();
             if (t != null) {
                 // eltávolítjuk a tektonról
                 t.setGombatest(null);
