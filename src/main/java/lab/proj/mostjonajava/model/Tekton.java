@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static lab.proj.mostjonajava.utils.Logger.log;
-import lombok.Data;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -222,11 +222,14 @@ public abstract class Tekton {
 
     /**
      * Törlődik a megadott fonal - a FonalElteto (ebben fix) és lehet az EltunoFonalas tektonba override-ol
+     *
      * @param fonal
+     * @return
      */
-    public void fonalTorlese(GombaFonal fonal) {
+    public boolean fonalTorlese(GombaFonal fonal) {
         getGombafonalak().remove(fonal);
         log("Fonal torlese sikeres.");
+        return true;
     }
 
     /**

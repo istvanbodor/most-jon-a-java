@@ -121,8 +121,8 @@ public class Gombatest {
                 !elerhetoTektonok.contains(fon.getHova())) {
                 
                 // Törlés próbálkozás mindkét oldalról (ha mindkettő fonal éltető akkor meg kell hagyni, ha csak az egyikből akkor oda visszarakjuk)
-                boolean honnanTorolve = fon.getHonnan().getGombafonalak().remove(fon);
-                boolean hovaTorolve = fon.getHova().getGombafonalak().remove(fon);
+                boolean honnanTorolve = fon.getHonnan().fonalTorlese(fon);
+                boolean hovaTorolve = fon.getHova().fonalTorlese(fon);
                 
                 // Ha mindkettőből töröltük, akkor gombatestből is
                 if (honnanTorolve && hovaTorolve) {

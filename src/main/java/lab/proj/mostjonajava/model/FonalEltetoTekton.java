@@ -44,10 +44,13 @@ public class FonalEltetoTekton extends Tekton {
 
     /**
      * Fonal törlése esetén itt nem törlődik a fonál
+     *
      * @param fonal
+     * @return
      */
     @Override
-    public void fonalTorlese(GombaFonal fonal) {
+    public boolean fonalTorlese(GombaFonal fonal) {
         log("Fonal torles sikertelen.");
+        return false;
     }
 }
