@@ -166,7 +166,7 @@ public abstract class Tekton {
     public boolean szomszedSzomszedEllenorzese(Tekton tekton) {
         for (Tekton szomszed : szomszedosTektonok) {
             if (szomszed.getSzomszedosTektonok().contains(tekton)){
-                //log("true");
+                log("true");
                 return true;
             }
         }
