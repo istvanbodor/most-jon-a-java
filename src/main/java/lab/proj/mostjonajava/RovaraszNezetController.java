@@ -69,6 +69,7 @@ public class RovaraszNezetController {
                     FXCollections.observableArrayList(aktivRovar.getTekton().getSzomszedosTektonok());
             szomszedosTektonok.setItems(tektonok);
             tekton.setFill(GrafikusJatekVezerlo.jatek.getTektonSzinek().get(aktivTekton));
+            updateTektonDetails(aktivTekton);
             ikonokMegjelenitese();
         } else {
             Platform.runLater(() -> {
@@ -137,6 +138,7 @@ public class RovaraszNezetController {
                 FXCollections.observableArrayList(GrafikusJatekVezerlo.aktivRovarasz.getRovarok());
         rovarok.setItems(obsRovarok);
         rovarOsszLepesBeallitas();
+        updateTektonDetails(aktivTekton);
         tekton.setFill(GrafikusJatekVezerlo.jatek.getTektonSzinek().get(aktivTekton));
         ikonokMegjelenitese();
     }
