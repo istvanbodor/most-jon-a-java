@@ -151,7 +151,7 @@ public abstract class Tekton {
      * @return
      */
     public boolean szomszedossagEllenorzese(Tekton tekton) {
-        if(szomszedosTektonok.contains(tekton)){
+        if(szomszedosTektonok.contains(tekton) || tekton == this){
             log("true");
             return true;}
         log("false");

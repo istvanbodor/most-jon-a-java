@@ -130,13 +130,13 @@ public class GombaszNezetContoller {
      */
     @FXML
     public void onSporaSzorasClick(ActionEvent actionEvent) {
+        Tekton hova;
         if (szomszedosTektonok.getSelectionModel().getSelectedItem() == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Válaszdd ki hova szeretnél spórát szórni!");
-            alert.setHeaderText("Hiba :C");
-            alert.showAndWait();
-            return;
+            hova = aktivGombatest.getTekton();
         }
-        Tekton hova = szomszedosTektonok.getSelectionModel().getSelectedItem();
+        else {
+            hova = szomszedosTektonok.getSelectionModel().getSelectedItem();
+        }
         int sporaSzam = hova.getSporak().size();
         GrafikusJatekVezerlo.sporaSzoras(aktivGombatest,hova, 1);
         listakFrissitese();

@@ -197,10 +197,10 @@ public class Gombatest {
      * @param mennyiseg
      */
     public void sporaKiloves(Tekton celTekton, int mennyiseg) {
-        if (!tekton.szomszedossagEllenorzese(celTekton) || kilohetoSporakSzama < mennyiseg) {
-            log("Spora kiloves sikertelen.");
-            return;
-        }
+            if (!tekton.szomszedossagEllenorzese(celTekton) || kilohetoSporakSzama < mennyiseg) {
+                log("Spora kiloves sikertelen.");
+                return;
+            }
 
         kilohetoSporakSzama -= mennyiseg;
         elszortSporakSzama += mennyiseg;
